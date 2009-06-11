@@ -1,0 +1,126 @@
+<project name="ZARLOCK-2-0" default="dist" basedir=".">
+	<description>
+        simple example build file
+    </description>
+
+    <property name="jpa-framework.location" value="../jpa-framework"/>
+
+    <path id="jpa-framework.classpath">
+        <pathelement location="${jpa-framework.location}/dist/jpa-framework.jar"/>
+    </path>
+
+	<path id="libs">
+		 <fileset dir="lib" includes="*.jar"/>
+		<path refid="jpa-framework.classpath"/>
+	</path>
+
+	<!-- set global properties for this build -->
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+	<!-- where the source files are -->
+	<property name="src" location="src" />
+
+	<!-- where the compiled classes go -->
+	<property name="build" location=".build" />
+
+	<!-- where to place the finished jar file -->
+	<property name="program" location=".program" />
+
+	<property name="dist" location="dist" />
+
+	<!-- ========== Dist Target ===================================
+        The dist target compiles all the source code and creates
+        a jar file for distribution.
+    -->
+	<target name="dist" depends="clean, compile" description="generate the distribution">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${program}/lib" />
+		<jar jarfile="${program}/zarlock.jar" basedir="${build}"/>
+		<copy includeemptydirs="false" todir="${program}/lib">
+			<fileset dir="lib" includes="**/*jar" />
+		</copy>
+		<copy includeemptydirs="false" todir="${program}/lib">
+			<fileset file="${jpa-framework.location}/dist/jpa-framework.jar"/>
+		</copy>
+		<copy includeemptydirs="false" todir="${program}">
+			<fileset dir="scripts" />
+		</copy>
+		<tar destfile="${dist}/zarlock.tar">
+			<fileset dir="${program}"/>
+		</tar>
+		<gzip src="${dist}/zarlock.tar" destfile="${dist}/zarlock.tar.gz"/>
+		<delete  file="${dist}/zarlock.tar"/>
+		<zip destfile="${dist}/zarlock.zip">
+			<fileset dir="${program}"/>
+		</zip>
+	</target>
+
+	<!-- ========== Init Target ====================================
+        This target initializes the build by creating a time stamp
+        for use in the jar file name and creating the directory
+        to hold the compiled classes.
+    -->
+	<target name="-init">
+		<!-- Create the time stamp -->
+		<tstamp />
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}" />
+		<mkdir dir="${dist}" />
+		<mkdir dir="${program}" />
+		<copy includeemptydirs="false" todir="${build}">
+			<fileset dir="resources/java" excludes="**/*.launch, **/*.java" />
+		</copy>
+		<copy todir="${program}">
+			<fileset file="zarlock-splash/splash.bmp"> </fileset>
+		</copy>
+		<copy includeemptydirs="false" todir="${build}">
+			<fileset dir="resources/test" excludes="**/*.launch, **/*.java" />
+		</copy>
+		<copy includeemptydirs="false" todir="${build}">
+			<fileset dir="src/java" excludes="**/*.launch, **/*.java" />
+		</copy>
+		<copy includeemptydirs="false" todir="${build}">
+			<fileset dir="src/test" excludes="**/*.launch, **/*.java" />
+		</copy>
+	</target>
+
+	<!-- ========== Compile Target =================================
+        The compile target compiles all files in the source directory
+        into the build directory.
+    -->
+	<target name="compile" depends="-init, compile-subprojects" description="compile the source ">
+	      <javac debug="true" debuglevel="${debuglevel}" destdir="${build}" source="${source}" target="${target}">
+	            <src path="resources/java"/>
+	            <classpath refid="libs"/>
+	        </javac>
+	        <javac debug="true" debuglevel="${debuglevel}" destdir="${build}" source="${source}" target="${target}">
+	            <src path="resources/test"/>
+	            <classpath refid="libs"/>
+	        </javac>
+	        <javac debug="true" debuglevel="${debuglevel}" destdir="${build}" source="${source}" target="${target}">
+	            <src path="src/java"/>
+	            <classpath refid="libs"/>
+	        </javac>
+	</target>
+
+	<target name="compile-subprojects" depends="-init" description="compile the source ">
+		  <ant antfile="${jpa-framework.location}/jpa-framework.xml" inheritAll="false" target="dist">
+	            <propertyset>
+	                <propertyref name="build.compiler"/>
+	            </propertyset>
+		     </ant>
+	</target>
+
+	<!-- ========== Clean Target ====================================
+        The clean target deletes all files from the build directory
+        and the dist directory.
+    -->
+	<target name="clean" description="clean up">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+		<delete dir="${program}" />
+	</target>
+</project>
+

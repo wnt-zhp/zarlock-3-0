@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment/>
+<entry key="cx.ath.jbzdak.zarlok.2-0.zz.folder">zapotrzebowania</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.database.current.folder">database</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.root.folder">/home/jb/Programs/idea-zarlock/zarlok-2-0/resources/java/.zarlok</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.database.filename">dbfile</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.imie.radaObozu">Wpisz imię członka rady obozu zatwierdzającego ZZ</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.kartoteki.folder">kartoteki</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.nazwa.obozu.linia.3">I ustaw pola: nazwa obozu linia 1, 2 i 3</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.nazwa.obozu.linia.2">Wejdź w Opcje - konfiguracja</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.documents.folder">documents</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.stan.magazynu.folder">stany_magazynow</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.nazwa.obozu.linia.1">Wpisz nazwę obozu</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.imie.kwatermistrza">Wpisz imię kwatermistrza</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.database.backup.folder">backup</entry>
+<entry key="cx.ath.jbzdak.zarlok.2-0.imie.komendanta">Wpisz imię komendanta</entry>
+</properties>

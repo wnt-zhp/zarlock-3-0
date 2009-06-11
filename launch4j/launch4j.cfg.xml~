@@ -1,0 +1,39 @@
+<launch4jConfig>
+  <dontWrapJar>true</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>./lib/zarlock.jar</jar>
+  <outfile>/home/jb/Programs/idea-zarlock/zarlok-2-0/launch4j/zarlock.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon></icon>
+  <classPath>
+    <mainClass>cx.ath.jbzdak.zarlok.main.AppLauncher</mainClass>
+    <cp>zarlock.jar</cp>
+    <cp>./lib/*</cp>
+  </classPath>
+  <jre>
+    <path></path>
+    <minVersion>1.6.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <initialHeapSize>50</initialHeapSize>
+    <maxHeapSize>150</maxHeapSize>
+  </jre>
+  <messages>
+    <startupErr>Błąd uruchamiania aplikacji.
+
+Możesz spróbować odpalić ją przez zarlock.bat</startupErr>
+    <bundledJreErr>Oprogramowanie javy dostarczone wraz z typ programem zawiera błąd,
+ściągnij z internetu a będzie dobrze</bundledJreErr>
+    <jreVersionErr>To oprogramowanie wymaga Jaby w wersji minimum </jreVersionErr>
+    <launcherErr>Jakieś problemy z jabą na Twoim komputerze, przeinstaluj ją</launcherErr>
+    <instanceAlreadyExistsMsg>An application instance is already running.</instanceAlreadyExistsMsg>
+  </messages>
+</launch4jConfig>

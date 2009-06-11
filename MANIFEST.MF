@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: cx.ath.jbzdak.zarlok.main.AppLauncher
+SplashScreen-Image: splash.png
+Class-Path: lib/*
