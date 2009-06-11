@@ -2,10 +2,7 @@ package cx.ath.jbzdak.zarlok.ui.partia;
 
 import cx.ath.jbzdak.jpaGui.autoComplete.AutocompleteComboBox;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
-import cx.ath.jbzdak.jpaGui.ui.form.DAOForm;
-import cx.ath.jbzdak.jpaGui.ui.form.DAOFormElement;
-import cx.ath.jbzdak.jpaGui.ui.form.FormFactory;
-import cx.ath.jbzdak.jpaGui.ui.form.FormPanel;
+import cx.ath.jbzdak.jpaGui.ui.form.*;
 import cx.ath.jbzdak.jpaGui.ui.formatted.MyFormattedTextField;
 import cx.ath.jbzdak.jpaGui.ui.formatted.NotEmptyFormatter;
 import cx.ath.jbzdak.jpaGui.ui.formatted.formatters.DateFormatter;
@@ -18,6 +15,7 @@ import cx.ath.jbzdak.zarlok.ui.formatted.formatters.DataWaznosciFormatter;
 import cx.ath.jbzdak.zarlok.ui.formatted.formatters.IloscPoczFormatter;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
 import net.miginfocom.swing.MigLayout;
 
 public class PartiaAddPanelBasic extends JPanel{
@@ -48,6 +46,8 @@ public class PartiaAddPanelBasic extends JPanel{
 
 	protected FormPanel<MyFormattedTextField> numerFakturyPanel;
 
+   protected FormPanelMock<JComboBox, ReadOnlyFormElement<JComboBox>> cenaJednostkowaSelectPanel;
+
 	protected CenaFormatter cenaFormatter = new CenaFormatter();
 
 	protected IloscPoczFormatter iloscPoczFormatter = new IloscPoczFormatter(cenaFormatter);
@@ -70,6 +70,8 @@ public class PartiaAddPanelBasic extends JPanel{
 		numerFakturyPanel = factory.decorateFormattedTextField("Numer faktury", "numerFaktury", new NotEmptyFormatter("Numer faktury nie może być pusty"));
 		form = factory.getCreatedForm();
 		form.setDao(new PartiaDAO(manager));
+      cenaJednostkowaSelectPanel = new FormPanelMock(new ReadOnlyFormElement<JComboBox>(new SelectTypComboBox(cenaFormatter), "Rodzaj ceny"));
+     // cenaJednostkowaSelectPanel.setConstraints(FormPanelConstraints.createCompactConstraints());
 		initGUI();
 	}
 
@@ -82,6 +84,7 @@ public class PartiaAddPanelBasic extends JPanel{
 		add(dataWaznosciPanel);
 		add(dataksiegowaniaPanel);
 		add(specyfikatorPanel, "");
+      add(cenaJednostkowaSelectPanel);
 	}
 
 	public void setPartia(Partia partia){

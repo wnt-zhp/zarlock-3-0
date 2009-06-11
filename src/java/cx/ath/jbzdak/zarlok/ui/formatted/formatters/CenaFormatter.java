@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class CenaFormatter implements MyFormatter{
 
-	private static final Pattern cenaPattern = Pattern.compile("\\s*(\\d++)\\s*(?:(\\+)?\\s*(\\d+)?([%p])?)\\s*");
+	private static final Pattern cenaPattern = Pattern.compile("\\s*(\\d++(?:[,.]\\d+)?)\\s*(?:(\\+)?\\s*(\\d+)?([%p])?)\\s*");
 
 	private boolean cenaJednostkowa = true;
 
