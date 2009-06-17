@@ -1,5 +1,7 @@
 package cx.ath.jbzdak.zarlok.entities;
 
+import org.apache.commons.math.util.MathUtils;
+
 
 public class TakieSamePartie implements ProductSeachCacheSearchable{
 
@@ -19,8 +21,8 @@ public class TakieSamePartie implements ProductSeachCacheSearchable{
 		this.produkt = produkt;
 		this.specyfikator = specyfikator;
 		this.jednostka = jednostka;
-		this.cena = cena;
-		this.iloscTeraz = iloscTeraz;
+		this.cena = MathUtils.round(cena.doubleValue(), 2);
+		this.iloscTeraz = MathUtils.round(iloscTeraz.doubleValue(), 2);
 	}
 
 	@SuppressWarnings({"WeakerAccess"})

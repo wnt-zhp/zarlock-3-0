@@ -1,14 +1,14 @@
 package cx.ath.jbzdak.zarlok.ui.query;
 
-import javax.swing.RowFilter;
-
-import java.math.BigDecimal;
+import javax.swing.*;
 
 public class JestNaSkladzieQuery<M, I> extends RowFilter<M, I> {
 
 	private final int terazWMagColumn;
 
 	boolean ignore;
+
+   private final static double MIN = 0.01;
 
 	public JestNaSkladzieQuery(int terazWMagColumn) {
 		super();
@@ -18,10 +18,8 @@ public class JestNaSkladzieQuery<M, I> extends RowFilter<M, I> {
 	@Override
 	public boolean include(
 			javax.swing.RowFilter.Entry<? extends M, ? extends I> entry) {
-		BigDecimal value = (BigDecimal) entry.getValue(terazWMagColumn);
-
-
-		return ignore || value == null || BigDecimal.ZERO.compareTo(value) < 0;
+		Number value = (Number) entry.getValue(terazWMagColumn);
+		return ignore || value == null || value.doubleValue() > MIN;
 	}
 
 	public boolean isDisabled() {
