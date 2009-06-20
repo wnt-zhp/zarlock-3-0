@@ -6,24 +6,25 @@ import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.jpaGui.ui.error.DisplayErrorDetailsDialog;
 import cx.ath.jbzdak.jpaGui.ui.error.ErrorHandlers;
+import cx.ath.jbzdak.zarlok.entities.Danie;
 import cx.ath.jbzdak.zarlok.entities.Dzien;
 import cx.ath.jbzdak.zarlok.entities.Posilek;
 import cx.ath.jbzdak.zarlok.raport.RaportException;
 import cx.ath.jbzdak.zarlok.ui.posilek.PosilekAddDialog;
-import javax.persistence.EntityManager;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
 
-import java.awt.Component;
-import java.awt.Desktop;
+import javax.persistence.EntityManager;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class TreePopupMenu extends JPopupMenu {
-   private Dzien d;
+public class TreePopupMenu extends JPopupMenu {
+   private Dzien dzien;
+
+   private Posilek posilek;
+
+   private Danie danie;
 
    private final DniTreePanelModel dniTreePanelModel;
 
@@ -31,12 +32,11 @@ class TreePopupMenu extends JPopupMenu {
 
    boolean printEnable = Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.PRINT);
 
-
    private final JMenuItem makeZZMenuItem = new JMenuItem("Drukuj ZZ");
-   private final JMenuItem saveZZMenuItem = new JMenuItem("Zapisz ZZ");
-   private final JMenuItem saveStanMenuItem = new JMenuItem("Zapisz stan magazynu");
    private final JMenuItem printStanMagazynu = new JMenuItem("Drukuj stan magazynu");
    private final JMenuItem usunDzienMenuItem = new JMenuItem("Usuń ten dzień");
+   private final JMenuItem usunPosilek = new JMenuItem("Usuń ten posilek");
+   private final JMenuItem usunDanie = new JMenuItem("Usun danie");
    private final JMenuItem dodajPosilek = new JMenuItem("Dodaj posiłek");
 
    TreePopupMenu(DBManager dbManager, DniTreePanelModel dniTreePanelModel) {
@@ -55,37 +55,13 @@ class TreePopupMenu extends JPopupMenu {
          @Override
          public void actionPerformed(ActionEvent e) {
             try {
-               dniTreePanelModel.raportFactory.printZZ(d);
+               dniTreePanelModel.raportFactory.printZZ(dzien);
             } catch (RaportException re) {
                DisplayErrorDetailsDialog dialog = new DisplayErrorDetailsDialog();
                dialog.setText(ErrorHandlers.createLongHandlers().getHandler(re).getMessage(re));
                dialog.pack();
                Utils.initLocation(dialog);
                dialog.setVisible(true);
-            }
-         }
-      });
-      saveZZMenuItem.addActionListener(new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            try {
-               dniTreePanelModel.raportFactory.saveZZ(d);
-            } catch (RaportException re) {
-               DisplayErrorDetailsDialog dialog = new DisplayErrorDetailsDialog();
-               dialog.setText(ErrorHandlers.createLongHandlers().getHandler(re).getMessage(re));
-               dialog.pack();
-               Utils.initLocation(dialog);
-               dialog.setVisible(true);
-            }
-         }
-      });
-      saveStanMenuItem.addActionListener(new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            try{
-               dniTreePanelModel.raportFactory.saveStanMagazynu(d);
-            }catch (RaportException re){
-               DisplayErrorDetailsDialog.showErrorDialog(re, null);
             }
          }
       });
@@ -93,7 +69,7 @@ class TreePopupMenu extends JPopupMenu {
          @Override
          public void actionPerformed(ActionEvent e) {
             try{
-               dniTreePanelModel.raportFactory.printStanMagazynu(d);
+               dniTreePanelModel.raportFactory.printStanMagazynu(dzien);
             }catch (RaportException re){
                DisplayErrorDetailsDialog.showErrorDialog(re, null);
             }
@@ -108,12 +84,12 @@ class TreePopupMenu extends JPopupMenu {
          public void actionPerformed(ActionEvent e) {
 
             int result = JOptionPane.showConfirmDialog(TreePopupMenu.this,
-                                         formatter.format(d), "Pytanie", JOptionPane.YES_NO_OPTION);
+                                         formatter.format(dzien), "Pytanie", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.YES_OPTION){
                Transaction.execute(dbManager, new Transaction() {
                   @Override
                   public void doTransaction(EntityManager entityManager) throws Exception {
-                     dniTreePanelModel.removeDzien(d);
+                     dniTreePanelModel.removeDzien(dzien);
                   }
                });
             }
@@ -127,22 +103,29 @@ class TreePopupMenu extends JPopupMenu {
             if (dialog == null) {
                dialog = new PosilekAddDialog(SwingUtilities.getWindowAncestor(TreePopupMenu.this),dbManager);
             }
-            dialog.setPosilek(new Posilek("", d));
+            dialog.setPosilek(new Posilek("", dzien));
             dialog.setVisible(true);
-            d.getPosilki().add(dialog.getPosilek());
+            dzien.getPosilki().add(dialog.getPosilek());
             Transaction.execute(dbManager, new Transaction() {
                @Override
                public void doTransaction(EntityManager entityManager) throws Exception {
-                  entityManager.merge(d);
+                  entityManager.merge(dzien);
                }
             });
             dniTreePanelModel.generateTree();
          }
       });
+      usunPosilek.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            JOptionPane.showConfirmDialog(DzienPo)
+         }
+      });
+
       add(makeZZMenuItem);
-      add(saveZZMenuItem);
+      //add(saveZZMenuItem);
       add(printStanMagazynu);
-      add(saveStanMenuItem);
+      //add(saveStanMenuItem);
       add(dodajPosilek);
       addSeparator();
       add(usunDzienMenuItem);
@@ -150,30 +133,31 @@ class TreePopupMenu extends JPopupMenu {
 
    @Override
    public void show(Component invoker, int x, int y) {
-      if (dniTreePanelModel.selectedItems.size() == 1 && dniTreePanelModel.onlyDniSelected) {
-         makeZZMenuItem.setEnabled(true);
-         saveZZMenuItem.setEnabled(true);
-         printStanMagazynu.setEnabled(true);
-         saveStanMenuItem.setEnabled(true);
-         usunDzienMenuItem.setEnabled(true);
-         d = (Dzien) dniTreePanelModel.selectedItems.get(0);
-      } else if(dniTreePanelModel.selectedItems.size() == 1 && dniTreePanelModel.onlyPosilkiSelected){
          makeZZMenuItem.setEnabled(false);
-         saveZZMenuItem.setEnabled(false);
          printStanMagazynu.setEnabled(false);
-         saveStanMenuItem.setEnabled(false);
-         usunDzienMenuItem.setEnabled(false);
-         dodajPosilek.setEnabled(true);
-         d = ((Posilek) dniTreePanelModel.selectedItems.get(0)).getDzien();
-      }else{
-         makeZZMenuItem.setEnabled(false);
-         saveZZMenuItem.setEnabled(false);
-         printStanMagazynu.setEnabled(false);
-         saveStanMenuItem.setEnabled(false);
          usunDzienMenuItem.setEnabled(false);
          dodajPosilek.setEnabled(false);
-         d = null;
-      }
+         dzien = null;
+         posilek = null;
+            danie = null;
+         if (dniTreePanelModel.selectedItems.size() == 1) {
+            Object selected = dniTreePanelModel.selectedItems.get(0);
+            if (selected instanceof Dzien) {
+               Dzien dzien = (Dzien) selected;
+               this.dzien = dzien;
+            }
+            if (selected instanceof Posilek){
+               this.posilek = (Posilek) selected;
+               this.dzien = posilek.getDzien();
+            }
+            if(selected instanceof Danie){
+               this.danie = (Danie) selected;
+               this.posilek = danie.getPosilek();
+               this.dzien = posilek.getDzien();
+            }
+         }
       super.show(invoker, x, y);
    }
+
+
 }
