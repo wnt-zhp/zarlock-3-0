@@ -10,9 +10,6 @@ import cx.ath.jbzdak.zarlok.db.dao.DzienDao;
 import cx.ath.jbzdak.zarlok.entities.Dzien;
 import cx.ath.jbzdak.zarlok.main.MainWindowModel;
 import cx.ath.jbzdak.zarlok.ui.iloscOsob.IloscOsobDialog;
-import javax.persistence.EntityManager;
-import javax.swing.*;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.BeanProperty;
@@ -20,7 +17,10 @@ import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.ELProperty;
 
-import java.awt.FlowLayout;
+import javax.persistence.EntityManager;
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import java.awt.*;
 import java.util.Collection;
 
 public class DniTreePanel extends JPanel {
@@ -55,7 +55,7 @@ public class DniTreePanel extends JPanel {
       FormFactory<Dzien> ffactory = new FormFactory<Dzien>();
       ffactory.setLayout("compact");
       dzienAddPanel = ffactory.decorateFormattedTextField("Dodaj dzien", "data", new DateFormatter());
-      model = new DniTreePanelModel(ffactory.getCreatedForm(), dao, mainWindowModel, mainWindowModel.getManager());
+      model = new DniTreePanelModel(ffactory.getCreatedForm(), dao, mainWindowModel, mainWindowModel.getManager(), tree);
       DefaultTreeCellRenderer treeRenderer = new DniTreeRenderer();
       tree.setModel(model.getModel());
       tree.setCellRenderer(treeRenderer);

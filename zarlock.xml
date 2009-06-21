@@ -24,10 +24,14 @@
 	<!-- where the compiled classes go -->
 	<property name="build" location=".build" />
 
-	<!-- where to place the finished jar file -->
-	<property name="program" location=".program" />
 
+	<property name="program" location=".program" />
+    <!-- where to place the finished jar file -->
 	<property name="dist" location="dist" />
+
+    <property name="logs" location=".program" />
+
+
 
 	<!-- ========== Dist Target ===================================
         The dist target compiles all the source code and creates
@@ -68,6 +72,7 @@
 		<mkdir dir="${build}" />
 		<mkdir dir="${dist}" />
 		<mkdir dir="${program}" />
+        <mkdir dir="${dist}/${logs}" />
 		<copy includeemptydirs="false" todir="${build}">
 			<fileset dir="resources/java" excludes="**/*.launch, **/*.java" />
 		</copy>

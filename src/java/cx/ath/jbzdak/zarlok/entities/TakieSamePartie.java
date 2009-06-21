@@ -2,6 +2,8 @@ package cx.ath.jbzdak.zarlok.entities;
 
 import org.apache.commons.math.util.MathUtils;
 
+import javax.annotation.CheckForNull;
+
 
 public class TakieSamePartie implements ProductSeachCacheSearchable{
 
@@ -16,13 +18,14 @@ public class TakieSamePartie implements ProductSeachCacheSearchable{
 	private Number iloscTeraz;
 
 	public TakieSamePartie(Produkt produkt, String specyfikator,
-			String jednostka, Number cena, Number iloscTeraz) {
+			String jednostka, @CheckForNull Number cena, @CheckForNull Number iloscTeraz) {
 		super();
 		this.produkt = produkt;
 		this.specyfikator = specyfikator;
 		this.jednostka = jednostka;
-		this.cena = MathUtils.round(cena.doubleValue(), 2);
-		this.iloscTeraz = MathUtils.round(iloscTeraz.doubleValue(), 2);
+
+		this.cena = cena==null?null:MathUtils.round(cena.doubleValue(), 2);
+		this.iloscTeraz = iloscTeraz==null?null:MathUtils.round(iloscTeraz.doubleValue(), 2);
 	}
 
 	@SuppressWarnings({"WeakerAccess"})

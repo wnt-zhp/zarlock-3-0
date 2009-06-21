@@ -4,11 +4,11 @@ import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.jpaGui.ui.table.TablePanel;
 import cx.ath.jbzdak.zarlok.entities.Danie;
-import javax.persistence.EntityManager;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingbinding.JTableBinding;
+
+import javax.persistence.EntityManager;
+import javax.swing.*;
 
 public class DaniePanel extends JPanel {
 
@@ -45,7 +45,7 @@ public class DaniePanel extends JPanel {
 
 	PlanowaneTable planowaneTable;
 
-    AddWyprowadzeniePanel addWyprowadzeniePanel;
+   AddWyprowadzeniePanel addWyprowadzeniePanel;
 
 	public DaniePanel(DBManager manager) {
 		super(new MigLayout("wrap 2, fillx", "[15px!|fill]"));
@@ -56,19 +56,19 @@ public class DaniePanel extends JPanel {
 		wyprowadzeniaTable = new WyprowadzeniaTable(manager);
 		planowaneTable = new PlanowaneTable(manager);
 		nazwaDania = new JLabel();
-        addWyprowadzeniePanel = new AddWyprowadzeniePanel(manager, wyprowadzeniaTable);
+      addWyprowadzeniePanel = new AddWyprowadzeniePanel(manager, wyprowadzeniaTable);
 		add(nazwaDania, "span 2");
 		add(wydanoLabel, "skip 1");
 		add(new TablePanel(wyprowadzeniaTable), "skip 1");
-        add(addWyprowadzeniePanel, "skip 1");
-		add(planowanoLabel, "skip 1");
-		add(new TablePanel(planowaneTable), "skip 1");
+      add(addWyprowadzeniePanel, "skip 1");
+		//add(planowanoLabel, "skip 1");
+		//add(new TablePanel(planowaneTable), "skip 1");
 	}
 
 	private void initGui() {
 		nazwaDania.setText(nazwaDaniaFormatter.format(danie));
 
-	}
+            }
 
 	public Danie getDanie() {
 		return danie;
@@ -90,4 +90,4 @@ public class DaniePanel extends JPanel {
 		this.entityManager = entityManager;
 	}
 
-}
+   }

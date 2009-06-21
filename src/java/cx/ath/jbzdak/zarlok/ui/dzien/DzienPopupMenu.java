@@ -1,5 +1,6 @@
 package cx.ath.jbzdak.zarlok.ui.dzien;
 
+import cx.ath.jbzdak.common.famfamicons.IconManager;
 import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
@@ -19,7 +20,7 @@ import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TreePopupMenu extends JPopupMenu {
+class TreePopupMenu extends JPopupMenu {
    private Dzien dzien;
 
    private Posilek posilek;
@@ -34,9 +35,9 @@ public class TreePopupMenu extends JPopupMenu {
 
    private final JMenuItem makeZZMenuItem = new JMenuItem("Drukuj ZZ");
    private final JMenuItem printStanMagazynu = new JMenuItem("Drukuj stan magazynu");
-   private final JMenuItem usunDzienMenuItem = new JMenuItem("Usuń ten dzień");
-   private final JMenuItem usunPosilek = new JMenuItem("Usuń ten posilek");
-   private final JMenuItem usunDanie = new JMenuItem("Usun danie");
+   private final JMenuItem usunDzienMenuItem = new JMenuItem("Usuń ten dzień", IconManager.getIconSafe("cancel"));
+   private final JMenuItem usunPosilek = new JMenuItem("Usuń ten posilek", IconManager.getIconSafe("cancel"));
+   private final JMenuItem usunDanie = new JMenuItem("Usun danie", IconManager.getIconSafe("cancel"));
    private final JMenuItem dodajPosilek = new JMenuItem("Dodaj posiłek");
 
    TreePopupMenu(DBManager dbManager, DniTreePanelModel dniTreePanelModel) {
@@ -86,7 +87,7 @@ public class TreePopupMenu extends JPopupMenu {
             int result = JOptionPane.showConfirmDialog(TreePopupMenu.this,
                                          formatter.format(dzien), "Pytanie", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.YES_OPTION){
-               Transaction.execute(dbManager, new Transaction() {
+               Transaction.execute(dniTreePanelModel.getEntityManager(), new Transaction() {
                   @Override
                   public void doTransaction(EntityManager entityManager) throws Exception {
                      dniTreePanelModel.removeDzien(dzien);
@@ -106,7 +107,7 @@ public class TreePopupMenu extends JPopupMenu {
             dialog.setPosilek(new Posilek("", dzien));
             dialog.setVisible(true);
             dzien.getPosilki().add(dialog.getPosilek());
-            Transaction.execute(dbManager, new Transaction() {
+            Transaction.execute(dniTreePanelModel.getEntityManager(), new Transaction() {
                @Override
                public void doTransaction(EntityManager entityManager) throws Exception {
                   entityManager.merge(dzien);
@@ -118,17 +119,49 @@ public class TreePopupMenu extends JPopupMenu {
       usunPosilek.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-            JOptionPane.showConfirmDialog(DzienPo)
+            int result = JOptionPane.showConfirmDialog(TreePopupMenu.this, "<html>" +
+                    "Czy na pewno chcesz usunąć ten <strong>posiłek</strong>?<br/> Operacja jest nieodwracalna</html>",
+                    "Pytanie", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(result == JOptionPane.YES_OPTION){
+               Transaction.execute(dniTreePanelModel.getEntityManager(), new Transaction() {
+                  @Override
+                  public void doTransaction(EntityManager entityManager) throws Exception {
+                     entityManager.remove(entityManager.merge(posilek));
+                     posilek.getDzien().getPosilki().remove(posilek);
+
+                  }
+               });
+               dniTreePanelModel.generateTree(); 
+            }
+         }
+      });
+
+      usunDanie.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            int result = JOptionPane.showConfirmDialog(TreePopupMenu.this,
+                     "<html> Czy na pewno chcesz usunąć to <strong>danie</strong>?<br/> Operacja jest nieodwracalna</html>",
+                     "Pytanie", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(result == JOptionPane.YES_OPTION){
+               Transaction.execute(dniTreePanelModel.getEntityManager(), new Transaction() {
+                  @Override
+                  public void doTransaction(EntityManager entityManager) throws Exception {
+                     entityManager.remove(entityManager.merge(danie));
+                     danie.getPosilek().getDania().remove(danie);
+                     dniTreePanelModel.generateTree();
+                  }
+               });
+            }
          }
       });
 
       add(makeZZMenuItem);
-      //add(saveZZMenuItem);
       add(printStanMagazynu);
-      //add(saveStanMenuItem);
       add(dodajPosilek);
       addSeparator();
       add(usunDzienMenuItem);
+      add(usunPosilek);
+      add(usunDanie);
    }
 
    @Override
@@ -137,6 +170,8 @@ public class TreePopupMenu extends JPopupMenu {
          printStanMagazynu.setEnabled(false);
          usunDzienMenuItem.setEnabled(false);
          dodajPosilek.setEnabled(false);
+         usunDanie.setEnabled(false);
+         usunPosilek.setEnabled(false);
          dzien = null;
          posilek = null;
             danie = null;
@@ -155,6 +190,14 @@ public class TreePopupMenu extends JPopupMenu {
                this.posilek = danie.getPosilek();
                this.dzien = posilek.getDzien();
             }
+            makeZZMenuItem.setEnabled(true);
+            printStanMagazynu.setEnabled(true);
+            dodajPosilek.setEnabled(true);
+            usunDzienMenuItem.setEnabled(true);
+            if(posilek!=null)
+               usunPosilek.setEnabled(true);
+            if(danie!=null)
+               usunDanie.setEnabled(true);
          }
       super.show(invoker, x, y);
    }

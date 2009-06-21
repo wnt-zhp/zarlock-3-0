@@ -6,6 +6,7 @@ import cx.ath.jbzdak.jpaGui.genericListeners.DoStuffMouseListener;
 import cx.ath.jbzdak.jpaGui.task.Task;
 import cx.ath.jbzdak.jpaGui.ui.form.DAOForm;
 import cx.ath.jbzdak.zarlok.db.dao.DzienDao;
+import cx.ath.jbzdak.zarlok.entities.Danie;
 import cx.ath.jbzdak.zarlok.entities.Dzien;
 import cx.ath.jbzdak.zarlok.entities.DzienUtils;
 import cx.ath.jbzdak.zarlok.entities.Posilek;
@@ -14,20 +15,18 @@ import cx.ath.jbzdak.zarlok.raport.RaportFactory;
 import cx.ath.jbzdak.zarlok.ui.iloscOsob.IloscOsobDialog;
 import cx.ath.jbzdak.zarlok.ui.posilek.PosilekPanel;
 import cx.ath.jbzdak.zarlok.ui.posilek.PosilekPanelCache;
+import net.miginfocom.swing.MigLayout;
+
 import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.Timer;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
-import net.miginfocom.swing.MigLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -49,19 +48,17 @@ class DniTreePanelModel {
 
    final List<Object> selectedItems = new ArrayList<Object>();
 
-   boolean onlyDniSelected;
-
-   boolean onlyPosilkiSelected;
-
    private final DAOForm<Dzien,?> form;
 
    private final DzienDao dzienDao;
 
    private final DBManager manager;
 
+   private final JTree tree;
+
    final RaportFactory raportFactory;
 
-   public DniTreePanelModel(DAOForm<Dzien, ?> form, DzienDao dzienDao, MainWindowModel mainWindowModel, DBManager manager) {
+   public DniTreePanelModel(DAOForm<Dzien, ?> form, DzienDao dzienDao, MainWindowModel mainWindowModel, DBManager manager, JTree tree) {
       this.form = form;
       this.dzienDao = dzienDao;
       form.setDao(dzienDao);
@@ -69,6 +66,7 @@ class DniTreePanelModel {
       form.startEditing();
       raportFactory = mainWindowModel.getRaportFactory();
       this.manager = manager;
+      this.tree = tree;
    }
 
    private final Timer selectionTimer;
@@ -98,7 +96,7 @@ class DniTreePanelModel {
             selectedItems.clear();
             updateDetailsPanel();
          }
-      });
+         });
 
    }
 
@@ -110,16 +108,51 @@ class DniTreePanelModel {
 	}
 
    void generateTree(){
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode();
+      DefaultMutableTreeNode root = new DefaultMutableTreeNode();
+
+      List<TreePath> selectedNewNodes = new ArrayList<TreePath>();
+      List<Object> selectedItemsAndParents = new ArrayList<Object>();
+         for(TreePath path :selectedPaths){
+            for (int ii = 0; ii < path.getPath().length; ii++) {
+               DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getPath()[ii];
+               selectedItemsAndParents.add(node.getUserObject());
+            }
+         }
+      model.setRoot(root);
 		for(Dzien d: dni){
+         //Dzien d2 = entityManager.find(Dzien.class, d.getId());
 			DefaultMutableTreeNode dzienNode = new DefaultMutableTreeNode(d, true);
-			for(Posilek p : d.getPosilki()){
-				dzienNode.add(new DefaultMutableTreeNode(p, false));
-			}
-			root.add(dzienNode);
+         if(selectedItemsAndParents.contains(d)){
+            TreePath path = new TreePath(model.getPathToRoot(dzienNode));
+            selectedNewNodes.add(path);
+         }
+         for(Posilek p : d.getPosilki()){
+            DefaultMutableTreeNode posilekNode = new DefaultMutableTreeNode(p, true);
+            dzienNode.add(posilekNode);
+            if(selectedItemsAndParents.contains(p)){
+               TreePath path = new TreePath(new Object[]{root, dzienNode, posilekNode});
+               selectedNewNodes.add(path);
+            }
+            for(Danie danie : p.getDania()){
+               DefaultMutableTreeNode danieNode =     new DefaultMutableTreeNode(danie, false);
+               posilekNode.add(danieNode);
+               if(selectedItemsAndParents.contains(danie)){
+                  TreePath path = new TreePath(new Object[]{root, dzienNode, posilekNode, danieNode});
+                  selectedNewNodes.add(path);
+               }
+            }
+         }
+         root.add(dzienNode);
 		}
-		model.setRoot(root);
+
+      model.reload();
+      tree.setSelectionPaths(selectedNewNodes.toArray(new TreePath[]{}));
+      for(TreePath treePath : selectedNewNodes){
+         tree.makeVisible(treePath);
+      }
+      updateDetailsPanel();
 	}
+
 
 	void updateDetailsPanel(){
 		detailsPanel.removeAll();
@@ -129,6 +162,7 @@ class DniTreePanelModel {
 				DzienPanel dp = DzienPanelCache.getDzienPanel(d);
 				dp.setEntityManager(entityManager);
 				dp.setDzien(d);
+            
 				detailsPanel.add(dp);
 				continue;
 			}
@@ -179,19 +213,6 @@ class DniTreePanelModel {
             } else {
                selectedPaths.remove(treePath);
                selectedItems.remove(((DefaultMutableTreeNode) treePath.getLastPathComponent()).getUserObject());
-            }
-         }
-         onlyDniSelected = true;
-         onlyPosilkiSelected = true;
-         for(Object o : selectedItems){
-            if(! (o instanceof Dzien)){
-               onlyDniSelected = false;
-            }
-            if(! ( o instanceof Posilek)){
-               onlyPosilkiSelected = false;
-            }
-            if(! onlyDniSelected && ! onlyPosilkiSelected){
-               break;
             }
          }
 			if(selectionTimer.isRunning()){

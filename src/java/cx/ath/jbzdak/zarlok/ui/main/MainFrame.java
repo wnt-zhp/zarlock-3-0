@@ -20,15 +20,13 @@ import cx.ath.jbzdak.zarlok.ui.partia.StanMagazynuActionListener;
 import cx.ath.jbzdak.zarlok.ui.partia.StanMagazynuPanel;
 import cx.ath.jbzdak.zarlok.ui.produkt.ProductAddDialog;
 import cx.ath.jbzdak.zarlok.ui.produkt.ProductEditPanel;
+import org.slf4j.Logger;
+
 import javax.swing.*;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.filechooser.FileFilter;
-import org.slf4j.Logger;
-
-import java.awt.BorderLayout;
-import java.awt.Desktop;
+import java.awt.*;
 import java.awt.Desktop.Action;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -175,7 +173,7 @@ public class MainFrame extends JFrame {
          jTabbedPane.addTab("Produkt", IconManager.getIconSafe("book_add"), getProductEditPanel(), null);
          jTabbedPane.addTab("Stan magazynu", null, getPartiePanel(), null);
          jTabbedPane.addTab("Dni", null, getDniTab(), null);
-         jTabbedPane.addTabCloseable("XXX", IconManager.getIconSafe("accept"), new JPanel(), null, true);
+         //jTabbedPane.addTabCloseable("XXX", IconManager.getIconSafe("accept"), new JPanel(), null, true);
          jTabbedPane.addListener(getPartiePanel(), getPartieActionListener());
          jTabbedPane.addListener(getDniTab(), new DniTabListener());
          //jTabbedPane.addTab(("Dni", null, )

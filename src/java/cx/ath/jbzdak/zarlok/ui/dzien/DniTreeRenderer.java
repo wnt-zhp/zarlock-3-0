@@ -1,13 +1,11 @@
 package cx.ath.jbzdak.zarlok.ui.dzien;
 
 import cx.ath.jbzdak.common.famfamicons.IconManager;
-import cx.ath.jbzdak.zarlok.entities.Dzien;
-import javax.swing.Icon;
-import javax.swing.JTree;
+
+import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-
-import java.awt.Component;
+import java.awt.*;
 
 public class DniTreeRenderer extends DefaultTreeCellRenderer {
 
@@ -18,20 +16,23 @@ public class DniTreeRenderer extends DefaultTreeCellRenderer {
 
 	@Override
 	public Icon getClosedIcon() {
-		return IconManager.getIconSafe("book");
+      if(value==null) return super.getClosedIcon();
+      String iconName = value.getClass().getSimpleName().toLowerCase() + "_closed";
+		return IconManager.getIconSafe(iconName);
 	}
 
 	@Override
 	public Icon getLeafIcon() {
-		if (value instanceof Dzien) {
-			return getClosedIcon();
-		}
-		return IconManager.getIconSafe("basket");
+     if(value==null) return super.getLeafIcon();
+      String iconName = value.getClass().getSimpleName().toLowerCase() + "_leaf";
+		return IconManager.getIconSafe(iconName);
 	}
 
 	@Override
 	public Icon getOpenIcon() {
-		return IconManager.getIconSafe("book_open");
+      if(value==null) return super.getOpenIcon();
+		String iconName = value.getClass().getSimpleName().toLowerCase() + "_open";
+		return IconManager.getIconSafe(iconName);
 	}
 
 	@Override

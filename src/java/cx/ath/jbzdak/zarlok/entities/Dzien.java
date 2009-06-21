@@ -1,8 +1,8 @@
 package cx.ath.jbzdak.zarlok.entities;
 
 import cx.ath.jbzdak.jpaGui.Utils;
-import javax.persistence.*;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class Dzien{
    private
    Date data;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="dzien")
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, mappedBy="dzien")
    private
    List<Posilek> posilki = new ArrayList<Posilek>();
 

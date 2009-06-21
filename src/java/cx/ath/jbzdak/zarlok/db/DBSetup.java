@@ -8,10 +8,10 @@ import cx.ath.jbzdak.zarlok.db.tasks.*;
 import cx.ath.jbzdak.zarlok.entities.listeners.PartiaSearchCacheUpdater;
 import cx.ath.jbzdak.zarlok.entities.listeners.ProductSearchCacheUpdater;
 import cx.ath.jbzdak.zarlok.ui.danie.DaniaPanelCache;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.slf4j.Logger;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -114,9 +114,9 @@ public class DBSetup {
 		return properties;
 	}
 
-	private void dbSetup() {
+	private void dbSetup() throws Exception{
 		logger.info("Starting setting up the database for url {}", manager.getJDBCURL());
-		dbSetup.executeSwallow(manager);
+		dbSetup.executeThrow(manager);
 
 	}
 

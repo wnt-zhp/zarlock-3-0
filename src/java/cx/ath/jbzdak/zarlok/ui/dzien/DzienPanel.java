@@ -5,10 +5,10 @@ import cx.ath.jbzdak.zarlok.entities.Dzien;
 import cx.ath.jbzdak.zarlok.entities.Posilek;
 import cx.ath.jbzdak.zarlok.ui.posilek.PosilekPanel;
 import cx.ath.jbzdak.zarlok.ui.posilek.PosilekPanelCache;
-import javax.persistence.EntityManager;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
+
+import javax.persistence.EntityManager;
+import javax.swing.*;
 
 public class DzienPanel extends JPanel{
 
@@ -20,7 +20,7 @@ public class DzienPanel extends JPanel{
 
 	private final PatternBeanFormatter naTerenieFormatter = new PatternBeanFormatter(
 			"<html><strong>Na terenie:</strong><br/>" +
-			"Ilość uczestników: pid<br/>" +
+			"Ilość uczestników: {iloscOsob.iloscUczestnikow}<br/>" +
 			"Ilość kadry: {iloscOsob.iloscKadry}<br/>" +
 			"Ilość pozostałych: {iloscOsob.iloscInnych}<br/>" +
 			"<strong>Razem: {iloscOsob.suma}</strong></html>"
@@ -41,11 +41,13 @@ public class DzienPanel extends JPanel{
 
 	private EntityManager entityManager;
 
-	public DzienPanel(){
+
+   public DzienPanel(){
 		super(new MigLayout("wrap 3, fillx", "[15px|fill, grow|fill, grow]"));
 		posilkiLabel = new JLabel("<html><font size=\"+1\"><strong>Posiłki</strong>:</font></html>");
 		dateLabel = new JLabel("");
 		naTerenieLabel = new JLabel("");
+      
 	}
 
 	private void initLabels(){

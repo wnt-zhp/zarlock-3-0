@@ -1,8 +1,8 @@
 package cx.ath.jbzdak.zarlok.entities;
 
 import cx.ath.jbzdak.jpaGui.Utils;
-import javax.persistence.*;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class Posilek {
 	@Embedded
 	private IloscOsob iloscOsob;
 
-	@OneToMany(cascade= CascadeType.ALL)
+	@OneToMany(cascade= {CascadeType.PERSIST, CascadeType.REMOVE} )
 	private List<Danie> dania = new ArrayList<Danie>();
 
 	private BigDecimal koszt = BigDecimal.ZERO;
