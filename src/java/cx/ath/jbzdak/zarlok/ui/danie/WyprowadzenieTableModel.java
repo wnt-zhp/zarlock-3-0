@@ -7,8 +7,9 @@ import cx.ath.jbzdak.zarlok.entities.Danie;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.entities.Wyprowadzenie;
 import cx.ath.jbzdak.zarlok.entities.WyprowadzenieUtils;
+
 import javax.persistence.EntityManager;
-import javax.swing.JTable;
+import javax.swing.*;
 
 public class WyprowadzenieTableModel extends EditableTableModel<Wyprowadzenie>{
 
@@ -44,7 +45,12 @@ public class WyprowadzenieTableModel extends EditableTableModel<Wyprowadzenie>{
       danie = entityManager.merge(danie);
       danie.updateKoszt();
       danie.getPosilek().recalculateCost();
-      t.getPartia().recalculateIloscTeraz();
+      Partia p = t.getPartia();
+      p.recalculateIloscTeraz();
+      if(!p.getWyprowadzenia().contains(t)){
+         p.setIloscTeraz(p.getIloscTeraz().subtract(t.getIloscJednostek()));
+      }
+      entityManager.merge(p);
 	}
 
 	public void setDanie(final Danie danie) {

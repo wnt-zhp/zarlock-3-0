@@ -3,12 +3,12 @@ package cx.ath.jbzdak.zarlok.entities;
 import cx.ath.jbzdak.jpaGui.Utils;
 import static cx.ath.jbzdak.jpaGui.Utils.getRelativeDate;
 import cx.ath.jbzdak.zarlok.entities.listeners.PartiaSearchCacheUpdater;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.persistence.*;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -189,7 +189,7 @@ public class Partia implements ProductSeachCacheSearchable{
 
 	@PreUpdate
 	public void preUpdate(){
-		recalculateIloscTeraz();
+		//recalculateIloscTeraz();
       cena = Utils.round(cena, 2);
 	}
 

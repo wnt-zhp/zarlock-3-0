@@ -8,7 +8,7 @@
         <setting name="targe-facet" value="" />
         <datasource-mapping>
           <factory-entry name="NewPeristenceUnit" />
-          <factory-entry name="zarlok-pu" />
+          <factory-entry name="zarlok-pu" value="77374aca-c6ee-458e-b9b7-39a41db3a086" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/resources/java/META-INF/persistence.xml" optional="false" version="1.0" />
       </configuration>
