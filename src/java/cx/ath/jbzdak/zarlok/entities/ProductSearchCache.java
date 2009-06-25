@@ -1,9 +1,10 @@
 package cx.ath.jbzdak.zarlok.entities;
 
-import javax.persistence.*;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
+
+import javax.persistence.*;
 
 @Entity
 @NamedQueries({
@@ -129,12 +130,19 @@ public class ProductSearchCache implements ProductSeachCacheSearchable {
 		this.jednostka = jednostka;
 	}
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
+   @Override
+   public String toString() {
+      return new ToStringBuilder(this).
+              append("id", id).
+              append("nazwaProduktu", nazwaProduktu).
+              append("specyfikator", specyfikator).
+              append("jednostka", jednostka).
+              append("productId", productId).
+              append("product", product).
+              toString();
+   }
 
-	public String toSearchFormat(){
+   public String toSearchFormat(){
 		return ProductSearchCacheUtils.format(this);
 	}
 
