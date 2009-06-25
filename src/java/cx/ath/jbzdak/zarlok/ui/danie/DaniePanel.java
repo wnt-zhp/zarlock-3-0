@@ -78,7 +78,7 @@ public class DaniePanel extends JPanel {
 		this.danie = danie;
 		wyprowadzeniaTable.setDanie(danie);
 		planowaneTable.setDanie(danie);
-        addWyprowadzeniePanel.setDzien(danie.getPosilek().getDzien());
+      addWyprowadzeniePanel.setDzien(danie.getPosilek().getDzien());
 		initGui();
 	}
 
