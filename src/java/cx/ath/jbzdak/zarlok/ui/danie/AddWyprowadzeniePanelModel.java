@@ -7,10 +7,10 @@ import cx.ath.jbzdak.jpaGui.ui.formatted.ParsingException;
 import cx.ath.jbzdak.jpaGui.ui.formatted.formatters.BigDecimalFormatter;
 import cx.ath.jbzdak.zarlok.entities.*;
 import cx.ath.jbzdak.zarlok.ui.autocolmpete.adaptor.PartiaAdaptor;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import org.slf4j.Logger;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.math.BigDecimal;
@@ -181,7 +181,7 @@ public class AddWyprowadzeniePanelModel {
                     "SELECT " +
                             "new cx.ath.jbzdak.zarlok.entities.ProductSearchCache(p.produkt.nazwa, p.specyfikator, p.jednostka, p.produkt.id)" +
                             "FROM Partia p WHERE " +
-                            "p.dataKsiegowania < :dzien AND " +
+                            "p.dataKsiegowania <= :dzien AND " +
                             "(p.dataWaznosci IS NULL OR p.dataWaznosci > :dzien) AND " +
                             "p.iloscTeraz > 0 AND " +
                             "((:nazwa IS NULL) OR  LOWER(p.produkt.nazwa) LIKE LOWER('%' || :nazwa || '%')) AND" +
