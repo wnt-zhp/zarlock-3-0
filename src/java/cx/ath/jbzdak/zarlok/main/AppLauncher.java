@@ -2,6 +2,7 @@ package cx.ath.jbzdak.zarlok.main;
 
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.ui.error.DisplayErrorDetailsDialog;
+import org.slf4j.Logger;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -15,7 +16,10 @@ import java.sql.SQLException;
  */
 public class AppLauncher {
 
-	public static void main(String[] args) throws Exception {
+   private static final Logger LOGGER = Utils.makeLogger();
+
+	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
+   public static void main(String[] args) throws Exception {
       try{
          MainWindowModel model = new  MainWindowModel();
          MainWindowInitializer.initialize(model);
@@ -27,6 +31,7 @@ public class AppLauncher {
                     "Nie można otworzyć bierzącej bazy danych, gdyż ta jest otwarta przez inną instancję programu.\nProgram nie może kontynuować");
          }else{
             DisplayErrorDetailsDialog.showErrorDialog(e, null);
+            LOGGER.error("", e);
          }
          System.exit(42);
       }
