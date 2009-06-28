@@ -204,4 +204,37 @@ public class Wyprowadzenie implements Cloneable, ProductSeachCacheSearchable{
       sb.append('}');
       return sb.toString();
    }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Wyprowadzenie)) return false;
+
+      Wyprowadzenie that = (Wyprowadzenie) o;
+
+      if (danie != null ? !danie.equals(that.danie) : that.danie != null) return false;
+      if (dataUtworzenia != null ? !dataUtworzenia.equals(that.dataUtworzenia) : that.dataUtworzenia != null)
+         return false;
+      if (dataWyprowadzenia != null ? !dataWyprowadzenia.equals(that.dataWyprowadzenia) : that.dataWyprowadzenia != null)
+         return false;
+      if (id != null ? !id.equals(that.id) : that.id != null) return false;
+      if (iloscJednostek != null ? !iloscJednostek.equals(that.iloscJednostek) : that.iloscJednostek != null)
+         return false;
+      if (partia != null ? !partia.equals(that.partia) : that.partia != null) return false;
+      if (tytulem != null ? !tytulem.equals(that.tytulem) : that.tytulem != null) return false;
+
+      return true;
+   }
+
+   @Override
+   public int hashCode() {
+      int result = id != null ? id.hashCode() : 0;
+      result = 31 * result + (partia != null ? partia.hashCode() : 0);
+      result = 31 * result + (iloscJednostek != null ? iloscJednostek.hashCode() : 0);
+      result = 31 * result + (dataWyprowadzenia != null ? dataWyprowadzenia.hashCode() : 0);
+      result = 31 * result + (tytulem != null ? tytulem.hashCode() : 0);
+      result = 31 * result + (dataUtworzenia != null ? dataUtworzenia.hashCode() : 0);
+      result = 31 * result + (danie != null ? danie.hashCode() : 0);
+      return result;
+   }
 }

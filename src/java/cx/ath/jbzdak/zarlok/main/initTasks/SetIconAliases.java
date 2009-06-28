@@ -22,6 +22,7 @@ public class SetIconAliases extends Task<MainWindowModel> {
       IconManager.setAlias("no_error_icon", "weather_sun");
       IconManager.setAlias("error_icon", "weather_rain");
       IconManager.setAlias("delete", "cancel");
+      IconManager.setAlias("zamknij", "cancel");
       IconManager.setAlias("posilek_closed", "basket_go");
       IconManager.setAlias("posilek_leaf", "basket");
       IconManager.setAlias("posilek_open", "basket");

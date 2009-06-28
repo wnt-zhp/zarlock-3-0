@@ -27,8 +27,8 @@ public class IloscPoczFormatter extends BigDecimalFormatter {
 	public BigDecimal parseValue(String text) throws Exception {
 		BigDecimal value =  super.parseValue(text);
 		cenaFormatter.setIlośćPoczatkowa(value);
-      Partia partia = (Partia) partiaForm.getEntity();
       if(watchIloscTeraz){
+         Partia partia = (Partia) partiaForm.getEntity();
          BigDecimal iloscTeraz = value;
          for(Wyprowadzenie w : partia.getWyprowadzenia()){
             iloscTeraz = iloscTeraz.subtract(w.getIloscJednostek(), MathContext.DECIMAL32);

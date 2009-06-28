@@ -138,7 +138,6 @@ public class Produkt {
 	}
 
    @Override
-   @SuppressWarnings({"ALL"})
    public boolean equals(Object o) {
       if (this == o) return true;
       if (!(o instanceof Produkt)) return false;
@@ -147,19 +146,18 @@ public class Produkt {
 
       if (dataWaznosci != null ? !dataWaznosci.equals(produkt.dataWaznosci) : produkt.dataWaznosci != null)
          return false;
-      if (!id.equals(produkt.id)) return false;
-      if (!jednostka.equals(produkt.jednostka)) return false;
-      if (!nazwa.equals(produkt.nazwa)) return false;
+      if (id != null ? !id.equals(produkt.id) : produkt.id != null) return false;
+      if (jednostka != null ? !jednostka.equals(produkt.jednostka) : produkt.jednostka != null) return false;
+      if (nazwa != null ? !nazwa.equals(produkt.nazwa) : produkt.nazwa != null) return false;
 
       return true;
    }
 
    @Override
-   @SuppressWarnings({"ALL"})
    public int hashCode() {
-      int result = id.hashCode();
-      result = 31 * result + nazwa.hashCode();
-      result = 31 * result + jednostka.hashCode();
+      int result = id != null ? id.hashCode() : 0;
+      result = 31 * result + (nazwa != null ? nazwa.hashCode() : 0);
+      result = 31 * result + (jednostka != null ? jednostka.hashCode() : 0);
       result = 31 * result + (dataWaznosci != null ? dataWaznosci.hashCode() : 0);
       return result;
    }

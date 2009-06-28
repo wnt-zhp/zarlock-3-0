@@ -5,19 +5,16 @@ import cx.ath.jbzdak.jpaGui.autoComplete.AutocompleteComboBox;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.jpaGui.ui.table.HighlightCellRenderer;
 import cx.ath.jbzdak.jpaGui.ui.table.TableObjectProperty;
-import cx.ath.jbzdak.zarlok.entities.Danie;
-import cx.ath.jbzdak.zarlok.entities.Partia;
-import cx.ath.jbzdak.zarlok.entities.Wyprowadzenie;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JTable;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+import cx.ath.jbzdak.zarlok.entities.*;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Converter;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 
+import javax.swing.*;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import java.util.List;
 
 
@@ -25,7 +22,7 @@ public class WyprowadzeniaTable extends JTable {
 
 	private static final long serialVersionUID = 1L;
 
-	WyprowadzenieTableModel wyprowadzeniaModel;
+	final WyprowadzenieTableModel wyprowadzeniaModel;
 
 	@SuppressWarnings("unchecked")
 	JTableBinding wyprowadzoneBinding;
@@ -110,7 +107,13 @@ public class WyprowadzeniaTable extends JTable {
 		@Override
 		protected void getTableCellRendererEntry(JTable table, Object value,
 				boolean isSelected, boolean hasFocus, int row, int column) {
-			setText(value==null?"":value.toString());
+         if (value instanceof ProductSeachCacheSearchable) {
+            ProductSeachCacheSearchable searchable = (ProductSeachCacheSearchable) value;
+            setText(ProductSearchCacheUtils.format(searchable));
+         }else{
+            setText(value==null?"": value.toString());            
+         }
+
 		}
 	}
 

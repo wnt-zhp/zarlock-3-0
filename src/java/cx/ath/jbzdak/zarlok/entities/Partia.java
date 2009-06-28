@@ -363,9 +363,7 @@ public class Partia implements ProductSeachCacheSearchable{
       return sb.toString();
    }
 
-
    @Override
-   @SuppressWarnings({"ALL"})
    public boolean equals(Object o) {
       if (this == o) return true;
       if (!(o instanceof Partia)) return false;
@@ -378,25 +376,23 @@ public class Partia implements ProductSeachCacheSearchable{
       if (dataWaznosci != null ? !dataWaznosci.equals(partia.dataWaznosci) : partia.dataWaznosci != null) return false;
       if (dataWprowadzenia != null ? !dataWprowadzenia.equals(partia.dataWprowadzenia) : partia.dataWprowadzenia != null)
          return false;
-      if (!id.equals(partia.id)) return false;
+      if (id != null ? !id.equals(partia.id) : partia.id != null) return false;
       if (iloscPocz != null ? !iloscPocz.equals(partia.iloscPocz) : partia.iloscPocz != null) return false;
       if (iloscTeraz != null ? !iloscTeraz.equals(partia.iloscTeraz) : partia.iloscTeraz != null) return false;
       if (jednostka != null ? !jednostka.equals(partia.jednostka) : partia.jednostka != null) return false;
       if (numerFaktury != null ? !numerFaktury.equals(partia.numerFaktury) : partia.numerFaktury != null) return false;
       if (numerLinii != null ? !numerLinii.equals(partia.numerLinii) : partia.numerLinii != null) return false;
       if (opis != null ? !opis.equals(partia.opis) : partia.opis != null) return false;
-      if (!produkt.equals(partia.produkt)) return false;
+      if (produkt != null ? !produkt.equals(partia.produkt) : partia.produkt != null) return false;
       if (specyfikator != null ? !specyfikator.equals(partia.specyfikator) : partia.specyfikator != null) return false;
 
       return true;
    }
 
-
    @Override
-   @SuppressWarnings({"ALL"})
    public int hashCode() {
-      int result = id.hashCode();
-      result = 31 * result + produkt.hashCode();
+      int result = id != null ? id.hashCode() : 0;
+      result = 31 * result + (produkt != null ? produkt.hashCode() : 0);
       result = 31 * result + (specyfikator != null ? specyfikator.hashCode() : 0);
       result = 31 * result + (cena != null ? cena.hashCode() : 0);
       result = 31 * result + (iloscPocz != null ? iloscPocz.hashCode() : 0);
