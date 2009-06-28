@@ -1,13 +1,13 @@
 package cx.ath.jbzdak.zarlok.raport.zz;
 
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 import static cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter.formatMessage;
 import cx.ath.jbzdak.zarlok.entities.Wyprowadzenie;
 import cx.ath.jbzdak.zarlok.raport.Raport;
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -51,7 +51,6 @@ class ZZRaport extends Raport{
    public void makeReport() throws DocumentException {
       init();
       bean = (ZZRaportBean) data[0];
-
       document.addTitle(formatMessage("Zapotrzebowanie żywnościowe " +
               "na dzień {dzien.data}", data));
       document.addCreationDate();
@@ -175,6 +174,7 @@ class ZZRaport extends Raport{
          for(Wyprowadzenie w : bean.getPosilkiDodatkowe().get(ii)){
            par.add(new Chunk(bean.formatWyprowadzenie(w) +",", defaultParagraphFont));
          }
+         document.add(par);
       }
    }
 
