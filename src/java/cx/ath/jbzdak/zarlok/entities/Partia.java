@@ -3,6 +3,7 @@ package cx.ath.jbzdak.zarlok.entities;
 import cx.ath.jbzdak.jpaGui.Utils;
 import static cx.ath.jbzdak.jpaGui.Utils.getRelativeDate;
 import cx.ath.jbzdak.zarlok.entities.listeners.PartiaSearchCacheUpdater;
+import org.hibernate.HibernateException;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
@@ -195,13 +196,7 @@ public class Partia implements ProductSeachCacheSearchable{
 
 
 	public void recalculateIloscTeraz(){
-		BigDecimal iloscTeraz = iloscPocz;
-		for(Wyprowadzenie w : wyprowadzenia){
-			if(w.getIloscJednostek()!=null){
-				iloscTeraz = iloscTeraz.subtract(w.getIloscJednostek());
-			}
-		}
-		setIloscTeraz(iloscTeraz);
+	   setIloscTeraz(PartieUtils.getIloscTeraz(this));
 	}
 
 	@Transient
@@ -231,7 +226,8 @@ public class Partia implements ProductSeachCacheSearchable{
 		this.produkt = produkt;
 	}
 
-	public String getSpecyfikator() {
+	@Override
+   public String getSpecyfikator() {
 		return specyfikator;
 	}
 
@@ -287,7 +283,8 @@ public class Partia implements ProductSeachCacheSearchable{
 		this.opis = opis;
 	}
 
-	public String getJednostka() {
+	@Override
+   public String getJednostka() {
 		return jednostka;
 	}
 
@@ -329,11 +326,6 @@ public class Partia implements ProductSeachCacheSearchable{
 		this.iloscTeraz = iloscTeraz;
 	}
 
-	@Override
-	public String toString() {
-		return getSearchFormat();
-	}
-
 	@Transient
 	public String getSearchFormat(){
 		return ProductSearchCacheUtils.format(this);
@@ -343,4 +335,79 @@ public class Partia implements ProductSeachCacheSearchable{
     public String getNazwaProduktu() {
         return getProdukt().getNazwa();
     }
+
+   @Override
+   public String toString() {
+      final StringBuilder sb = new StringBuilder();
+      sb.append("Partia");
+      sb.append("{id=").append(id);
+      sb.append(", produkt=").append(produkt);
+      sb.append(", specyfikator='").append(specyfikator).append('\'');
+      sb.append(", cena=").append(cena);
+      sb.append(", iloscPocz=").append(iloscPocz);
+      sb.append(", jednostka='").append(jednostka).append('\'');
+      sb.append(", iloscTeraz=").append(iloscTeraz);
+      sb.append(", dataKsiegowania=").append(dataKsiegowania);
+      sb.append(", dataWaznosci=").append(dataWaznosci);
+      sb.append(", dataWprowadzenia=").append(dataWprowadzenia);
+      try{
+         sb.append(", wyprowadzenia=").append(getWyprowadzenia());
+      }catch (HibernateException e){
+          sb.append(", wyprowadzenia=NIE ZAŁADOWANO");
+         //Hibernate exception moze polecieć -- olać!
+      }
+      sb.append(", opis='").append(opis).append('\'');
+      sb.append(", numerFaktury='").append(numerFaktury).append('\'');
+      sb.append(", numerLinii=").append(numerLinii);
+      sb.append('}');
+      return sb.toString();
+   }
+
+
+   @Override
+   @SuppressWarnings({"ALL"})
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Partia)) return false;
+
+      Partia partia = (Partia) o;
+
+      if (cena != null ? !cena.equals(partia.cena) : partia.cena != null) return false;
+      if (dataKsiegowania != null ? !dataKsiegowania.equals(partia.dataKsiegowania) : partia.dataKsiegowania != null)
+         return false;
+      if (dataWaznosci != null ? !dataWaznosci.equals(partia.dataWaznosci) : partia.dataWaznosci != null) return false;
+      if (dataWprowadzenia != null ? !dataWprowadzenia.equals(partia.dataWprowadzenia) : partia.dataWprowadzenia != null)
+         return false;
+      if (!id.equals(partia.id)) return false;
+      if (iloscPocz != null ? !iloscPocz.equals(partia.iloscPocz) : partia.iloscPocz != null) return false;
+      if (iloscTeraz != null ? !iloscTeraz.equals(partia.iloscTeraz) : partia.iloscTeraz != null) return false;
+      if (jednostka != null ? !jednostka.equals(partia.jednostka) : partia.jednostka != null) return false;
+      if (numerFaktury != null ? !numerFaktury.equals(partia.numerFaktury) : partia.numerFaktury != null) return false;
+      if (numerLinii != null ? !numerLinii.equals(partia.numerLinii) : partia.numerLinii != null) return false;
+      if (opis != null ? !opis.equals(partia.opis) : partia.opis != null) return false;
+      if (!produkt.equals(partia.produkt)) return false;
+      if (specyfikator != null ? !specyfikator.equals(partia.specyfikator) : partia.specyfikator != null) return false;
+
+      return true;
+   }
+
+
+   @Override
+   @SuppressWarnings({"ALL"})
+   public int hashCode() {
+      int result = id.hashCode();
+      result = 31 * result + produkt.hashCode();
+      result = 31 * result + (specyfikator != null ? specyfikator.hashCode() : 0);
+      result = 31 * result + (cena != null ? cena.hashCode() : 0);
+      result = 31 * result + (iloscPocz != null ? iloscPocz.hashCode() : 0);
+      result = 31 * result + (jednostka != null ? jednostka.hashCode() : 0);
+      result = 31 * result + (iloscTeraz != null ? iloscTeraz.hashCode() : 0);
+      result = 31 * result + (dataKsiegowania != null ? dataKsiegowania.hashCode() : 0);
+      result = 31 * result + (dataWaznosci != null ? dataWaznosci.hashCode() : 0);
+      result = 31 * result + (dataWprowadzenia != null ? dataWprowadzenia.hashCode() : 0);
+      result = 31 * result + (opis != null ? opis.hashCode() : 0);
+      result = 31 * result + (numerFaktury != null ? numerFaktury.hashCode() : 0);
+      result = 31 * result + (numerLinii != null ? numerLinii.hashCode() : 0);
+      return result;
+   }
 }

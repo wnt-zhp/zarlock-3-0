@@ -6,22 +6,20 @@ import cx.ath.jbzdak.jpaGui.ui.form.DAOForm;
 import cx.ath.jbzdak.jpaGui.ui.form.FormElement;
 import cx.ath.jbzdak.jpaGui.ui.form.OkButtonFormPanel;
 import cx.ath.jbzdak.zarlok.entities.Partia;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
 
-import java.awt.BorderLayout;
-import java.awt.Frame;
-import java.awt.GraphicsEnvironment;
-import java.awt.Point;
+import javax.annotation.Nullable;
+import javax.swing.*;
+import java.awt.*;
 
 public class PartiaAddDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
 	private PartiaAddPanel partiaAddPanel = null;
-
 	private final DBManager manager;
 	private OkButtonFormPanel<Partia> okButtonPanel = null;
+
+   private boolean completedSuccesfully = false;
 
 	/**
 	 * @param owner
@@ -97,6 +95,12 @@ public class PartiaAddDialog extends JDialog {
 					setVisible(false);
 				}
 			});
+         okButtonPanel.addOkActionTask(new Task<DAOForm>() {
+            @Override
+            public void doTask(@Nullable DAOForm daoForm, @Nullable Object... o) throws Exception {
+               completedSuccesfully = true;
+            }
+         });
 		}
 		return okButtonPanel;
 	}
@@ -109,4 +113,11 @@ public class PartiaAddDialog extends JDialog {
 		partiaAddPanel.clear();
 	}
 
+   public boolean isCompletedSuccesfully() {
+      return completedSuccesfully;
+   }
+
+   public void setCompletedSuccesfully(boolean completedSuccesfully) {
+      this.completedSuccesfully = completedSuccesfully;
+   }
 }

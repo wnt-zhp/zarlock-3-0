@@ -3,12 +3,11 @@ package cx.ath.jbzdak.zarlok.entities;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.db.dao.annotations.LifecycleListener;
 import cx.ath.jbzdak.jpaGui.db.dao.annotations.LifecyclePhase;
-import javax.persistence.*;
 import org.apache.commons.collections.functors.CloneTransformer;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.validator.NotNull;
 import org.slf4j.Logger;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Date;
@@ -122,11 +121,6 @@ public class Wyprowadzenie implements Cloneable, ProductSeachCacheSearchable{
 		this.tytulem = tytulem;
 	}
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
-
 	public Date getDataUtworzenia() {
 		return dataUtworzenia;
 	}
@@ -171,10 +165,12 @@ public class Wyprowadzenie implements Cloneable, ProductSeachCacheSearchable{
         return getPartia().getNazwaProduktu();
     }
 
+    @Override
     public String getJednostka() {
         return getPartia().getJednostka();
     }
 
+    @Override
     public String getSpecyfikator() {
         return getPartia().getSpecyfikator();
     }
@@ -195,4 +191,17 @@ public class Wyprowadzenie implements Cloneable, ProductSeachCacheSearchable{
       LOGGER.info("Koszt dania updated");
    }
 
+   @Override
+   public String toString() {
+      final StringBuilder sb = new StringBuilder();
+      sb.append("Wyprowadzenie");
+      sb.append("{id=").append(id);
+      sb.append(", iloscJednostek=").append(iloscJednostek);
+      sb.append(", dataWyprowadzenia=").append(dataWyprowadzenia);
+      sb.append(", tytulem='").append(tytulem).append('\'');
+      sb.append(", dataUtworzenia=").append(dataUtworzenia);
+      sb.append(", danie=").append(danie);
+      sb.append('}');
+      return sb.toString();
+   }
 }

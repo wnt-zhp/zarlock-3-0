@@ -5,7 +5,7 @@ import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 
 public class WyprowadzenieUtils {
 
-	public static final boolean compareContents(Wyprowadzenie w, Wyprowadzenie w2){
+	public static boolean compareContents(Wyprowadzenie w, Wyprowadzenie w2){
 			if(!Utils.equals(w.getId(), w2.getId()))
 				return false;
 			if(w.getPartia()==null ^ w2.getPartia()==null){
@@ -18,9 +18,9 @@ public class WyprowadzenieUtils {
 	}
 
 
-	private final static PatternBeanFormatter beanFormatter = new PatternBeanFormatter("Wydano na danie {nazwa}, posiłek {posilek.nazwa}, dnia {posilek.dzien.data}");
+	private static final PatternBeanFormatter beanFormatter = new PatternBeanFormatter("Wydano na danie {nazwa}, posiłek {posilek.nazwa}, dnia {posilek.dzien.data}");
 
-	public static final String getTytulemFromDanie(Danie d){
+	public static String getTytulemFromDanie(Danie d){
 		return beanFormatter.format(d);
 	}
 

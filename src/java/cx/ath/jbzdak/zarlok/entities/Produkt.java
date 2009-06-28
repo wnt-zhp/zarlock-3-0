@@ -1,12 +1,11 @@
 package cx.ath.jbzdak.zarlok.entities;
 
 import cx.ath.jbzdak.zarlok.entities.listeners.ProductSearchCacheUpdater;
-import javax.annotation.Nonnull;
-import javax.persistence.*;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.Range;
 
+import javax.annotation.Nonnull;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,15 +116,55 @@ public class Produkt {
 		this.dataWaznosci = dataWaznosci;
 	}
 
-	public String toString(){
-		return ToStringBuilder.reflectionToString(this);
-	}
+   @Override
+   public String toString() {
+      final StringBuilder sb = new StringBuilder();
+      sb.append("Produkt");
+      sb.append("{id=").append(id);
+      sb.append(", nazwa='").append(nazwa).append('\'');
+      sb.append(", jednostka='").append(jednostka).append('\'');
+      sb.append(", dataWaznosci=").append(dataWaznosci);
+//      try{
+//         sb.append(", partie=").append(partie);
+//      }catch (HibernateException e){
+//         sb.append(", partie=").append("BRAK PARTII");
+//      }
+      sb.append('}');
+      return sb.toString();
+   }
 
-	public List<Partia> getPartie() {
+   public List<Partia> getPartie() {
 		return partie;
 	}
 
-	public void setPartie(List<Partia> partie) {
+   @Override
+   @SuppressWarnings({"ALL"})
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Produkt)) return false;
+
+      Produkt produkt = (Produkt) o;
+
+      if (dataWaznosci != null ? !dataWaznosci.equals(produkt.dataWaznosci) : produkt.dataWaznosci != null)
+         return false;
+      if (!id.equals(produkt.id)) return false;
+      if (!jednostka.equals(produkt.jednostka)) return false;
+      if (!nazwa.equals(produkt.nazwa)) return false;
+
+      return true;
+   }
+
+   @Override
+   @SuppressWarnings({"ALL"})
+   public int hashCode() {
+      int result = id.hashCode();
+      result = 31 * result + nazwa.hashCode();
+      result = 31 * result + jednostka.hashCode();
+      result = 31 * result + (dataWaznosci != null ? dataWaznosci.hashCode() : 0);
+      return result;
+   }
+
+   public void setPartie(List<Partia> partie) {
 		this.partie = partie;
 	}
 }

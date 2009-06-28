@@ -1,6 +1,7 @@
 package cx.ath.jbzdak.zarlok.ui.main;
 
 import cx.ath.jbzdak.common.famfamicons.IconManager;
+import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
 import static cx.ath.jbzdak.jpaGui.Utils.initLocation;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
@@ -16,12 +17,14 @@ import cx.ath.jbzdak.zarlok.ui.dzien.DniTab;
 import cx.ath.jbzdak.zarlok.ui.dzien.DniTabListener;
 import cx.ath.jbzdak.zarlok.ui.opcje.OpcjeEditPanel;
 import cx.ath.jbzdak.zarlok.ui.partia.PartiaAddDialog;
+import cx.ath.jbzdak.zarlok.ui.partia.PartieListPanel;
 import cx.ath.jbzdak.zarlok.ui.partia.StanMagazynuActionListener;
 import cx.ath.jbzdak.zarlok.ui.partia.StanMagazynuPanel;
 import cx.ath.jbzdak.zarlok.ui.produkt.ProductAddDialog;
 import cx.ath.jbzdak.zarlok.ui.produkt.ProductEditPanel;
 import org.slf4j.Logger;
 
+import javax.persistence.EntityManager;
 import javax.swing.*;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.filechooser.FileFilter;
@@ -45,6 +48,7 @@ public class MainFrame extends JFrame {
    private JBTabbedPane jTabbedPane = null;
    private ProductEditPanel productEditPanel = null;
    private PartiaAddDialog partiaAddDialog = null;  //  @jve:decl-index=0:visual-constraint="982,695"
+   private PartieListPanel partieListPanel = null;
    private JMenuItem jMenuItem1 = null;
    private StanMagazynuPanel partiePanel = null;
    private StanMagazynuActionListener partieActionListener = null;  //  @jve:decl-index=0:visual-constraint="214,32"
@@ -171,11 +175,25 @@ public class MainFrame extends JFrame {
       if (jTabbedPane == null) {
          jTabbedPane = new JBTabbedPane();
          jTabbedPane.addTab("Produkt", IconManager.getIconSafe("book_add"), getProductEditPanel(), null);
-         jTabbedPane.addTab("Stan magazynu", null, getPartiePanel(), null);
+         jTabbedPane.addTab("Stan magazynu", null, getStanMagazynuPanel(), null);
+         jTabbedPane.addTab("Partie", null, getPartieListPanel(), null);
          jTabbedPane.addTab("Dni", null, getDniTab(), null);
          //jTabbedPane.addTabCloseable("XXX", IconManager.getIconSafe("accept"), new JPanel(), null, true);
-         jTabbedPane.addListener(getPartiePanel(), getPartieActionListener());
+         jTabbedPane.addListener(getStanMagazynuPanel(), getPartieActionListener());
          jTabbedPane.addListener(getDniTab(), new DniTabListener());
+         jTabbedPane.addListener(getPartieListPanel(), new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               if("SELECTED".equals(e.getActionCommand())){
+                  Transaction.execute(mainWindowModel.getManager(),new Transaction() {
+                     @Override
+                     public void doTransaction(EntityManager entityManager) throws Exception {
+                        getPartieListPanel().setPartie(entityManager.createQuery("SELECT p FROM Partia p").getResultList());                        
+                     }
+                  });
+               }
+            }
+         });
          //jTabbedPane.addTab(("Dni", null, )
 
       }
@@ -238,7 +256,7 @@ public class MainFrame extends JFrame {
     *
     * @return cx.ath.jbzdak.zarlok.ui.partia.PartiePanel
     */
-   private StanMagazynuPanel getPartiePanel() {
+   private StanMagazynuPanel getStanMagazynuPanel() {
       if (partiePanel == null) {
          partiePanel = new StanMagazynuPanel();
       }
@@ -252,7 +270,7 @@ public class MainFrame extends JFrame {
     */
    private StanMagazynuActionListener getPartieActionListener() {
       if (partieActionListener == null) {
-         partieActionListener = new StanMagazynuActionListener(getManager(), getPartiePanel());
+         partieActionListener = new StanMagazynuActionListener(getManager(), getStanMagazynuPanel());
       }
       return partieActionListener;
    }
@@ -532,4 +550,12 @@ public class MainFrame extends JFrame {
       }
       return resetDatabase;
    }
+
+   PartieListPanel getPartieListPanel() {
+      if (partieListPanel == null) {
+        partieListPanel = new PartieListPanel(getMainWindowModel());
+      }
+      return partieListPanel;
+   }
 }
+

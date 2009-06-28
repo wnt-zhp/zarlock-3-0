@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PartieUtils {
@@ -84,6 +85,26 @@ public class PartieUtils {
          }
       }
       return result;
+   }
+
+   public static BigDecimal getIloscTeraz(Partia p){
+      BigDecimal iloscTeraz = p.getIloscPocz();
+      for(Wyprowadzenie w : p.getWyprowadzenia()){
+         if(w.getIloscJednostek()!=null){
+            iloscTeraz = iloscTeraz.subtract(w.getIloscJednostek());
+         }
+      }
+      return iloscTeraz;
+   }
+
+   public static BigDecimal getIloscForDay(Partia p, Date dzien){
+      BigDecimal iloscTeraz = p.getIloscPocz();
+      for(Wyprowadzenie w : p.getWyprowadzenia()){
+         if(w.getIloscJednostek()!=null && w.getDataWyprowadzenia().before(dzien)){
+            iloscTeraz = iloscTeraz.subtract(w.getIloscJednostek());
+         }
+      }
+      return iloscTeraz;
    }
 
 

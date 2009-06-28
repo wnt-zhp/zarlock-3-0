@@ -7,10 +7,10 @@ import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.entities.ProductSearchCache;
 import cx.ath.jbzdak.zarlok.ui.formatted.formatters.ProductSearchCacheFormatter;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import org.slf4j.Logger;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +26,7 @@ public class SelectPartiaAdaptor extends
 		super(manager);
 	}
 
-	ProductSearchCacheFormatter productSearchCacheFormatter = new ProductSearchCacheFormatter();
+	private final ProductSearchCacheFormatter productSearchCacheFormatter = new ProductSearchCacheFormatter();
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -34,8 +34,7 @@ public class SelectPartiaAdaptor extends
 			EntityManager entityManager) {
 		ProductSearchCache psc;
 		try {
-			psc = (ProductSearchCache) productSearchCacheFormatter
-					.parseValue(getFilter());
+			psc = productSearchCacheFormatter.parseValue(getFilter());
 			Query q = entityManager.createNamedQuery("getParieForWydanie");
 			q.setParameter("nazwa", psc.getNazwaProduktu());
 			q.setParameter("specyfikator", psc.getSpecyfikator());
@@ -44,7 +43,7 @@ public class SelectPartiaAdaptor extends
 			List<AutoCompleteValueHolder> list =
 				new ArrayList<AutoCompleteValueHolder>(results.size());
 			for (Partia p : results) {
-				list.add(new AutoCompleteValueHolder(p.toString(), p));
+				list.add(new AutoCompleteValueHolder(p.getSearchFormat(), p));
 			}
 			return list;
 		} catch (Exception e) {
