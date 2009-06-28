@@ -1,15 +1,15 @@
 package cx.ath.jbzdak.zarlok.raport;
 
+import com.lowagie.text.*;
+import com.lowagie.text.Font;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.PdfPCell;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.zarlok.config.PreferencesConfig;
 import cx.ath.jbzdak.zarlok.config.PreferencesKeys;
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.PdfPCell;
 import org.slf4j.Logger;
 
-import java.awt.Color;
-import java.awt.Desktop;
+import java.awt.*;
 import java.awt.Desktop.Action;
 import java.io.*;
 
@@ -69,9 +69,9 @@ public abstract class Raport {
    protected abstract void makeReport() throws DocumentException;
 
    protected void addHeader() throws DocumentException{
-      document.add(new Paragraph(new Chunk(PreferencesConfig.getString(PreferencesKeys.NAZWA_OBOZU_1), defaultParagraphFont)));
-      document.add(new Paragraph(new Chunk(PreferencesConfig.getString(PreferencesKeys.NAZWA_OBOZU_2), defaultParagraphFont)));
-      document.add(new Paragraph(new Chunk(PreferencesConfig.getString(PreferencesKeys.NAZWA_OBOZU_3), defaultParagraphFont)));
+      document.add(new Paragraph(new Chunk(PreferencesConfig.getConfigurationSource().getConfiguration().get(PreferencesKeys.NAZWA_OBOZU_1).getSingleValue().toString(), defaultParagraphFont)));
+      document.add(new Paragraph(new Chunk(PreferencesConfig.getConfigurationSource().getConfiguration().get(PreferencesKeys.NAZWA_OBOZU_2).getSingleValue().toString(), defaultParagraphFont)));
+      document.add(new Paragraph(new Chunk(PreferencesConfig.getConfigurationSource().getConfiguration().get(PreferencesKeys.NAZWA_OBOZU_3).getSingleValue().toString(), defaultParagraphFont)));
    }
 
    public void print() throws RaportException {

@@ -1,5 +1,7 @@
 package cx.ath.jbzdak.zarlok.ui.partia;
 
+import cx.ath.jbzdak.common.famfamicons.IconManager;
+import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.db.dao.RefreshType;
 import cx.ath.jbzdak.jpaGui.genericListeners.DoStuffMouseListener;
@@ -9,6 +11,7 @@ import cx.ath.jbzdak.jpaGui.ui.form.DAOForm;
 import cx.ath.jbzdak.jpaGui.ui.form.FormDialog;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.main.MainWindowModel;
+import cx.ath.jbzdak.zarlok.ui.wyprowadzenie.WyprowadzenieEditTable;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
@@ -19,7 +22,10 @@ import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 
 import javax.annotation.Nullable;
+import javax.persistence.EntityManager;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,11 +54,10 @@ public class PartieListPanel extends JPanel{
       windowModel = model;
       init();
       add(new JScrollPane(table));
-
-
    }
 
 
+   @SuppressWarnings({"RedundantTypeArguments"/*Inaczej się nie chce kompilować*/})
    private void init(){
       table = new JTable();
       tableBinding = SwingBindings.<Partia, PartieListPanel>createJTableBinding(AutoBinding.UpdateStrategy.READ, this,
@@ -72,8 +77,21 @@ public class PartieListPanel extends JPanel{
       table.setAutoCreateRowSorter(true);
       table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       table.addMouseListener(new DoStuffMouseListener(){
-
          final PopupMenu menu = new PopupMenu();
+         {
+            table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+               @Override
+               public void valueChanged(ListSelectionEvent e) {
+                  if(table.getSelectedRow()!=-1){
+                     menu.editPartiaMenuItem.setEnabled(true);
+                     menu.showWyprowadzeniaMenuItem.setEnabled(true);
+                  }else{
+                     menu.editPartiaMenuItem.setEnabled(false);
+                     menu.showWyprowadzeniaMenuItem.setEnabled(false);
+                  }
+               }
+            });
+         }
          @Override
          protected void doStuff(MouseEvent e) {
             if(e.isPopupTrigger() && table.getSelectedRow()!=-1){
@@ -101,6 +119,8 @@ public class PartieListPanel extends JPanel{
 
 
       final JMenuItem editPartiaMenuItem = new JMenuItem("Edytuj");
+
+      final JMenuItem showWyprowadzeniaMenuItem = new JMenuItem("Podejrzyj wyprowadzenia ");
 
       PopupMenu(){
 
@@ -141,7 +161,47 @@ public class PartieListPanel extends JPanel{
                }
             }
          });
+         showWyprowadzeniaMenuItem.addActionListener(new ActionListener() {
+
+            final WyprowadzenieEditTable table;
+            final JDialog dialog;
+
+            {
+               table = new WyprowadzenieEditTable(windowModel.getManager());
+               dialog = new JDialog(windowModel.getMainFrame(), "Lista wyprowadzen", true);
+               dialog.setLayout(new MigLayout("fill, wrap 1", "[fill, grow]", "[fill, grow|]"));
+               JButton closeButton = new JButton("Zamknij", IconManager.getIconSafe("zamknij"));
+               closeButton.addActionListener(new ActionListener() {
+                  @Override
+                  public void actionPerformed(ActionEvent e) {
+                     dialog.setVisible(false);
+                  }
+               });
+               dialog.add(new JScrollPane(table));
+               dialog.add(closeButton);
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               Transaction.execute(windowModel.getManager(), new Transaction() {
+                  @Override
+                  public void doTransaction(EntityManager entityManager) throws Exception {
+                     table.setEntities(entityManager.createQuery("SELECT w FROM Wyprowadzenie w WHERE w.partia = :partia").setParameter("partia", getSelectedPartia()).getResultList());
+                  }
+               });
+               dialog.pack();
+               Utils.initLocation(dialog);
+               dialog.setVisible(true);
+               Transaction.execute(windowModel.getManager(), new Transaction() {
+                  @Override
+                  public void doTransaction(EntityManager entityManager) throws Exception {
+                     setSelectedPartia(entityManager.find(Partia.class, getSelectedPartia().getId()));
+                  }
+               });
+            }
+         });
          add(editPartiaMenuItem);
+         add(showWyprowadzeniaMenuItem);
       }
 
       private Partia getSelectedPartia(){

@@ -128,27 +128,27 @@ public class ZZRaportBean {
    }
 
    public String getImieKomendant(){
-      return PreferencesConfig.getString(PreferencesKeys.KOMENDANT);
+      return dictionary.get(PreferencesKeys.KOMENDANT).getSingleValue().toString();
    }
 
    public String getImieSprawzajacy(){
-      return PreferencesConfig.getString(PreferencesKeys.CZLONEK_RADY_OBOZU);
+      return dictionary.get(PreferencesKeys.CZLONEK_RADY_OBOZU).getSingleValue().toString();
    }
 
    public String getImieKwatermistrza(){
-      return PreferencesConfig.getString(PreferencesKeys.KWATERMISTRZ);
+      return dictionary.get(PreferencesKeys.KWATERMISTRZ).getSingleValue().toString();
    }
 
    public String get1Linia(){
-      return PreferencesConfig.getString(PreferencesKeys.NAZWA_OBOZU_1);
+      return dictionary.get(PreferencesKeys.NAZWA_OBOZU_1).getSingleValue().toString();
    }
 
    public String get2Linia(){
-      return PreferencesConfig.getString(PreferencesKeys.NAZWA_OBOZU_2);
+      return dictionary.get(PreferencesKeys.NAZWA_OBOZU_2).getSingleValue().toString();
    }
 
    public String get3Linia(){
-      return PreferencesConfig.getString(PreferencesKeys.NAZWA_OBOZU_3);
+      return dictionary.get(PreferencesKeys.NAZWA_OBOZU_3).getSingleValue().toString();
    }
 
    public IloscOsob getIloscOsob() {return dzien.getIloscOsob();}
