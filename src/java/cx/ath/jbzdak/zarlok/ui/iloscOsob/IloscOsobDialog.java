@@ -1,12 +1,14 @@
 package cx.ath.jbzdak.zarlok.ui.iloscOsob;
 
 import static cx.ath.jbzdak.jpaGui.Utils.initLocation;
+import cx.ath.jbzdak.jpaGui.genericListeners.HideWindowTask;
+import cx.ath.jbzdak.jpaGui.ui.form.DAOForm;
 import cx.ath.jbzdak.jpaGui.ui.form.OkButtonFormPanel;
 import cx.ath.jbzdak.zarlok.entities.IloscOsob;
-import javax.swing.JDialog;
 import net.miginfocom.swing.MigLayout;
 
-import java.awt.Window;
+import javax.swing.*;
+import java.awt.*;
 
 public class IloscOsobDialog extends JDialog{
 
@@ -27,6 +29,7 @@ public class IloscOsobDialog extends JDialog{
 		panel = new IloscOsobPanel();
 		buttonPanel = new OkButtonFormPanel<IloscOsob>();
 		buttonPanel.setForm(panel.getForm());
+      buttonPanel.addBothTaskAction(new HideWindowTask<DAOForm>(this));
 		add(panel);
 		add(buttonPanel, "south");
 		pack();
