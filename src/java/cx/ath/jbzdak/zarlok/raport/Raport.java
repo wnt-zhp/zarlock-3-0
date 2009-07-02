@@ -140,7 +140,7 @@ public abstract class Raport {
    }
 
    protected void init() throws DocumentException {
-      document = new Document(PageSize.A4);
+      document = new Document(PageSize.A4, 80, 36, 36, 36);
       writer = type.createWriter(document, getResultStream());
    }
 
