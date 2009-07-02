@@ -42,7 +42,7 @@ public class WyprowadzenieEditTable extends JTable{
       TableColumn akcjeColumn = getColumnModel().getColumn(4);
       akcjeColumn.setCellEditor(model.createRendererEditor());
       akcjeColumn.setCellRenderer(model.createRendererEditor());
-      setRowHeight(25);
+      setRowHeight(30);
    }
 
    public void setEntities(List<Wyprowadzenie> entities) {

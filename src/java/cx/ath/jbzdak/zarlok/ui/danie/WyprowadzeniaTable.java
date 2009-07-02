@@ -30,7 +30,7 @@ public class WyprowadzeniaTable extends JTable {
 	public WyprowadzeniaTable(DBManager manager){
 		wyprowadzeniaModel = new WyprowadzenieTableModel(manager, this);
         wyprowadzeniaModel.setInsertNewRow(false);
-		setRowHeight(25);
+		setRowHeight(30);
 		initBinding();
 		TableColumnModel columnModel = getColumnModel();
 		TableColumn nazwaPartiiColumn = columnModel.getColumn(0);
