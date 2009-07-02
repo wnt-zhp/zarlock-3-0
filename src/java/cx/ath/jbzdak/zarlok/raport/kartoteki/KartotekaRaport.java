@@ -1,15 +1,15 @@
 package cx.ath.jbzdak.zarlok.raport.kartoteki;
 
-import cx.ath.jbzdak.jpaGui.Utils;
-import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
-import static cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter.formatMessage;
-import cx.ath.jbzdak.zarlok.raport.Raport;
 import com.lowagie.text.Cell;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
+import cx.ath.jbzdak.jpaGui.Utils;
+import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
+import static cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter.formatMessage;
+import cx.ath.jbzdak.zarlok.raport.Raport;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -58,9 +58,10 @@ class KartotekaRaport extends Raport{
    }
 
    private void addTable() throws DocumentException {
-      PdfPTable table = new PdfPTable(9);
+      PdfPTable table = new PdfPTable(new float[] {0.5f,2f,3f,1f,1.1f,1f,1.1f,1f,1.1f});
       createHeader(table);
       table.setHeaderRows(3);
+      table.setWidthPercentage(100);
       int lp = 0;
       for(KartotekaEntryBean row: kartotekaRaportBean.getZawartoscKartoteki()){
          table.addCell(getDefaultCell(String.valueOf(++lp)));
