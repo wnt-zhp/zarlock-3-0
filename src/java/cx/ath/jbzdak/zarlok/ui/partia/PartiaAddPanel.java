@@ -7,8 +7,8 @@ import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.entities.ProductSearchCache;
 import cx.ath.jbzdak.zarlok.entities.Produkt;
 import cx.ath.jbzdak.zarlok.ui.autocolmpete.adaptor.PartiaAdaptor;
-import javax.persistence.EntityManager;
 
+import javax.persistence.EntityManager;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -45,5 +45,9 @@ public class PartiaAddPanel extends PartiaAddPanelBasic {
 
 	@Override
 	protected void initGUI() { }
+
+   public void reset(){
+      produktSelectBox.getRenderer().setSelectedItem(null);
+   }
 
 }
