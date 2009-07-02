@@ -188,7 +188,7 @@ public class MainFrame extends JFrame {
                   Transaction.execute(mainWindowModel.getManager(),new Transaction() {
                      @Override
                      public void doTransaction(EntityManager entityManager) throws Exception {
-                        getPartieListPanel().setPartie(entityManager.createQuery("SELECT p FROM Partia p").getResultList());                        
+                        getPartieListPanel().setPartie(entityManager.createQuery("SELECT p FROM Partia p JOIN FETCH p.wyprowadzenia").getResultList());                        
                      }
                   });
                }

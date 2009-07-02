@@ -43,16 +43,16 @@ public class PartieListPanel extends JPanel{
 
    private JTable table;
 
-   private JTableBinding tableBinding;
-
-
-
+   private final PartiePanelFilter filter;
+   
    private List<Partia> partie = Collections.emptyList();
 
    public PartieListPanel(MainWindowModel model) {
-      super(new MigLayout("fill", "[fill, grow]"));
+      super(new MigLayout("fill, wrap 1", "[fill, grow]"));
       windowModel = model;
       init();
+      filter = new PartiePanelFilter(table);
+      add(filter);
       add(new JScrollPane(table));
    }
 
@@ -60,7 +60,7 @@ public class PartieListPanel extends JPanel{
    @SuppressWarnings({"RedundantTypeArguments"/*Inaczej się nie chce kompilować*/})
    private void init(){
       table = new JTable();
-      tableBinding = SwingBindings.<Partia, PartieListPanel>createJTableBinding(AutoBinding.UpdateStrategy.READ, this,
+      JTableBinding tableBinding=SwingBindings.<Partia, PartieListPanel>createJTableBinding(AutoBinding.UpdateStrategy.READ, this,
               BeanProperty.<PartieListPanel, List<Partia>>create("partie"), table);
       tableBinding.addColumnBinding(ELProperty.create("${produkt.nazwa} - ${specyfikator}"))
               .setColumnName("Nazwa").setEditable(false);
@@ -107,6 +107,7 @@ public class PartieListPanel extends JPanel{
       if( ! (partie instanceof ObservableList)){
          this.partie = ObservableCollections.observableList(partie);
       }
+      filter.setModel(partie);
       firePropertyChange("partie", oldPartie, this.partie);
    }
 
