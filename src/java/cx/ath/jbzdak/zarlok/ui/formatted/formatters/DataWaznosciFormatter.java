@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class DataWaznosciFormatter extends DateFormatter{
 
 	public static final Pattern nieistotnaPat
-		= Pattern.compile("\\s*(?:nieist(?:otna)?)|(?:olej)\\s*");
+		= Pattern.compile("\\s*(?:nieist(?:otna)?)|(?:olej)|(?:n\\.?\\s?dot\\.?)\\s*");
 
 	@Override
 	public Date parseValue(String text) throws Exception {
