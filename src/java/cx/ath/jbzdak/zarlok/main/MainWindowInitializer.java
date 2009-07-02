@@ -2,10 +2,7 @@ package cx.ath.jbzdak.zarlok.main;
 
 import cx.ath.jbzdak.jpaGui.task.Task;
 import cx.ath.jbzdak.jpaGui.task.TasksExecutor;
-import cx.ath.jbzdak.zarlok.main.initTasks.AddShutdownHook;
-import cx.ath.jbzdak.zarlok.main.initTasks.GetDesktopSupport;
-import cx.ath.jbzdak.zarlok.main.initTasks.SetIconAliases;
-import cx.ath.jbzdak.zarlok.main.initTasks.SetupLF;
+import cx.ath.jbzdak.zarlok.main.initTasks.*;
 
 /**
  * Inicjalizuje {@link MainWindowModel}. Żeby dodać taska inicjalizajyjnego
@@ -41,6 +38,7 @@ public class MainWindowInitializer {
 	void initPostDB() {
 		te = model.getPostDBStartupTasks();
 		addTask(new SetupMainFrame());
+      addTask(new Checkpoint());
 	}
 
 	void addTask(Task<? super MainWindowModel> task) {
