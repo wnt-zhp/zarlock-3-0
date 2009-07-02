@@ -28,7 +28,7 @@ public class RootFolderDefault extends DefaultValue {
 
 
 	private String getDefaultFolder(Properties properties){
-		String homeFolder = properties.getProperty("user.dir");
+		String homeFolder = properties.getProperty("user.home");
 		return homeFolder + File.separatorChar + '.' + ROOT_FOLDER_NAME;
 	}
 
