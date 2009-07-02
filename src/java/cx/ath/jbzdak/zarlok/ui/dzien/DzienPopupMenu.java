@@ -178,26 +178,23 @@ class TreePopupMenu extends JPopupMenu {
          if (dniTreePanelModel.selectedItems.size() == 1) {
             Object selected = dniTreePanelModel.selectedItems.get(0);
             if (selected instanceof Dzien) {
-               Dzien dzien = (Dzien) selected;
-               this.dzien = dzien;
+               this.dzien = (Dzien) selected;
+               usunDzienMenuItem.setEnabled(true);
             }
             if (selected instanceof Posilek){
                this.posilek = (Posilek) selected;
                this.dzien = posilek.getDzien();
+               usunPosilek.setEnabled(true);
             }
             if(selected instanceof Danie){
                this.danie = (Danie) selected;
                this.posilek = danie.getPosilek();
                this.dzien = posilek.getDzien();
+               usunDanie.setEnabled(true);
             }
             makeZZMenuItem.setEnabled(true);
             printStanMagazynu.setEnabled(true);
-            dodajPosilek.setEnabled(true);
-            usunDzienMenuItem.setEnabled(true);
-            if(posilek!=null)
-               usunPosilek.setEnabled(true);
-            if(danie!=null)
-               usunDanie.setEnabled(true);
+            dodajPosilek.setEnabled(true);   
          }
       super.show(invoker, x, y);
    }
