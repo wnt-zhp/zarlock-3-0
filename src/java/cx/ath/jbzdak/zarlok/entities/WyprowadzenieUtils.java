@@ -18,7 +18,7 @@ public class WyprowadzenieUtils {
 	}
 
 
-	private static final PatternBeanFormatter beanFormatter = new PatternBeanFormatter("Wydano na danie {nazwa}, posiłek {posilek.nazwa}, dnia {posilek.dzien.data}");
+	private static final PatternBeanFormatter beanFormatter = new PatternBeanFormatter("{posilek.dzien.data} na posiłek {posilek.nazwa} ");
 
 	public static String getTytulemFromDanie(Danie d){
 		return beanFormatter.format(d);
