@@ -73,7 +73,7 @@ public class PartiaAddDialog extends JDialog {
 	 *
 	 * @return cx.ath.jbzdak.zarlok.ui.partia.PartiaAddPanel
 	 */
-	private PartiaAddPanelBasic getPartiaAddPanel() {
+	private PartiaAddPanel getPartiaAddPanel() {
 		if (partiaAddPanel == null) {
 			partiaAddPanel = new PartiaAddPanel(manager);
 		}
@@ -105,7 +105,15 @@ public class PartiaAddDialog extends JDialog {
 		return okButtonPanel;
 	}
 
-	public DAOForm<Partia, ? extends FormElement> getForm() {
+   @Override
+   public void setVisible(boolean b) {
+      if(b){
+         getPartiaAddPanel().reset();
+      }
+      super.setVisible(b);
+   }
+
+   public DAOForm<Partia, ? extends FormElement> getForm() {
 		return partiaAddPanel.getForm();
 	}
 
