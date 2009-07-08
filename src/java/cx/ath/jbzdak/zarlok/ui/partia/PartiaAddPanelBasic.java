@@ -13,9 +13,9 @@ import cx.ath.jbzdak.zarlok.ui.autocolmpete.adaptor.SpecyfikatorAdaptor;
 import cx.ath.jbzdak.zarlok.ui.formatted.formatters.CenaFormatter;
 import cx.ath.jbzdak.zarlok.ui.formatted.formatters.DataWaznosciFormatter;
 import cx.ath.jbzdak.zarlok.ui.formatted.formatters.IloscPoczFormatter;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
 import net.miginfocom.swing.MigLayout;
 
 public class PartiaAddPanelBasic extends JPanel{
@@ -59,18 +59,23 @@ public class PartiaAddPanelBasic extends JPanel{
 		produktNamePanel = factory.decotrateJTextField("Nazwa produktu", "produkt.nazwa");
 		produktNamePanel.getFormElement().setEditable(false);
 		jednostkaPanel = factory.decotrateComboBox("Jednostka", "jednostka", new AutocompleteComboBox(new JednostkaAdaptor(manager)));
-		specyfikatorPanel = factory.decotrateComboBox("Specyfikatos", "specyfikator", new AutocompleteComboBox(new SpecyfikatorAdaptor(manager)));
+        jednostkaPanel.getFormElement().setReadNullValues(false);
+		specyfikatorPanel = factory.decotrateComboBox("Specyfikator", "specyfikator", new AutocompleteComboBox(new SpecyfikatorAdaptor(manager)));
+        specyfikatorPanel.getFormElement().setReadNullValues(false);
 		iloscPoczatkowaPanel = factory.decorateFormattedTextField("Ilość początkowa", "iloscPocz", new MyFormattedTextField(iloscPoczFormatter));
 		iloscPoczatkowaPanel.getFormElement().setReadNullValues(false);
 		cenaPanel = factory.decorateFormattedTextField("Cena:", "cena", new MyFormattedTextField(cenaFormatter));
 		cenaPanel.getFormElement().setReadNullValues(false);
 		dataWaznosciPanel = factory.decorateFormattedTextField("Data ważności", "dataWaznosci", new DataWaznosciFormatter());
-		dataWaznosciPanel.getFormElement().setReadNullValues(true);
+        dataWaznosciPanel.getFormElement().setReadNullValues(false);
 		dataksiegowaniaPanel = factory.decorateFormattedTextField("Data księgowania", "dataKsiegowania", new DateFormatter());
+        dataksiegowaniaPanel.getFormElement().setReadNullValues(false);
 		numerFakturyPanel = factory.decorateFormattedTextField("Numer faktury", "numerFaktury", new NotEmptyFormatter("Numer faktury nie może być pusty"));
+        numerFakturyPanel.getFormElement().setReadNullValues(false);
 		form = factory.getCreatedForm();
 		form.setDao(new PartiaDAO(manager));
-      cenaJednostkowaSelectPanel = new FormPanelMock(new ReadOnlyFormElement<JComboBox>(new SelectTypComboBox(cenaFormatter), "Rodzaj ceny"));
+        cenaJednostkowaSelectPanel = new FormPanelMock(new ReadOnlyFormElement<JComboBox>(new SelectTypComboBox(cenaPanel.getFormElement().getRenderer()), "Rodzaj ceny"));
+
      // cenaJednostkowaSelectPanel.setConstraints(FormPanelConstraints.createCompactConstraints());
 		initGUI();
 	}
@@ -91,7 +96,8 @@ public class PartiaAddPanelBasic extends JPanel{
 		if(partia.getProdukt()==null){
 			throw new IllegalArgumentException();
 		}
-		form.setEntity(partia);
+        clear();
+		form.setEntity(partia);      
 	}
 
 	public DAOForm<Partia, ? extends DAOFormElement> getForm() {
@@ -104,7 +110,6 @@ public class PartiaAddPanelBasic extends JPanel{
 		cenaPanel.getFormElement().clear();
 		dataWaznosciPanel.getFormElement().clear();
 		specyfikatorPanel.getFormElement().clear();
-		numerFakturyPanel.getFormElement().clear();
 	}
 
 

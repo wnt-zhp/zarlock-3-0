@@ -25,17 +25,13 @@ public class ProductNameFormatter implements MyFormatter {
 
 	@Override
 	public Object parseValue(String text) throws Exception {
-		if(prod.getId()!=null){
-			if(!prod.getNazwa().equals(text)){
-				throw new FormattingException("Nie można zmienić nazwy istniejącego produktu");
-			}
-		}else{
+        if (prod.getId() == null) {
 			Query q = entityManager.createNamedQuery("countProduktNazwa").setParameter("nazwa", text);
-			if(((Number)q.getSingleResult()).intValue()!=0){
-				throw new FormattingException("Dany produkt już istnieje");
-			}
-		}
-		return text;
+            if(((Number)q.getSingleResult()).intValue()!=0){
+                throw new FormattingException("Dany produkt już istnieje");
+            }
+        }
+        return text;
 	}
 
 	public Produkt getProd() {

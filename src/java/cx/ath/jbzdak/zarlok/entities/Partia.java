@@ -3,13 +3,14 @@ package cx.ath.jbzdak.zarlok.entities;
 import cx.ath.jbzdak.jpaGui.Utils;
 import static cx.ath.jbzdak.jpaGui.Utils.getRelativeDate;
 import cx.ath.jbzdak.zarlok.entities.listeners.PartiaSearchCacheUpdater;
-import org.hibernate.HibernateException;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.persistence.*;
+import org.hibernate.HibernateException;
+import org.hibernate.validator.Length;
+import org.hibernate.validator.NotEmpty;
+import org.hibernate.validator.NotNull;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,67 +23,66 @@ import java.util.List;
 @Entity
 @Table(name="PARTIA")
 @NamedQueries({
-	@NamedQuery(
-			name="getPartiaJednostka",
-			query = "SELECT DISTINCT p.jednostka FROM Partia p WHERE p.jednostka LIKE CONCAT(CONCAT('%', :jednostka), '%')"
-	),
-	@NamedQuery(
-			name = "getPartiaSpecyfikator",
-			query = "SELECT DISTINCT p.specyfikator FROM Partia p WHERE LOWER(p.specyfikator) LIKE LOWER('%' || :specyfikator || '%')"
-	),
-	@NamedQuery(
-			name = "getPartie",
-			query = "SELECT new cx.ath.jbzdak.zarlok.entities.TakieSamePartie(p.produkt, p.specyfikator, p.jednostka, AVG(p.cena*p.iloscTeraz)/SUM(p.iloscTeraz), SUM(p.iloscTeraz))  FROM Partia p GROUP BY p.produkt, p.specyfikator, p.jednostka"
-	),
-	@NamedQuery(
-		name = "filterPartie",
-		query = "SELECT p FROM Partia p"
-	),
-	@NamedQuery(
-			name = "getPartieByProdukt",
-			query = "SELECT new cx.ath.jbzdak.zarlok.entities.TakieSamePartie(p.produkt, p.specyfikator, p.jednostka, AVG(p.cena), SUM(p.iloscTeraz))" +
-					" FROM Partia p WHERE p.produkt = :produkt GROUP BY p.produkt, p.specyfikator, p.jednostka"
-	),
-	@NamedQuery(
-			name = "getParieForWydanie",
-			query = "SELECT p FROM Partia p " +
-					"WHERE ((:nazwa IS NULL) OR  LOWER(p.produkt.nazwa) LIKE LOWER('%' || :nazwa || '%')) AND" +
-					"((:specyfikator IS NULL) OR LOWER(p.specyfikator) LIKE LOWER('%' || :specyfikator || '%')) AND " +
-					"((:jednostka IS NULL) OR LOWER(p.jednostka) LIKE LOWER('%' || :jednostka || '%'))"
-	),
-   @NamedQuery(
-           name = "getPartieDoWydaniaNaPosilek",
-           query =   "SELECT p FROM Partia p " +
-                   "WHERE " +
-                   "(:nazwa IS NULL OR p.produkt.nazwa = :nazwa) AND " +
-                   "(:specyfikator IS NULL OR p.specyfikator = :specyfikator ) AND " +
-                   "(:jednostka IS NULL OR p.jednostka = :jednostka) AND " +
-                   "(p.dataWaznosci IS NULL OR p.dataWaznosci > :dzien) AND " +
-                   "p.dataKsiegowania <= :dzien AND " +
-                   "p.iloscTeraz > 0 " +
-                   "ORDER BY p.dataWaznosci ASC, " +
-                   "p.dataKsiegowania DESC, " +
-                   "p.iloscTeraz ASC"
-   ),
-   @NamedQuery(
-           name = "getKartotekiContents",
-           query = "SELECT new cx.ath.jbzdak.zarlok.raport.kartoteki.KartotekaRaportBean(" +
-                   "p.produkt.nazwa, " +
-                   "p.specyfikator," +
-                   "p.cena) " +
-                   "FROM Partia p " +
-                   "GROUP BY p.produkt.nazwa, p.jednostka, p.specyfikator, p.cena "
-   ),
-   @NamedQuery(
-           name = "getKartotekaContentsStage2",
-                   query = "SELECT DISTINCT (p) " +
-                   "FROM Partia p " +
-                   "LEFT JOIN FETCH p.wyprowadzenia " +
-                   "WHERE p.produkt.nazwa = :nazwa  AND p.specyfikator = :specyfikator AND p.cena = :cena"
+        @NamedQuery(
+                name="getPartiaJednostka",
+                query = "SELECT DISTINCT p.jednostka FROM Partia p WHERE p.jednostka LIKE CONCAT(CONCAT('%', :jednostka), '%')"
+        ),
+        @NamedQuery(
+                name = "getPartiaSpecyfikator",
+                query = "SELECT DISTINCT p.specyfikator FROM Partia p WHERE LOWER(p.specyfikator) LIKE LOWER('%' || :specyfikator || '%')"
+        ),
+        @NamedQuery(
+                name = "getPartie",
+                query = "SELECT new cx.ath.jbzdak.zarlok.entities.TakieSamePartie(p.produkt, p.specyfikator, p.jednostka, AVG(p.cena*p.iloscTeraz)/SUM(p.iloscTeraz), SUM(p.iloscTeraz))  FROM Partia p GROUP BY p.produkt, p.specyfikator, p.jednostka"
+        ),
+        @NamedQuery(
+                name = "filterPartie",
+                query = "SELECT p FROM Partia p"
+        ),
+        @NamedQuery(
+                name = "getPartieByProdukt",
+                query = "SELECT new cx.ath.jbzdak.zarlok.entities.TakieSamePartie(p.produkt, p.specyfikator, p.jednostka, AVG(p.cena), SUM(p.iloscTeraz))" +
+                        " FROM Partia p WHERE p.produkt = :produkt GROUP BY p.produkt, p.specyfikator, p.jednostka"
+        ),
+        @NamedQuery(
+                name = "getParieForWydanie",
+                query = "SELECT p FROM Partia p " +
+                        "WHERE ((:nazwa IS NULL) OR  LOWER(p.produkt.nazwa) LIKE LOWER('%' || :nazwa || '%')) AND" +
+                        "((:specyfikator IS NULL) OR LOWER(p.specyfikator) LIKE LOWER('%' || :specyfikator || '%')) AND " +
+                        "((:jednostka IS NULL) OR LOWER(p.jednostka) LIKE LOWER('%' || :jednostka || '%'))"
+        ),
+        @NamedQuery(
+                name = "getPartieDoWydaniaNaPosilek",
+                query = "SELECT p FROM Partia p " +
+                        "WHERE " +
+                        "(:nazwa IS NULL OR p.produkt.nazwa = :nazwa) AND " +
+                        "(:specyfikator IS NULL OR p.specyfikator = :specyfikator ) AND " +
+                        "(:jednostka IS NULL OR p.jednostka = :jednostka) AND " +
+                        "(p.dataWaznosci IS NULL OR p.dataWaznosci > :dzien) AND " +
+                        "p.dataKsiegowania <= :dzien AND " +
+                        "p.iloscTeraz > 0 " +
+                        "ORDER BY p.dataWaznosci ASC, " +
+                        "p.dataKsiegowania DESC, " +
+                        "p.iloscTeraz ASC"
+        ),
+        @NamedQuery(
+                name = "getKartotekiContents",
+                query = "SELECT new cx.ath.jbzdak.zarlok.raport.kartoteki.KartotekaRaportBean(" +
+                        "p.produkt.nazwa, " +
+                        "p.specyfikator," +
+                        "p.cena) " +
+                        "FROM Partia p " +
+                        "GROUP BY p.produkt.nazwa, p.jednostka, p.specyfikator, p.cena "
+        ),
+        @NamedQuery(
+                name = "getKartotekaContentsStage2",
+                query = "SELECT DISTINCT (p) " +
+                        "FROM Partia p " +
+                        "LEFT JOIN FETCH p.wyprowadzenia " +
+                        "WHERE p.produkt.nazwa = :nazwa  AND p.specyfikator = :specyfikator AND p.cena = :cena"
 
-   )
+        )
 })
-
 @EntityListeners({PartiaSearchCacheUpdater.class})
 public class Partia implements ProductSeachCacheSearchable{
 
@@ -100,7 +100,7 @@ public class Partia implements ProductSeachCacheSearchable{
 	 * szynce lukusowej luksusowa to specyfikator
 	 */
 	@Nonnull
-	@NotNull
+	@NotEmpty
 	@Column(name="Specyfikator")
    private String specyfikator;
 
@@ -186,12 +186,18 @@ public class Partia implements ProductSeachCacheSearchable{
 		dataWprowadzenia = new Date();
 		recalculateIloscTeraz();
       cena = Utils.round(cena, 2);
+      iloscPocz = Utils.round(iloscPocz, 2);
+
 	}
 
 	@PreUpdate
 	public void preUpdate(){
 		//recalculateIloscTeraz();
       cena = Utils.round(cena, 2);
+      iloscPocz = Utils.round(iloscPocz, 2);
+      if(iloscTeraz!=null){
+         iloscTeraz = Utils.round(iloscTeraz, 2);
+      }
 	}
 
 

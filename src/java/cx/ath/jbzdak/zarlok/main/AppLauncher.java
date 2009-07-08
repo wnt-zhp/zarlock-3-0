@@ -2,9 +2,9 @@ package cx.ath.jbzdak.zarlok.main;
 
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.ui.error.DisplayErrorDetailsDialog;
+import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 
-import javax.swing.*;
 import java.sql.SQLException;
 
 /**
@@ -21,6 +21,14 @@ public class AppLauncher {
 	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
    public static void main(String[] args) throws Exception {
       try{
+         LOGGER.info("************************************************************");
+         LOGGER.info("************************************************************");
+         LOGGER.info("");
+         LOGGER.info("Starting zarlock ");
+         LOGGER.info("");
+         LOGGER.info("zarlockstart");          
+         LOGGER.info("************************************************************");
+         LOGGER.info("************************************************************");
          MainWindowModel model = new  MainWindowModel();
          MainWindowInitializer.initialize(model);
          model.startApp();

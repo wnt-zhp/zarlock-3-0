@@ -5,12 +5,21 @@
     <layout class="org.apache.log4j.PatternLayout"> 
       <param name="ConversionPattern" value="%d [%t] %-5p %c - %m%n"/> 
     </layout> 
-  </appender> 
+  </appender>
+    <appender name="R" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="logs/zarlock.log"/>
+        <param name="MaxFileSize" value="100KB"/>
+        <param name="MaxBackupIndex" value="100"/>
+        <layout class="org.apache.log4j.PatternLayout">
+          <param name="ConversionPattern" value="%d [%t] %-5p %c - %m%n"/> 
+        </layout>
+      </appender>
   <logger name="cx">
     <level value="debug"/> 
   </logger>
   <root> 
     <priority value ="FATAL" /> 
-    <appender-ref ref="CONSOLE" /> 
+    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="R" /> 
   </root> 
 </log4j:configuration>

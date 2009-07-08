@@ -11,11 +11,11 @@ import cx.ath.jbzdak.jpaGui.ui.query.FulltextJTtextField;
 import cx.ath.jbzdak.jpaGui.ui.query.GeneralFilter;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.entities.PartieUtils;
-import net.miginfocom.swing.MigLayout;
-
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import net.miginfocom.swing.MigLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -47,15 +47,15 @@ public class PartiePanelFilter extends JPanel{
    private final DatyFilter datyFilter = new DatyFilter();
 
    private final GeneralFilter<TableModel, Integer> wydanoFilter = new GeneralFilter<TableModel, Integer>(4) {
-      private final Pattern pat = Pattern.compile("(\\d+)\\[(\\d+)\\]");
+      private final Pattern pat = Pattern.compile("([\\d.,]+)\\[([.,\\d]+)\\]");
 
       @Override
       protected boolean include(Entry<? extends TableModel, ? extends Integer> entry, int index) {
          String value = entry.getStringValue(index);
-         //System.out.println(value);
+         System.out.println(value);
          Matcher m = pat.matcher(value);
          if(m.find()){
-            Double terazWMag = Double.valueOf(m.group(2));
+            Double terazWMag = Double.valueOf(m.group(1));
             return terazWMag > 0.01;
          }
          return false;
@@ -142,7 +142,7 @@ public class PartiePanelFilter extends JPanel{
          if(!p.getDataKsiegowania().before(data)){
             return false;
          }
-         if(!p.getDataWaznosci().after(data)){
+         if(p.getDataWaznosci()!=null && !p.getDataWaznosci().after(data)){
             return false;
          }
          if(p.getIloscTeraz().compareTo(BigDecimal.ZERO)<=0){

@@ -6,10 +6,14 @@ import cx.ath.jbzdak.jpaGui.ui.form.DAOForm;
 import cx.ath.jbzdak.jpaGui.ui.form.FormElement;
 import cx.ath.jbzdak.jpaGui.ui.form.OkButtonFormPanel;
 import cx.ath.jbzdak.zarlok.entities.Partia;
-
 import javax.annotation.Nullable;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 
 public class PartiaAddDialog extends JDialog {
 
@@ -95,12 +99,12 @@ public class PartiaAddDialog extends JDialog {
 					setVisible(false);
 				}
 			});
-         okButtonPanel.addOkActionTask(new Task<DAOForm>() {
-            @Override
-            public void doTask(@Nullable DAOForm daoForm, @Nullable Object... o) throws Exception {
-               completedSuccesfully = true;
-            }
-         });
+            okButtonPanel.addOkActionTask(new Task<DAOForm>() {
+                @Override
+                public void doTask(@Nullable DAOForm daoForm, @Nullable Object... o) throws Exception {
+                    completedSuccesfully = true;
+                }
+            });
 		}
 		return okButtonPanel;
 	}
@@ -117,9 +121,6 @@ public class PartiaAddDialog extends JDialog {
 		return partiaAddPanel.getForm();
 	}
 
-	public void clear() {
-		partiaAddPanel.clear();
-	}
 
    public boolean isCompletedSuccesfully() {
       return completedSuccesfully;

@@ -4,24 +4,23 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import org.hibernate.validator.NotNull;
-import org.hibernate.validator.Range;
 
 @Embeddable
 public class IloscOsob implements Cloneable{
 
 
 	@NotNull
-	@Range(min=0)
+	//@Range(min=0)
 	@Column(name = "ILOSC_UCZESTNIKOW")
 	private Integer iloscUczestnikow;
 
 	@NotNull
-	@Range(min=0)
+	//@Range(min=0)
 	@Column(name = "ILOSC_KADRY")
 	private Integer iloscKadry;
 
 	@NotNull
-	@Range(min=0)
+	//@Range(min=0)
 	@Column(name = "ILOSC_INNYCH")
 	private Integer iloscInnych;
 

@@ -4,10 +4,10 @@ import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.task.Task;
 import cx.ath.jbzdak.zarlok.main.MainWindowModel;
-import org.slf4j.Logger;
-
 import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
+import org.slf4j.Logger;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,7 +23,7 @@ public class Checkpoint extends Task<MainWindowModel>{
 
    @Override
    public void doTask(final @Nullable MainWindowModel mainWindowModel, @Nullable Object... o) throws Exception {
-      Timer timer = new Timer();
+      Timer timer = new Timer(true);
 
       long delay = 1000 * 60 * 15;
       timer.scheduleAtFixedRate(new TimerTask() {

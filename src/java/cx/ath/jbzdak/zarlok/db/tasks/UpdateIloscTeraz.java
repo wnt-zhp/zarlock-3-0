@@ -37,7 +37,7 @@ public class UpdateIloscTeraz extends Task<ZarlockDBManager> {
             update.executeUpdate();
          }
          em.getTransaction().commit();
-         LOG.info("Zmienion {} wierszy", results.size());
+         LOG.info("Zmienino {} wierszy", results.size());
       } catch (Exception e) {
          em.getTransaction().rollback();
          LOG.error("Error during updating iloscTeraz", e);

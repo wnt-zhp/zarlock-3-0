@@ -33,7 +33,7 @@ public class RootFolderDefault extends DefaultValue {
 	}
 
 	private String getFolderForWindows(Properties properties, String osName){
-		if(osName.contains("XP")){
+		if(osName.toLowerCase().contains("xp")){
 			return getFolderForXP(properties);
 		}else if(false){//TODO wykrywanie Visty
 			return getFolderForVista();
@@ -42,7 +42,7 @@ public class RootFolderDefault extends DefaultValue {
 	}
 
 	private String getFolderForXP(Properties properties){
-		String homeFolder = properties.getProperty("user.dir");
+		String homeFolder = properties.getProperty("user.home");
 		return homeFolder + File.separatorChar + "Application Data" + File.separatorChar + ROOT_FOLDER_NAME;
 	}
 
@@ -51,7 +51,7 @@ public class RootFolderDefault extends DefaultValue {
 	}
 
 	private String getFolderForDefaultWindows(Properties properties){
-		String homeFolder = properties.getProperty("user.dir");
+		String homeFolder = properties.getProperty("user.home");
 		return homeFolder + File.separatorChar + ROOT_FOLDER_NAME;
 	}
 }

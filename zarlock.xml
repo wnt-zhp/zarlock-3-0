@@ -51,7 +51,8 @@
 			<fileset dir="scripts" />
 		</copy>
 		<tar destfile="${dist}/zarlock.tar">
-			<fileset dir="${program}"/>
+			<fileset dir="${program}" excludes="${program}/zarlock.sh"/>
+            <tarfileset file="${program}/zarlock.sh" mode="555"/>
 		</tar>
 		<gzip src="${dist}/zarlock.tar" destfile="${dist}/zarlock.tar.gz"/>
 		<delete  file="${dist}/zarlock.tar"/>

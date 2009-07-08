@@ -1,11 +1,9 @@
 package cx.ath.jbzdak.zarlok.ui.partia;
 
+import cx.ath.jbzdak.jpaGui.genericListeners.DebugPropertyChangeListener;
+import cx.ath.jbzdak.jpaGui.ui.formatted.MyFormattedTextField;
 import cx.ath.jbzdak.zarlok.ui.formatted.formatters.CenaFormatter;
 import javax.swing.JComboBox;
-import org.jdesktop.beansbinding.Binding;
-import org.jdesktop.beansbinding.BindingGroup;
-import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 
 import java.beans.PropertyChangeSupport;
 
@@ -23,13 +21,22 @@ public class SelectTypComboBox extends JComboBox{
 
    CenaFormatter cenaFormatter;
 
+   MyFormattedTextField cenaField;
+
    boolean cenaJednostkowaSelected = true;
 
-   public SelectTypComboBox(CenaFormatter cenaFormatter) {
+   private SelectTypComboBox(CenaFormatter cenaFormatter) {
       super(new Object[]{CENA_JEDNOSTKOWA, CENA_SUMARYCZNA});
       setSelectedItem(CENA_JEDNOSTKOWA);
       setEditable(false);
       setCenaFormatter(cenaFormatter);
+
+   }
+
+   public SelectTypComboBox(MyFormattedTextField cenaField) {
+      this((CenaFormatter) cenaField.getFormatter());
+      this.cenaField = cenaField;
+      cenaField.addPropertyChangeListener(new DebugPropertyChangeListener());
    }
 
    public void setCenaFormatter(CenaFormatter cenaFormatter) {
@@ -43,6 +50,15 @@ public class SelectTypComboBox extends JComboBox{
       if(this.cenaJednostkowaSelected != cenaJednostkowaSelected){
          if(cenaFormatter != null){
             cenaFormatter.setCenaJednostkowa(cenaJednostkowaSelected);
+            if(cenaField!=null){
+               try {
+                  System.out.println("userEnstereText=" + cenaField.getUserEnteredText());
+                  cenaField.setValue(cenaFormatter.parseValue(cenaField.getUserEnteredText()));
+               } catch (Exception e) {
+                  e.printStackTrace();
+               }
+
+            }
          }
       }
       this.cenaJednostkowaSelected = cenaJednostkowaSelected;
@@ -53,4 +69,4 @@ public class SelectTypComboBox extends JComboBox{
       super.setSelectedItem(anObject);
       setCenaJednostkowaSelected(anObject == CENA_JEDNOSTKOWA);
    }
-}
+   }

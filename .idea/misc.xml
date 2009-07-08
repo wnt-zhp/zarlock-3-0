@@ -27,7 +27,7 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/../jpa-framework/pom.xml" />
+        <option value="P:/jpa-framework/pom.xml" />
       </list>
     </option>
   </component>
@@ -52,8 +52,5 @@
     <option name="myVersion" value="124" />
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
-  <UsedPathMacros>
-    <macro name="MAVEN_REPOSITORY" description="Maven Local Repostiry" />
-  </UsedPathMacros>
 </project>
 

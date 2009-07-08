@@ -22,19 +22,22 @@ import cx.ath.jbzdak.zarlok.ui.partia.StanMagazynuActionListener;
 import cx.ath.jbzdak.zarlok.ui.partia.StanMagazynuPanel;
 import cx.ath.jbzdak.zarlok.ui.produkt.ProductAddDialog;
 import cx.ath.jbzdak.zarlok.ui.produkt.ProductEditPanel;
-import org.slf4j.Logger;
-
 import javax.persistence.EntityManager;
 import javax.swing.*;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.filechooser.FileFilter;
-import java.awt.*;
+import org.slf4j.Logger;
+
+import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Desktop.Action;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class MainFrame extends JFrame {
 
@@ -188,7 +191,11 @@ public class MainFrame extends JFrame {
                   Transaction.execute(mainWindowModel.getManager(),new Transaction() {
                      @Override
                      public void doTransaction(EntityManager entityManager) throws Exception {
-                        getPartieListPanel().setPartie(entityManager.createQuery("SELECT p FROM Partia p JOIN FETCH p.wyprowadzenia").getResultList());                        
+                        List<Partia> partie = entityManager.createQuery("SELECT p FROM Partia p").getResultList();
+                        for (Partia partia : partie) {
+                           partia.getWyprowadzenia();
+                        }
+                        getPartieListPanel().setPartie(partie);                        
                      }
                   });
                }
@@ -241,7 +248,6 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                getPartiaAddDialog().getForm().setEntity(new Partia());
-               getPartiaAddDialog().clear();
                getPartiaAddDialog().getForm().rollback();
                getPartiaAddDialog().setVisible(true);
             }
@@ -417,6 +423,7 @@ public class MainFrame extends JFrame {
    private JFileChooser getOldDatabaseChooser() {
       if (oldDatabaseChooser == null) {
          oldDatabaseChooser = new JFileChooser();
+         oldDatabaseChooser.setFileHidingEnabled(false);
          oldDatabaseChooser.setFileFilter(new FileFilter(){
 
             @Override

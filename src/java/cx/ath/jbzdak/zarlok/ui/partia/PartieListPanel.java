@@ -4,6 +4,7 @@ import cx.ath.jbzdak.common.famfamicons.IconManager;
 import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.db.dao.RefreshType;
+import cx.ath.jbzdak.jpaGui.genericListeners.DebugBindingListener;
 import cx.ath.jbzdak.jpaGui.genericListeners.DoStuffMouseListener;
 import cx.ath.jbzdak.jpaGui.task.Task;
 import cx.ath.jbzdak.jpaGui.ui.error.ErrorDialog;
@@ -12,6 +13,12 @@ import cx.ath.jbzdak.jpaGui.ui.form.FormDialog;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.main.MainWindowModel;
 import cx.ath.jbzdak.zarlok.ui.wyprowadzenie.WyprowadzenieEditTable;
+import javax.annotation.Nullable;
+import javax.persistence.EntityManager;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
@@ -21,12 +28,6 @@ import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 
-import javax.annotation.Nullable;
-import javax.persistence.EntityManager;
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -48,7 +49,7 @@ public class PartieListPanel extends JPanel{
    private List<Partia> partie = Collections.emptyList();
 
    public PartieListPanel(MainWindowModel model) {
-      super(new MigLayout("fill, wrap 1", "[fill, grow]"));
+      super(new MigLayout("fill, wrap 1", "[fill, grow]", "[fill,grow][]"));
       windowModel = model;
       init();
       filter = new PartiePanelFilter(table);
@@ -72,7 +73,7 @@ public class PartieListPanel extends JPanel{
       tableBinding.addColumnBinding(ELProperty.create("${iloscTeraz}[${iloscPocz}]")).setColumnName("Ilość w magazynie")
               .setEditable(false);
       tableBinding.addColumnBinding(BeanProperty.create("numerFaktury")).setColumnName("Numer faktury").setEditable(true);
-      //tableBinding.addBindingListener(new DebugBindingListener());
+      tableBinding.addBindingListener(new DebugBindingListener());
       tableBinding.bind();
       table.setAutoCreateRowSorter(true);
       table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

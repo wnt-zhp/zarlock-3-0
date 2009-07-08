@@ -6,9 +6,9 @@ import cx.ath.jbzdak.jpaGui.ui.table.EditableTableModel;
 import cx.ath.jbzdak.zarlok.entities.Danie;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.entities.Wyprowadzenie;
-
 import javax.persistence.EntityManager;
-import javax.swing.*;
+import javax.swing.JTable;
+
 import java.math.MathContext;
 
 /**
@@ -34,7 +34,9 @@ public class WyprowadzeniaEditTableModel extends EditableTableModel<Wyprowadzeni
 
    @Override
    protected void removeEntry(Wyprowadzenie wyprowadzenie, EntityManager manager) {
+      partiaDao.beginTransaction();
       partiaDao.setEntity(wyprowadzenie.getPartia());
+      partiaDao.getEntity().getWyprowadzenia().remove(wyprowadzenie);
       partiaDao.getEntity().setIloscTeraz(partiaDao.getEntity().getIloscTeraz().add(wyprowadzenie.getIloscJednostek(), MathContext.DECIMAL32));
       partiaDao.update();
       if(wyprowadzenie.getDanie()!=null){
@@ -42,7 +44,18 @@ public class WyprowadzeniaEditTableModel extends EditableTableModel<Wyprowadzeni
          danieDao.getEntity().setKoszt(danieDao.getEntity().getKoszt().subtract(wyprowadzenie.getWartosc()));
          danieDao.update();
       }
+      partiaDao.closeTransaction();
    }
+
+//   @Override
+//   protected void removeEntry2(Wyprowadzenie wyprowadzenie, EntityManager manager) {
+//      System.out.println("WyprowadzeniaEditTableModel.removeEntry2");
+//      try {
+//         new UpdateIloscTeraz().doTask((ZarlockDBManager) dbManager);
+//      } catch (Exception e) {
+//         throw new RuntimeException(e);
+//      }
+//   }
 
    @Override
    protected void preMergeEntry(Wyprowadzenie wyprowadzenie, EntityManager entityManager) {

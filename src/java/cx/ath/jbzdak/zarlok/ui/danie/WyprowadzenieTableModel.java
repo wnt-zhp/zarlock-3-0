@@ -7,9 +7,8 @@ import cx.ath.jbzdak.zarlok.entities.Danie;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.entities.Wyprowadzenie;
 import cx.ath.jbzdak.zarlok.entities.WyprowadzenieUtils;
-
 import javax.persistence.EntityManager;
-import javax.swing.*;
+import javax.swing.JTable;
 
 public class WyprowadzenieTableModel extends EditableTableModel<Wyprowadzenie>{
 
@@ -19,9 +18,21 @@ public class WyprowadzenieTableModel extends EditableTableModel<Wyprowadzenie>{
 
 	private Danie danie;
 
-	@Override
-	protected void removeEntry(Wyprowadzenie t, EntityManager manager) {
+   @Override
+   protected void removeEntry(Wyprowadzenie wyprowadzenie, EntityManager manager) {
+
+   }
+
+   @Override
+	protected void removeEntry2(final Wyprowadzenie t, EntityManager manager) {
       t.setDanie(null);
+      Transaction.execute(dbManager, new Transaction() {
+         @Override
+         public void doTransaction(EntityManager entityManager) throws Exception {
+            Partia p = entityManager.find(Partia.class, t.getPartia().getId());
+            p.recalculateIloscTeraz();
+         }
+      });
 		danie = manager.find(Danie.class, danie.getId());
 //		danie.getWyprowadzenia().remove(t);
       danie.updateKoszt();

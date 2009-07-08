@@ -59,11 +59,11 @@ public class PartiaAdaptor extends DbAdaptor<List<ProductSearchCache>, AutoCompl
     }
 
 	private List<ProductSearchCache> filterResultList(List<ProductSearchCache> unfiltered, ProductSearchCache filter){
+	    Set<ProductSearchCache> pscSet = new TreeSet<ProductSearchCache>(new Compare());
 		if(unfiltered.size()<20){
 			return unfiltered;
 		}
 		if(filter.getJednostka()==null){
-			Set<ProductSearchCache> pscSet = new TreeSet<ProductSearchCache>(new Compare());
 			for(ProductSearchCache psc : unfiltered){
 				psc.setJednostka(null);
 				pscSet.add(psc);
@@ -74,7 +74,6 @@ public class PartiaAdaptor extends DbAdaptor<List<ProductSearchCache>, AutoCompl
 			}
 		}
 		if(filter.getSpecyfikator()==null){
-			Set<ProductSearchCache> pscSet = new TreeSet<ProductSearchCache>(new Compare());
 			for(ProductSearchCache psc : unfiltered){
 				psc.setSpecyfikator(null);
 				pscSet.add(psc);

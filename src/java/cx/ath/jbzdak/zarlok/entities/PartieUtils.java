@@ -94,6 +94,7 @@ public class PartieUtils {
             iloscTeraz = iloscTeraz.subtract(w.getIloscJednostek());
          }
       }
+      iloscTeraz = Utils.round(iloscTeraz, 2);
       return iloscTeraz;
    }
 

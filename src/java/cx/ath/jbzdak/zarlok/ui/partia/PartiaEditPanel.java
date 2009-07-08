@@ -13,9 +13,10 @@ import cx.ath.jbzdak.zarlok.ui.autocolmpete.adaptor.SpecyfikatorAdaptor;
 import cx.ath.jbzdak.zarlok.ui.formatted.formatters.CenaFormatter;
 import cx.ath.jbzdak.zarlok.ui.formatted.formatters.DataWaznosciFormatter;
 import cx.ath.jbzdak.zarlok.ui.formatted.formatters.IloscPoczFormatter;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
-
-import javax.swing.*;
 
 public class PartiaEditPanel extends JPanel{
 
@@ -67,7 +68,7 @@ public class PartiaEditPanel extends JPanel{
 		numerFakturyPanel = factory.decorateFormattedTextField("Numer faktury", "numerFaktury", new NotEmptyFormatter("Numer faktury nie może być pusty"));
 		form = factory.getCreatedForm();
 		form.setDao(new PartiaDAO(manager));
-      cenaJednostkowaSelectPanel = new FormPanelMock(new ReadOnlyFormElement<JComboBox>(new SelectTypComboBox(cenaFormatter), "Rodzaj ceny"));
+      cenaJednostkowaSelectPanel = new FormPanelMock(new ReadOnlyFormElement<JComboBox>(new SelectTypComboBox(cenaPanel.getFormElement().getRenderer()), "Rodzaj ceny"));
      // cenaJednostkowaSelectPanel.setConstraints(FormPanelConstraints.createCompactConstraints());
 		initGUI();
 	}

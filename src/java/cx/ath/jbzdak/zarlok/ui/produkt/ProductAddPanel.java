@@ -1,7 +1,6 @@
 package cx.ath.jbzdak.zarlok.ui.produkt;
 
 import cx.ath.jbzdak.jpaGui.Utils;
-import static cx.ath.jbzdak.jpaGui.Utils.isIdNull;
 import cx.ath.jbzdak.jpaGui.autoComplete.AutocompleteComboBox;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.jpaGui.ui.error.ErrorDialog;
@@ -91,11 +90,6 @@ public class ProductAddPanel extends JPanel {
       }
 		form.setEntity(p);
 		formatter.setProd(p);
-		if(isIdNull(p)){
-			productName.getFormElement().setEditable(true);
-		}else{
-			productName.getFormElement().setEditable(false);
-		}
 	}
 
 	public boolean commit() {
