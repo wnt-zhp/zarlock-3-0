@@ -1,13 +1,11 @@
 package cx.ath.jbzdak.zarlok.ui.produkt;
 
+import cx.ath.jbzdak.jpaGui.Utils;
 import static cx.ath.jbzdak.jpaGui.Utils.isIdNull;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.zarlok.db.dao.ProduktDAO;
 import cx.ath.jbzdak.zarlok.entities.Produkt;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.BeanProperty;
@@ -45,6 +43,8 @@ public class ProductEditPanel extends JPanel{
 
 	private JButton edytujZapiszButton;
 
+   private JButton usunButton;
+
 	public ProductEditPanel(DBManager manager){
 		this.manager = manager;
 		this.produktDAO = new ProduktDAO(manager);
@@ -55,7 +55,9 @@ public class ProductEditPanel extends JPanel{
 		productAddPanel.initialize();
 		productAddPanel.setBorder(BorderFactory.createTitledBorder("Produkt"));
 		edytujZapiszButton = new JButton("Edytuj");
-		productAddPanel.add(edytujZapiszButton, "w pref!");
+      usunButton = new JButton("Usuń");
+		productAddPanel.add(edytujZapiszButton, "w pref!, split 2");
+      productAddPanel.add(usunButton, "w pref!");
 		kartotekaPanel = new KartotekaPanel(produktDAO, manager);
 		kartotekaPanel.setBorder(BorderFactory.createTitledBorder("Kartoteka"));
 		stanPanel = new StanPanel(produktDAO);
@@ -122,6 +124,30 @@ public class ProductEditPanel extends JPanel{
 				}
 			}
 		});
+      usunButton.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+           // produktDAO.beginTransaction();
+            try{
+               if(!produktDAO.getEntity().getPartie().isEmpty()){
+                  JOptionPane.showMessageDialog(ProductEditPanel.this, "Nie można usunąć produktu do którego przypisano już partie", "Błąd", JOptionPane.ERROR_MESSAGE);
+                  produktDAO.closeTransaction();
+                  return;
+               }
+               produktDAO.remove();
+               produktDAO.closeTransaction();
+               setProdukt(new Produkt());
+               productSearchBox.getEditor().setText("");
+               productAddPanel.stopEditing();
+               productAddPanel.startViewing();
+               setEditable(false);
+               //produktDAO.closeTransaction();
+            }catch (RuntimeException re){
+               //produktDAO.rollbackIfActive();
+               throw re;
+            }
+         }
+      });
 	}
 
 	@SuppressWarnings("unchecked")
@@ -144,6 +170,7 @@ public class ProductEditPanel extends JPanel{
 	public void setEditable(boolean editable) {
 		this.editable = editable;
 		edytujZapiszButton.setText(editable?"Zapisz":"Edytuj");
+      usunButton.setEnabled(editable && produktDAO.getEntity()!=null && !Utils.isIdNull(produktDAO.getEntity()));
 	}
 
 	public void start(){
