@@ -26,6 +26,7 @@ import javax.persistence.EntityManager;
 import javax.swing.*;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.filechooser.FileFilter;
+import net.miginfocom.swing.MigLayout;
 import org.slf4j.Logger;
 
 import java.awt.BorderLayout;
@@ -301,12 +302,13 @@ public class MainFrame extends JFrame {
    private JMenuBar getJJMenuBar() {
       if (jJMenuBar == null) {
          jJMenuBar = new JMenuBar();
+         jJMenuBar.setLayout(new MigLayout("", "[][][]:push[][][pref!, align right]"));
          jJMenuBar.add(getJMenu());
          jJMenuBar.add(getProgramMenu());
          jJMenuBar.add(getDokumentyMenu());
-         jJMenuBar.add(Box.createHorizontalGlue());
          jJMenuBar.add(getJMenuItem());
          jJMenuBar.add(getJMenuItem1());
+         jJMenuBar.add(new JMenuItem("ver. 2.0.2"));
       }
       return jJMenuBar;
    }
