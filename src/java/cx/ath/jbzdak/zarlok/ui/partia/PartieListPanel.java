@@ -3,6 +3,7 @@ package cx.ath.jbzdak.zarlok.ui.partia;
 import cx.ath.jbzdak.common.famfamicons.IconManager;
 import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
+import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 import cx.ath.jbzdak.jpaGui.db.dao.RefreshType;
 import cx.ath.jbzdak.jpaGui.genericListeners.DebugBindingListener;
 import cx.ath.jbzdak.jpaGui.genericListeners.DoStuffMouseListener;
@@ -10,6 +11,7 @@ import cx.ath.jbzdak.jpaGui.task.Task;
 import cx.ath.jbzdak.jpaGui.ui.error.ErrorDialog;
 import cx.ath.jbzdak.jpaGui.ui.form.DAOForm;
 import cx.ath.jbzdak.jpaGui.ui.form.FormDialog;
+import cx.ath.jbzdak.zarlok.db.dao.PartiaDAO;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.main.MainWindowModel;
 import cx.ath.jbzdak.zarlok.ui.wyprowadzenie.WyprowadzenieEditTable;
@@ -124,6 +126,8 @@ public class PartieListPanel extends JPanel{
 
       final JMenuItem showWyprowadzeniaMenuItem = new JMenuItem("Podejrzyj wyprowadzenia ");
 
+      final JMenuItem usunPartie = new JMenuItem("Usuń partię");
+
       PopupMenu(){
 
          editPartiaMenuItem.addActionListener(new ActionListener() {
@@ -202,8 +206,35 @@ public class PartieListPanel extends JPanel{
                });
             }
          });
+         usunPartie.addActionListener(new ActionListener() {
+
+            private PatternBeanFormatter formatter = new PatternBeanFormatter("<html>Czy na pewno chcesz usunąć" +
+                    "partię <span style=\"font-weight: bold;\">{searchFormat}</span> ma ona: " +
+                    "<span style=\"font-weight: bold;\">{1}</span> wyprowadzeń</html>");
+
+            private PartiaDAO dao = new PartiaDAO(windowModel.getManager());
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(PartieListPanel.this, formatter.format(getSelectedPartia(), getSelectedPartia().getWyprowadzenia().size()))){
+                  Partia p = getSelectedPartia();
+                  removePartia(p);
+                  dao.setEntity(p);
+                  dao.remove();
+               }
+            }
+
+            private void removePartia(Partia p){
+               int row = table.getSelectedRow();
+               if(row == -1){
+                  throw new IllegalStateException();
+               }
+               getPartie().remove(getSelectedPartia());
+               //table.tableChanged(new TableModelEvent(table.getModel(), row, row, -1, TableModelEvent.DELETE));
+            }
+         });
          add(editPartiaMenuItem);
          add(showWyprowadzeniaMenuItem);
+         add(usunPartie);
       }
 
       private Partia getSelectedPartia(){

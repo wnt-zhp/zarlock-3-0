@@ -16,10 +16,14 @@ import cx.ath.jbzdak.zarlok.entities.Posilek;
 import cx.ath.jbzdak.zarlok.raport.RaportException;
 import cx.ath.jbzdak.zarlok.ui.iloscOsob.IloscOsobDialog;
 import cx.ath.jbzdak.zarlok.ui.posilek.PosilekAddDialog;
-
 import javax.persistence.EntityManager;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
+
+import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -122,7 +126,8 @@ class TreePopupMenu extends JPopupMenu {
          @Override
          public void actionPerformed(ActionEvent e) {
             IloscOsobDialog dialog = new IloscOsobDialog(SwingUtilities.getWindowAncestor(invoker));
-            final IloscOsob ilosc = dzien.getIloscOsob();
+            dialog.setModal(true);
+            final IloscOsob ilosc = dzien.getIloscOsob().clone();
             dialog.showDialog(ilosc);
             Transaction.execute(dbManager, new Transaction(){
                @Override

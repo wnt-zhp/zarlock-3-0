@@ -10,7 +10,6 @@
       <maximumStackSize value="32" />
       <properties />
       <executeOn event="beforeRun" target="dist" />
-      <executeOn event="beforeRun" target="dist" runConfigurationType="Application" runConfigurationName="Zarlock - dist" />
     </buildFile>
   </component>
 </project>
