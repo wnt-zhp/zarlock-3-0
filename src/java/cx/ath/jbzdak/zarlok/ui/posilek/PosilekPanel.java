@@ -6,11 +6,6 @@ import cx.ath.jbzdak.zarlok.entities.Danie;
 import cx.ath.jbzdak.zarlok.entities.Posilek;
 import cx.ath.jbzdak.zarlok.ui.danie.DaniaPanelCache;
 import cx.ath.jbzdak.zarlok.ui.danie.DaniePanel;
-import javax.persistence.EntityManager;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.BeanProperty;
@@ -18,7 +13,9 @@ import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.ELProperty;
 
-import java.awt.FlowLayout;
+import javax.persistence.EntityManager;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,7 +33,7 @@ public class PosilekPanel extends JPanel{
 
 	PatternBeanFormatter nazwaFormatter
 		= new PatternBeanFormatter("<html><font size=\"+1\"><strong>{nazwa}</strong> " +
-				"(koszt: {#0}{(costStrict)?\"\":\"<i>\"}{koszt}{#0}{(costStrict)?\"\":\"</i>\"}zł</font></html>)");
+				"(koszt: {#0}{(costStrict)?\"\":\"<i>\"}{koszt}{#0}{(costStrict)?\"\":\"</i>\"}zł</font>) -- id:{id}</html>)");
 
 	JPanel addDaniePanel;
 

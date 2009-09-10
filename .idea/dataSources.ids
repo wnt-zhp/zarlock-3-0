@@ -2,7 +2,7 @@
 <component name="dataSourceStorage">
   <DataSource DataSourceSourceName="LOCAL">
     <option name="DRIVER_CLASS" value="org.hsqldb.jdbcDriver" />
-    <option name="DATABASE_URL" value="jdbc:hsqldb:file:///home/repo/git/zarlock-2-0/zarlock-work/.zarlok/database/dbfile" />
+    <option name="DATABASE_URL" value="jdbc:hsqldb:file:/home/jb/.zarlok/database/dbfile" />
     <option name="DRIVER_PATH" />
     <option name="DATBASE_USERNAME" value="sa" />
     <option name="ENCODED_DATABASE_PASSWORD" value="" />

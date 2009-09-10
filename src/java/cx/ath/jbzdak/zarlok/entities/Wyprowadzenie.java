@@ -56,7 +56,7 @@ public class Wyprowadzenie implements Cloneable, ProductSeachCacheSearchable{
       this.danie = danie;
    }
 
-   @ManyToOne(optional = true)
+   @ManyToOne(optional = true, fetch = FetchType.LAZY)
    private Danie danie;
 
 	@PrePersist
@@ -200,7 +200,7 @@ public class Wyprowadzenie implements Cloneable, ProductSeachCacheSearchable{
       sb.append(", dataWyprowadzenia=").append(dataWyprowadzenia);
       sb.append(", tytulem='").append(tytulem).append('\'');
       sb.append(", dataUtworzenia=").append(dataUtworzenia);
-      sb.append(", danie=").append(danie);
+      //sb.append(", danie=").append(danie);
       sb.append('}');
       return sb.toString();
    }

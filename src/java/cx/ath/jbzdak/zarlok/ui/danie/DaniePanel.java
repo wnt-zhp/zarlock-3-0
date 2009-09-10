@@ -30,7 +30,7 @@ public class DaniePanel extends JPanel {
 
 	PatternBeanFormatter nazwaDaniaFormatter = new PatternBeanFormatter(
 			"<html><font size=\"+1\"><strong>{nazwa}</strong>:</font> "
-					+ "({#0}{(costStrict)?\"\":\"<i>\"}{koszt}{#0}{(costStrict)?\"\":\"</i>\"}zł)</html>");
+					+ "({#0}{(costStrict)?\"\":\"<i>\"}{koszt}{#0}{(costStrict)?\"\":\"</i>\"}zł) -- id:{id}</html>");
 
 	// Komponenty zależne od dania:
 

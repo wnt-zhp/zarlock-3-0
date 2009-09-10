@@ -1,14 +1,15 @@
 package cx.ath.jbzdak.zarlok.ui.wyprowadzenie;
 
+import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.jpaGui.db.dao.DAO;
 import cx.ath.jbzdak.jpaGui.ui.table.EditableTableModel;
 import cx.ath.jbzdak.zarlok.entities.Danie;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.entities.Wyprowadzenie;
-import javax.persistence.EntityManager;
-import javax.swing.JTable;
 
+import javax.persistence.EntityManager;
+import javax.swing.*;
 import java.math.MathContext;
 
 /**
@@ -41,8 +42,15 @@ public class WyprowadzeniaEditTableModel extends EditableTableModel<Wyprowadzeni
       partiaDao.update();
       if(wyprowadzenie.getDanie()!=null){
          danieDao.setEntity(wyprowadzenie.getDanie());
-         danieDao.getEntity().setKoszt(danieDao.getEntity().getKoszt().subtract(wyprowadzenie.getWartosc()));
-         danieDao.update();
+         danieDao.beginTransaction();
+         try{
+            danieDao.getEntity().setKoszt(danieDao.getEntity().getKoszt().subtract(wyprowadzenie.getWartosc()));
+            danieDao.update();
+            danieDao.closeTransaction();
+         }catch (RuntimeException e){
+            danieDao.rollback();
+            Utils.makeLogger().error(e.getMessage(),e);
+         }
       }
       partiaDao.closeTransaction();
    }

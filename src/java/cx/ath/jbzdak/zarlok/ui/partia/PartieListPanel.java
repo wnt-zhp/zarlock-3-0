@@ -5,7 +5,6 @@ import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 import cx.ath.jbzdak.jpaGui.db.dao.RefreshType;
-import cx.ath.jbzdak.jpaGui.genericListeners.DebugBindingListener;
 import cx.ath.jbzdak.jpaGui.genericListeners.DoStuffMouseListener;
 import cx.ath.jbzdak.jpaGui.task.Task;
 import cx.ath.jbzdak.jpaGui.ui.error.ErrorDialog;
@@ -15,12 +14,6 @@ import cx.ath.jbzdak.zarlok.db.dao.PartiaDAO;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.main.MainWindowModel;
 import cx.ath.jbzdak.zarlok.ui.wyprowadzenie.WyprowadzenieEditTable;
-import javax.annotation.Nullable;
-import javax.persistence.EntityManager;
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
@@ -30,6 +23,12 @@ import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 
+import javax.annotation.Nullable;
+import javax.persistence.EntityManager;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -75,7 +74,7 @@ public class PartieListPanel extends JPanel{
       tableBinding.addColumnBinding(ELProperty.create("${iloscTeraz}[${iloscPocz}]")).setColumnName("Ilość w magazynie")
               .setEditable(false);
       tableBinding.addColumnBinding(BeanProperty.create("numerFaktury")).setColumnName("Numer faktury").setEditable(true);
-      tableBinding.addBindingListener(new DebugBindingListener());
+      //tableBinding.addBindingListener(new DebugBindingListener());
       tableBinding.bind();
       table.setAutoCreateRowSorter(true);
       table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -215,12 +214,15 @@ public class PartieListPanel extends JPanel{
             private PartiaDAO dao = new PartiaDAO(windowModel.getManager());
             @Override
             public void actionPerformed(ActionEvent e) {
-               if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(PartieListPanel.this, formatter.format(getSelectedPartia(), getSelectedPartia().getWyprowadzenia().size()))){
-                  Partia p = getSelectedPartia();
+               Partia p = getSelectedPartia();
+               dao.beginTransaction();
+               dao.setEntity(getSelectedPartia());
+               if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(PartieListPanel.this, formatter.format(dao.getEntity(), dao.getEntity().getWyprowadzenia().size()))){
                   removePartia(p);
                   dao.setEntity(p);
                   dao.remove();
                }
+               dao.closeTransaction();
             }
 
             private void removePartia(Partia p){

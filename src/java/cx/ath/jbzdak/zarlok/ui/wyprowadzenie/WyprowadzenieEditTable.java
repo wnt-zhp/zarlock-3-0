@@ -1,7 +1,6 @@
 package cx.ath.jbzdak.zarlok.ui.wyprowadzenie;
 
 import cx.ath.jbzdak.jpaGui.db.DBManager;
-import cx.ath.jbzdak.jpaGui.genericListeners.DebugBindingListener;
 import cx.ath.jbzdak.jpaGui.ui.table.TableObjectProperty;
 import cx.ath.jbzdak.zarlok.entities.Wyprowadzenie;
 import org.jdesktop.beansbinding.AutoBinding;
@@ -34,7 +33,7 @@ public class WyprowadzenieEditTable extends JTable{
       binding.addColumnBinding(ELProperty.create("#{iloscJednostek} #{partia.jednostka}")).setEditable(false);
       binding.addColumnBinding(BeanProperty.create("tytulem")).setColumnName("Tytułem").setEditable(false);
       binding.addColumnBinding(new TableObjectProperty()).setColumnName("Akcje").setEditable(true);
-      binding.addBindingListener(new DebugBindingListener());
+      //binding.addBindingListener(new DebugBindingListener());
       model.setInsertNewRow(false);
       model.setEntities(Arrays.asList(new Wyprowadzenie()));
       binding.bind();

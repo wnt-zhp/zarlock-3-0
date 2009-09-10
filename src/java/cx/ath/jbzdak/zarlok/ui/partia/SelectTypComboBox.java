@@ -3,8 +3,8 @@ package cx.ath.jbzdak.zarlok.ui.partia;
 import cx.ath.jbzdak.jpaGui.genericListeners.DebugPropertyChangeListener;
 import cx.ath.jbzdak.jpaGui.ui.formatted.MyFormattedTextField;
 import cx.ath.jbzdak.zarlok.ui.formatted.formatters.CenaFormatter;
-import javax.swing.JComboBox;
 
+import javax.swing.*;
 import java.beans.PropertyChangeSupport;
 
 /**
@@ -52,8 +52,8 @@ public class SelectTypComboBox extends JComboBox{
             cenaFormatter.setCenaJednostkowa(cenaJednostkowaSelected);
             if(cenaField!=null){
                try {
-                  System.out.println("userEnstereText=" + cenaField.getUserEnteredText());
-                  cenaField.setValue(cenaFormatter.parseValue(cenaField.getUserEnteredText()));
+                  cenaField.attemptParseText();
+                  cenaField.formatValue();
                } catch (Exception e) {
                   e.printStackTrace();
                }
