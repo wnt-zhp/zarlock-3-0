@@ -1,10 +1,10 @@
 package cx.ath.jbzdak.zarlok.entities;
 
 import cx.ath.jbzdak.zarlok.entities.listeners.BlockConfigEntryUpdate;
-import javax.persistence.*;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotEmpty;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**

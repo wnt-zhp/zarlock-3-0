@@ -2,26 +2,26 @@ package cx.ath.jbzdak.zarlok.entities.listeners;
 
 import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
+import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.entities.ProductSearchCache;
-import cx.ath.jbzdak.zarlok.entities.Produkt;
-import javax.persistence.EntityManager;
-import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
 
-public class ProductSearchCacheUpdater {
+import javax.persistence.EntityManager;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+
+public class PartiaSearchCacheUpdater {
 
 	private static DBManager manager;
 
-	@PostPersist @PostUpdate
-	public void updatePSC(final Produkt p){
+	@PrePersist @PreUpdate
+	public void updatePSC(final Partia p){
         Transaction.execute(manager, new Transaction() {
             @Override
             public void doTransaction(EntityManager entityManager) throws Exception {
-              ProductSearchCache cache = new ProductSearchCache(p.getNazwa(), p.getJednostka(), p.getId());
-			  entityManager.persist(cache);
+                ProductSearchCache cache = new ProductSearchCache(p.getProdukt().getNazwa(), p.getSpecyfikator(), p.getJednostka(),  p.getProdukt().getId());
+                entityManager.persist(cache);
             }
         });
-
 	}
 
 	public static DBManager getManager() {
@@ -29,7 +29,6 @@ public class ProductSearchCacheUpdater {
 	}
 
 	public static void setManager(DBManager manager) {
-		ProductSearchCacheUpdater.manager = manager;
+		PartiaSearchCacheUpdater.manager = manager;
 	}
-
 }

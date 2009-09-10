@@ -1,11 +1,11 @@
 package cx.ath.jbzdak.zarlok.entities;
 
 import cx.ath.jbzdak.zarlok.entities.listeners.ProductSearchCacheUpdater;
-import javax.annotation.Nonnull;
-import javax.persistence.*;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.Range;
 
+import javax.annotation.Nonnull;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

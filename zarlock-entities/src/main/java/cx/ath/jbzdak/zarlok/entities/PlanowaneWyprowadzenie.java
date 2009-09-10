@@ -1,11 +1,11 @@
 package cx.ath.jbzdak.zarlok.entities;
 
 import cx.ath.jbzdak.zarlok.ui.danie.PlanowaneTable;
-import javax.persistence.*;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 
+import javax.persistence.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.math.BigDecimal;

@@ -1,8 +1,8 @@
 package cx.ath.jbzdak.zarlok.entities.listeners;
 
 import cx.ath.jbzdak.zarlok.entities.Partia;
-import javax.persistence.PrePersist;
 
+import javax.persistence.PrePersist;
 import java.util.Date;
 
 /**

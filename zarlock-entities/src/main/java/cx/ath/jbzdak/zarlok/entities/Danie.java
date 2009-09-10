@@ -1,12 +1,12 @@
 package cx.ath.jbzdak.zarlok.entities;
 
 import cx.ath.jbzdak.jpaGui.Utils;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.persistence.*;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;

@@ -1,9 +1,10 @@
 package cx.ath.jbzdak.zarlok.entities;
 
+import org.hibernate.validator.NotNull;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
-import org.hibernate.validator.NotNull;
 
 @Embeddable
 public class IloscOsob implements Cloneable{
