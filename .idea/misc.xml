@@ -28,6 +28,9 @@
     <option name="originalFiles">
       <list>
         <option value="P:/jpa-framework/pom.xml" />
+        <option value="$PROJECT_DIR$/zarlock-main/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/zarlock-entities/pom.xml" />
       </list>
     </option>
   </component>

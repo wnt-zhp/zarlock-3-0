@@ -2,8 +2,9 @@
 <project relativePaths="false" version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../jpa-framework/jpa-framework.iml" filepath="$PROJECT_DIR$/../jpa-framework/jpa-framework.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-2-0.iml" filepath="$PROJECT_DIR$/zarlock-2-0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-entities/zarlock-entities.iml" filepath="$PROJECT_DIR$/zarlock-entities/zarlock-entities.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-main/zarlock-main.iml" filepath="$PROJECT_DIR$/zarlock-main/zarlock-main.iml" />
     </modules>
   </component>
 </project>
