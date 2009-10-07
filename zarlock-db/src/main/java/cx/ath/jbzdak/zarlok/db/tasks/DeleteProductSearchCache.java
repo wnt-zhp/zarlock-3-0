@@ -3,9 +3,9 @@ package cx.ath.jbzdak.zarlok.db.tasks;
 import static cx.ath.jbzdak.jpaGui.Utils.makeLogger;
 import cx.ath.jbzdak.jpaGui.task.Task;
 import cx.ath.jbzdak.zarlok.db.ZarlockDBManager;
-import cx.ath.jbzdak.zarlok.entities.ProductSearchCache;
-import javax.persistence.EntityManager;
 import org.slf4j.Logger;
+
+import javax.persistence.EntityManager;
 
 /**
  * Task czyszczący kesz {@link ProductSearchCache}. Encje te

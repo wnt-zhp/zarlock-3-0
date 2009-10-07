@@ -79,7 +79,7 @@ public class DBBackup {
       } catch (IOException e) {
          throw new RuntimeException(e);
       }
-      return zipFile;
+      return zipgoogFile;
    }
 
    private void appendFile(File file) throws IOException {

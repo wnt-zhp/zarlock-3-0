@@ -7,9 +7,7 @@
         <version>3.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>cx.ath.jbzdak.zarlock</groupId>
     <artifactId>zarlock-entities</artifactId>
-    <version>3.0</version>
     <dependencies>
         <dependency>
             <groupId>hibernate-entitymanager</groupId>
