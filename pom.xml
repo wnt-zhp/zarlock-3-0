@@ -2,52 +2,69 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <groupId>cx.ath.jbzdak.zarlock</groupId>
+    <artifactId>zarlock-main</artifactId>
     <packaging>pom</packaging>
+    <version>3.0</version>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.6</source>
+                        <target>1.6</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
     <modules>
         <module>zarlock-entities</module>
+        <module>zarlock-importer</module>
+        <module>zarlock-db</module>
+        <module>zarlock-config</module>
+        <module>zarlock-ui</module>
+        <module>zarlock-raport</module>
+        <module>zarlock-runners</module>
+        <module>zarlock-assembly</module>
     </modules>
-    <parent>
-        <groupId>cx.ath.jbzdak.zarlock</groupId>
-        <artifactId>zarlock-main</artifactId>
-        <version>3.0</version>
-        <relativePath>zarlock-main</relativePath>
-    </parent>
-    <artifactId>zarlock-program</artifactId>
-    <version>1.0</version>
+    <repositories>
+        <repository>
+            <id>skimble-private</id>
+            <url>http://localhost:8081/nexus/content/groups/private/</url>
+        </repository>
+    </repositories>
     <dependencies>
-        <dependency>
-            <groupId>cx.ath.jbzdak.gui</groupId>
-            <artifactId>jpa-framework</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.4.0.GA</version>
-        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.5.8</version>
         </dependency>
-        <dependency>
-            <groupId>hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>1.8.0.7</version>
-        </dependency>
-        <dependency>
-            <groupId>com.lowagie</groupId>
-            <artifactId>itext-rtf</artifactId>
-            <version>2.1.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.lowagie</groupId>
-            <artifactId>itext</artifactId>
-            <version>2.1.5</version>
-        </dependency>
-        <dependency>
-            <groupId>cx.ath.jbzdak.zarlock</groupId>
-            <artifactId>zarlock10</artifactId>
+          <dependency>
+            <groupId>cx.ath.jbzdak.gui</groupId>
+            <artifactId>jpa-framework</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.5.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.5.6</version>
+            </dependency>
+          <dependency>
+            <groupId>cx.ath.jbzdak.gui</groupId>
+            <artifactId>jpa-framework</artifactId>
+             <version>2.0</version>
+        </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

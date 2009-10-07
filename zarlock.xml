@@ -48,7 +48,7 @@
 			<fileset file="${jpa-framework.location}/dist/jpa-framework.jar"/>
 		</copy>
 		<copy includeemptydirs="false" todir="${program}">
-			<fileset dir="scripts" />
+			<fileset dir="zarlock-assembly/scripts" />
 		</copy>
 		<tar destfile="${dist}/zarlock.tar">
 			<fileset dir="${program}" excludes="${program}/zarlock.sh"/>
@@ -78,7 +78,7 @@
 			<fileset dir="resources/java" excludes="**/*.launch, **/*.java" />
 		</copy>
 		<copy todir="${program}">
-			<fileset file="zarlock-splash/splash.bmp"> </fileset>
+			<fileset file="zarlock-assembly/zarlock-splash/splash.bmp"> </fileset>
 		</copy>
 		<copy includeemptydirs="false" todir="${build}">
 			<fileset dir="resources/test" excludes="**/*.launch, **/*.java" />

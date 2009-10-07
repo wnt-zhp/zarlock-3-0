@@ -31,6 +31,14 @@
         <option value="$PROJECT_DIR$/zarlock-main/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/zarlock-entities/pom.xml" />
+        <option value="$PROJECT_DIR$/zarlock-importer/pom.xml" />
+        <option value="$PROJECT_DIR$/zarlock-db/pom.xml" />
+        <option value="$PROJECT_DIR$/config/pom.xml" />
+        <option value="$PROJECT_DIR$/zarlock-config/pom.xml" />
+        <option value="$PROJECT_DIR$/zarlock-ui/pom.xml" />
+        <option value="$PROJECT_DIR$/zarlock-raport/pom.xml" />
+        <option value="$PROJECT_DIR$/zarlock-runners/pom.xml" />
+        <option value="$PROJECT_DIR$/zarlock-assembly/pom.xml" />
       </list>
     </option>
   </component>
