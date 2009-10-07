@@ -23,7 +23,6 @@
     </build>
     <modules>
         <module>zarlock-entities</module>
-        <module>zarlock-importer</module>
         <module>zarlock-db</module>
         <module>zarlock-config</module>
         <module>zarlock-ui</module>
@@ -95,6 +94,11 @@
             <dependency>
                 <groupId>cx.ath.jbzdak.zarlock</groupId>
                 <artifactId>zarlok-config</artifactId>
+                <version>3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>cx.ath.jbzdak.zarlock</groupId>
+                <artifactId>zarlock-db</artifactId>
                 <version>3.0</version>
             </dependency>
             <!-- JPA Gui dependencies -->

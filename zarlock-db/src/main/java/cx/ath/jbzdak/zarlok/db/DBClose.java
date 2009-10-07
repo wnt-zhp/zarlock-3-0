@@ -1,13 +1,12 @@
 package cx.ath.jbzdak.zarlok.db;
 
 import static cx.ath.jbzdak.jpaGui.Utils.makeLogger;
-import cx.ath.jbzdak.jpaGui.db.DBState;
 import cx.ath.jbzdak.jpaGui.task.TasksExecutor;
 import cx.ath.jbzdak.zarlok.db.tasks.CleanImportTables;
 import cx.ath.jbzdak.zarlok.db.tasks.DeleteProductSearchCache;
-import javax.persistence.EntityManagerFactory;
 import org.slf4j.Logger;
 
+import javax.persistence.EntityManagerFactory;
 import java.sql.SQLException;
 
 
@@ -46,7 +45,6 @@ public class DBClose {
     */
    public void stopDatabase(ZarlockDBManager manager) throws Exception{
       this.manager = manager;
-      manager.fireStateWillChange(DBState.CLOSED);
       doPreStop();
       doStop();
       doPostStop();

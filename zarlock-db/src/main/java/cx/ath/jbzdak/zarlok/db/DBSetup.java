@@ -1,13 +1,11 @@
 package cx.ath.jbzdak.zarlok.db;
 
 import static cx.ath.jbzdak.jpaGui.Utils.makeLogger;
-import cx.ath.jbzdak.jpaGui.db.DBState;
 import cx.ath.jbzdak.jpaGui.task.TasksExecutor;
 import cx.ath.jbzdak.zarlok.config.ConfigurationException;
 import cx.ath.jbzdak.zarlok.db.tasks.*;
 import cx.ath.jbzdak.zarlok.entities.listeners.PartiaSearchCacheUpdater;
 import cx.ath.jbzdak.zarlok.entities.listeners.ProductSearchCacheUpdater;
-import cx.ath.jbzdak.zarlok.ui.danie.DaniaPanelCache;
 import org.slf4j.Logger;
 
 import javax.persistence.EntityManagerFactory;
@@ -45,7 +43,6 @@ public class DBSetup {
 		dbSetup.addTask(new FillProductCacheTask());
 		dbSetup.addTask(new InitListenerDbManager(ProductSearchCacheUpdater.class));
 		dbSetup.addTask(new InitListenerDbManager(PartiaSearchCacheUpdater.class));
-		dbSetup.addTask(new InitListenerDbManager(DaniaPanelCache.class));
 		dbSetup.addTask(new UpdateIloscTeraz());
 		dbSetup.addTask(new CleanImportTables());
       dbSetup.addTask(new UpdateKoszty());
@@ -81,7 +78,6 @@ public class DBSetup {
 			initTasksAfterStart();
 		}
 		dbSetup();
-      manager.fireStateWillChange(DBState.OPEN);
 	}
 
    private void initBeforeStartSetup() throws Exception {

@@ -2,7 +2,6 @@ package cx.ath.jbzdak.zarlok.ui.partia;
 
 import cx.ath.jbzdak.jpaGui.autoComplete.AutocompleteComboBox;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
-import cx.ath.jbzdak.jpaGui.ui.form.*;
 import cx.ath.jbzdak.jpaGui.ui.formatted.MyFormattedTextField;
 import cx.ath.jbzdak.jpaGui.ui.formatted.NotEmptyFormatter;
 import cx.ath.jbzdak.jpaGui.ui.formatted.formatters.DateFormatter;
