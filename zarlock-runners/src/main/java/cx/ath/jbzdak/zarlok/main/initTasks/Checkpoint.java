@@ -1,7 +1,7 @@
 package cx.ath.jbzdak.zarlok.main.initTasks;
 
-import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
+import cx.ath.jbzdak.jpaGui.db.Transaction;
 import cx.ath.jbzdak.jpaGui.task.Task;
 import cx.ath.jbzdak.zarlok.main.MainWindowModel;
 import org.slf4j.Logger;

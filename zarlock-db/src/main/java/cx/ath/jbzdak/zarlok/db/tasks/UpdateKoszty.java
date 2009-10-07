@@ -1,15 +1,15 @@
 package cx.ath.jbzdak.zarlok.db.tasks;
 
-import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
-import cx.ath.jbzdak.jpaGui.db.DBManager;
+import cx.ath.jbzdak.jpaGui.db.JPATransaction;
 import cx.ath.jbzdak.jpaGui.task.Task;
+import cx.ath.jbzdak.zarlok.db.ZarlockDBManager;
 import cx.ath.jbzdak.zarlok.entities.IloscOsob;
+import org.slf4j.Logger;
+
 import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import org.slf4j.Logger;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: 2009-04-21
  */
-public class UpdateKoszty extends Task<DBManager>{
+public class UpdateKoszty extends Task<ZarlockDBManager>{
 
    private static final Logger LOGGER = Utils.makeLogger();
 
@@ -26,8 +26,8 @@ public class UpdateKoszty extends Task<DBManager>{
    }
 
    @Override
-   public void doTask(DBManager manager, @Nullable Object... o) throws Exception {
-      EntityManager em = manager.createEntityManager();
+   public void doTask(ZarlockDBManager manager, @Nullable Object... o) throws Exception {
+      EntityManager em = manager.createProvider();
       try{
          updateDania(em);
          updateKoszt(em, "fetchPosilekKoszt", "updatePosilkiKoszt");
@@ -38,7 +38,7 @@ public class UpdateKoszty extends Task<DBManager>{
    }
 
    private void updateDania(EntityManager em) {
-      Transaction.execute(em, new Transaction() {
+      JPATransaction.execute(em, new JPATransaction() {
          @Override
          public void doTransaction(EntityManager entityManager) {
             Query q = entityManager.createQuery("SELECT d.id, d.posilek.iloscOsob FROM Danie d");
@@ -58,7 +58,7 @@ public class UpdateKoszty extends Task<DBManager>{
    }
 
    private void updateKoszt(EntityManager entityManager, final String fetchQueryName, final String updateQueryName){
-      Transaction.execute(entityManager, new Transaction() {
+      JPATransaction.execute(entityManager, new JPATransaction() {
          @Override
          public void doTransaction(EntityManager entityManager) {
             Query q = entityManager.createNamedQuery(fetchQueryName);

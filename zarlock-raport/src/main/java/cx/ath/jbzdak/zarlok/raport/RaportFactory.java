@@ -1,10 +1,10 @@
 package cx.ath.jbzdak.zarlok.raport;
 
 import cx.ath.jbzdak.jpaGui.ReturnableTransaction;
-import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.TransactionException;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
+import cx.ath.jbzdak.jpaGui.db.Transaction;
 import cx.ath.jbzdak.zarlok.entities.Dzien;
 import cx.ath.jbzdak.zarlok.raport.kartoteki.KartotekaRaportFactory;
 import cx.ath.jbzdak.zarlok.raport.stany.StanMagazynuFactory;

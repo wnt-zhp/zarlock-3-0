@@ -1,9 +1,9 @@
 package cx.ath.jbzdak.zarlok.raport.kartoteki;
 
 import cx.ath.jbzdak.jpaGui.ReturnableTransaction;
-import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
+import cx.ath.jbzdak.jpaGui.db.Transaction;
 import cx.ath.jbzdak.zarlok.config.Preferences;
 import cx.ath.jbzdak.zarlok.raport.Raport;
 import cx.ath.jbzdak.zarlok.raport.RaportException;

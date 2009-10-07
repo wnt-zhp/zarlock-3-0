@@ -1,9 +1,9 @@
 package cx.ath.jbzdak.zarlok.ui.partia;
 
 import cx.ath.jbzdak.common.famfamicons.IconManager;
-import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
+import cx.ath.jbzdak.jpaGui.db.Transaction;
 import cx.ath.jbzdak.jpaGui.db.dao.RefreshType;
 import cx.ath.jbzdak.jpaGui.genericListeners.DoStuffMouseListener;
 import cx.ath.jbzdak.jpaGui.task.Task;

@@ -1,10 +1,10 @@
 package cx.ath.jbzdak.zarlok.ui.dzien;
 
 import cx.ath.jbzdak.common.famfamicons.IconManager;
-import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
+import cx.ath.jbzdak.jpaGui.db.Transaction;
 import cx.ath.jbzdak.jpaGui.ui.error.DisplayErrorDetailsDialog;
 import cx.ath.jbzdak.jpaGui.ui.error.ErrorHandlers;
 import cx.ath.jbzdak.zarlok.db.ZarlockDBManager;

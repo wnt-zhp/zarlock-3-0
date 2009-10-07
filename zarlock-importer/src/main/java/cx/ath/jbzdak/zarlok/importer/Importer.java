@@ -1,11 +1,9 @@
 package cx.ath.jbzdak.zarlok.importer;
 
-import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
+import cx.ath.jbzdak.jpaGui.db.Transaction;
 import cx.ath.jbzdak.zarlok.db.tasks.CleanImportTables;
 import cx.ath.jbzdak.zarlok.entities.*;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import zzDataBase.Day;
 import zzDataBase.MealExpenditure;
 import zzDataBase.Mealv3;
@@ -14,6 +12,8 @@ import zzEx.ZZIllegalEx;
 import zzMyDate.MyDate;
 import zzProduct.Product;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.math.BigDecimal;
 import java.util.*;
 

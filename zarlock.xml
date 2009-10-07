@@ -17,7 +17,7 @@
 	<!-- set global properties for this build -->
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.6"/>
-    <property name="source" value="1.6"/>
+    <property name="source"      value="1.6"/>
 	<!-- where the source files are -->
 	<property name="src" location="src" />
 

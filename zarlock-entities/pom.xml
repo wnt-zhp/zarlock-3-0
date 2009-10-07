@@ -10,6 +10,23 @@
     <artifactId>zarlock-entities</artifactId>
     <dependencies>
         <dependency>
+            <groupId>cx.ath.jbzdak.gui</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cx.ath.jbzdak.gui</groupId>
+            <artifactId>db-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cx.ath.jbzdak.gui</groupId>
+            <artifactId>db-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cx.ath.jbzdak.gui</groupId>
+            <artifactId>beanFormatter</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>hibernate-entitymanager</groupId>
             <artifactId>ejb3-persistence</artifactId>
             <version>3.3.2.GA</version>
@@ -20,7 +37,14 @@
             <version>3.0.0.ga</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-math</groupId>
+            <artifactId>commons-math</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

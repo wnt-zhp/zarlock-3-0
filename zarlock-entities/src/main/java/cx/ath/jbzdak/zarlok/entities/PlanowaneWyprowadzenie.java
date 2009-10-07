@@ -1,6 +1,5 @@
 package cx.ath.jbzdak.zarlok.entities;
 
-import cx.ath.jbzdak.zarlok.ui.danie.PlanowaneTable;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
@@ -84,7 +83,6 @@ public class PlanowaneWyprowadzenie implements Cloneable, ProductSeachCacheSearc
 	}
 
 	/**
-	 * Używane przez {@link PlanowaneTable}
     * @return .
 	 */
 	@Transient

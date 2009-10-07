@@ -1,7 +1,8 @@
 package cx.ath.jbzdak.zarlok.db;
 
-import cx.ath.jbzdak.jpaGui.Transaction;
+import cx.ath.jbzdak.jpaGui.db.JPATransaction;
 import cx.ath.jbzdak.jpaGui.task.Task;
+
 import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 
@@ -16,7 +17,7 @@ public class SetCollation extends Task<ZarlockDBManager> {
 
    @Override
    public void doTask(@Nullable ZarlockDBManager manager, @Nullable Object... o) throws Exception {
-      Transaction.execute(manager, new Transaction() {
+      JPATransaction.execute(manager, new JPATransaction() {
          @Override
          public void doTransaction(EntityManager entityManager) throws Exception {
             entityManager.createNativeQuery("SET DATABASE COLLATION \"Polish\"").executeUpdate();

@@ -1,8 +1,8 @@
 package cx.ath.jbzdak.zarlok.ui.danie;
 
-import cx.ath.jbzdak.jpaGui.Transaction;
 import static cx.ath.jbzdak.jpaGui.Utils.makeLogger;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
+import cx.ath.jbzdak.jpaGui.db.Transaction;
 import cx.ath.jbzdak.jpaGui.ui.formatted.ParsingException;
 import cx.ath.jbzdak.jpaGui.ui.formatted.formatters.BigDecimalFormatter;
 import cx.ath.jbzdak.zarlok.ui.autocolmpete.adaptor.PartiaAdaptor;

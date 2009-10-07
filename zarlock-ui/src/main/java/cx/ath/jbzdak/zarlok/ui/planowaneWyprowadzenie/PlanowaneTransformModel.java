@@ -1,11 +1,11 @@
 package cx.ath.jbzdak.zarlok.ui.planowaneWyprowadzenie;
 
 import cx.ath.jbzdak.jpaGui.ReturnableTransaction;
-import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.autoComplete.AutoCompleteValueHolder;
 import cx.ath.jbzdak.jpaGui.autoComplete.FilterAdapter;
 import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
+import cx.ath.jbzdak.jpaGui.db.Transaction;
 import cx.ath.jbzdak.jpaGui.ui.formatted.ParsingException;
 import cx.ath.jbzdak.jpaGui.ui.formatted.formatters.BigDecimalFormatter;
 import cx.ath.jbzdak.jpaGui.ui.query.AbstractQuery;

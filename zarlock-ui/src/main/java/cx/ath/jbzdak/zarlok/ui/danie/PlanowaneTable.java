@@ -1,9 +1,9 @@
 package cx.ath.jbzdak.zarlok.ui.danie;
 
-import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.autoComplete.AutoCompleteValueHolder;
 import cx.ath.jbzdak.jpaGui.autoComplete.AutocompleteComboBox;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
+import cx.ath.jbzdak.jpaGui.db.Transaction;
 import cx.ath.jbzdak.jpaGui.ui.table.AutoCompleteComboBoxEditor;
 import cx.ath.jbzdak.jpaGui.ui.table.TableObjectProperty;
 import cx.ath.jbzdak.zarlok.entities.Danie;

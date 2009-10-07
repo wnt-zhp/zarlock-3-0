@@ -1,6 +1,6 @@
 package cx.ath.jbzdak.zarlok.entities;
 
-import cx.ath.jbzdak.jpaGui.ui.formatted.ParsingException;
+import cx.ath.jbzdak.jpaGui.ParsingException;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.regex.Matcher;

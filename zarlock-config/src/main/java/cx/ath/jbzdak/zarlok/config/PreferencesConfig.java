@@ -5,7 +5,7 @@ import cx.ath.jbzdak.jpaGui.app.ConfigEntry;
 import cx.ath.jbzdak.jpaGui.app.ConfigurationSource;
 import cx.ath.jbzdak.jpaGui.app.DefaultConfigEntry;
 import static cx.ath.jbzdak.zarlok.config.PreferencesKeys.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +28,7 @@ public class PreferencesConfig{
 
    private static final Properties PROPERTIES;
 
-	private static final Logger log = Logger.getLogger(PreferencesConfig.class);
+	private static final Logger log = Utils.makeLogger(); 
 
    public static ResourceBundle getResourceBundle() {
       return RESOURCE_BUNDLE;
@@ -95,10 +95,21 @@ public class PreferencesConfig{
             try {
                saveProperties();
             } catch (ConfigurationException e) {
-               log.fatal("Error while saving configuration", e);
+               log.error("Error while saving configuration", e);
             }
          }
+
+         @Override
+         public boolean isKeyWritable(String s) {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+         }
+
+         @Override
+         public boolean isReadOnly() {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+         }
       };
+
    }
 
    @edu.umd.cs.findbugs.annotations.SuppressWarnings("OBL_UNSATISFIED_OBLIGATION")
@@ -118,12 +129,12 @@ public class PreferencesConfig{
          try {
             os.close();
          } catch (Exception e) {
-            log.debug(e);
+            log.debug("", e);
          }
          try {
             is.close();
          } catch (IOException e) {
-            log.debug(e);
+            log.debug("", e);
          }
       }
    }
@@ -133,7 +144,7 @@ public class PreferencesConfig{
       try {
          PROPERTIES.loadFromXML(new FileInputStream(getPropertiesFile()));
       } catch (IOException e) {
-         log.fatal("Exception while loading properties", e);
+         log.error("Exception while loading properties", e);
       }
    }
 

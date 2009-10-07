@@ -1,14 +1,13 @@
 package cx.ath.jbzdak.zarlok.db;
 
 import cx.ath.jbzdak.jpaGui.Utils;
-import cx.ath.jbzdak.jpaGui.db.AbstractDBManager;
+import cx.ath.jbzdak.jpaGui.db.JpaDbManager;
 import cx.ath.jbzdak.zarlok.config.Preferences;
-import cx.ath.jbzdak.zarlok.main.MainWindowModel;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,11 +23,10 @@ import java.util.Map;
  *
  * bazę danych otwiera się za pomocą {@link DBSetup} a zamyka za pomocą {@link DBClose}.
  *
- * @see MainWindowModel
  * @author jb
  *
  */
-public class ZarlockDBManager extends AbstractDBManager{
+public class ZarlockDBManager extends JpaDbManager{
 
    private static final Logger LOGGER = Utils.makeLogger();
 

@@ -1,8 +1,8 @@
 package cx.ath.jbzdak.zarlok.importer;
 
 import cx.ath.jbzdak.zarlok.entities.Partia;
-import javax.persistence.*;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;

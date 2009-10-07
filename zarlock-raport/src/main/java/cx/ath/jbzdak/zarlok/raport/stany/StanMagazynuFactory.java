@@ -1,8 +1,8 @@
 package cx.ath.jbzdak.zarlok.raport.stany;
 
 import cx.ath.jbzdak.jpaGui.ReturnableTransaction;
-import cx.ath.jbzdak.jpaGui.Transaction;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
+import cx.ath.jbzdak.jpaGui.db.Transaction;
 import cx.ath.jbzdak.zarlok.config.Preferences;
 import cx.ath.jbzdak.zarlok.entities.Dzien;
 import cx.ath.jbzdak.zarlok.raport.Raport;

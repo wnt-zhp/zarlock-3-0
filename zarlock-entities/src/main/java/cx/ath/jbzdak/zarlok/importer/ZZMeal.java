@@ -1,9 +1,8 @@
-
 package cx.ath.jbzdak.zarlok.importer;
 
 import cx.ath.jbzdak.zarlok.entities.Posilek;
-import javax.persistence.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
