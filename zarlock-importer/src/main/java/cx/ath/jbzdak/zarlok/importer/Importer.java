@@ -1,8 +1,10 @@
 package cx.ath.jbzdak.zarlok.importer;
 
-import cx.ath.jbzdak.jpaGui.db.DBManager;
+
 import cx.ath.jbzdak.jpaGui.db.Transaction;
+import cx.ath.jbzdak.jpaGui.db.JPATransaction;
 import cx.ath.jbzdak.zarlok.db.tasks.CleanImportTables;
+import cx.ath.jbzdak.zarlok.db.ZarlockDBManager;
 import cx.ath.jbzdak.zarlok.entities.*;
 import zzDataBase.Day;
 import zzDataBase.MealExpenditure;
@@ -20,7 +22,7 @@ import java.util.*;
 public class Importer {
 
 
-	public static final void doImport(DBManager manager){
+	public static final void doImport(ZarlockDBManager manager){
 		try {
 			feedProductsIntoDb(manager);
 			feedMealsIntoDb(manager);
@@ -39,9 +41,9 @@ public class Importer {
 	}
 
 
-	private static void generateExpenditures(DBManager manager) {
+	private static void generateExpenditures(ZarlockDBManager manager) {
 		final List<ZZMeal> meals = new ArrayList<ZZMeal>();
-		Transaction.execute(manager.createEntityManager(), new Transaction(){
+		JPATransaction.execute(manager.createEntityManager(), new Transaction(){
 			{closeEntityManager=true;}
 			@SuppressWarnings("unchecked")
 			@Override
@@ -81,7 +83,7 @@ public class Importer {
 	}
 
 
-	private static void geenrateMeals(DBManager manager) {
+	private static void geenrateMeals(ZarlockDBManager manager) {
 		final List<Date> dni = new ArrayList<Date>();
 		Transaction.execute(manager.createEntityManager(), new Transaction(){
 			{closeEntityManager=true;}
@@ -114,7 +116,7 @@ public class Importer {
 		}
 	}
 
-	private static void generateProducts(DBManager manager) {
+	private static void generateProducts(ZarlockDBManager manager) {
 		final List<String> nazwy = new ArrayList<String>();
 		Transaction.execute(manager.createEntityManager(), new Transaction(){
 			{closeEntityManager=true;}
@@ -157,7 +159,7 @@ public class Importer {
 		}
 	}
 
-	private static final void feedProductsIntoDb(DBManager manager) {
+	private static final void feedProductsIntoDb(ZarlockDBManager manager) {
 		final Collection<Product> products = StaticContent.sc.getDataBase()
 				.getDatabase().values();
 
@@ -184,7 +186,7 @@ public class Importer {
 
 	}
 
-	private static final void feedMealsIntoDb(DBManager manager){
+	private static final void feedMealsIntoDb(ZarlockDBManager manager){
 		final Collection<Day> days = StaticContent.sc.getDays();
 		for(Day d : days){
 			for(Mealv3 mealv3 : d.getMeals()){
@@ -194,7 +196,7 @@ public class Importer {
 
 	}
 
-	private static final void feedOneMeal(DBManager manager, final Mealv3 mealv3){
+	private static final void feedOneMeal(ZarlockDBManager manager, final Mealv3 mealv3){
 		Transaction.execute(manager.createEntityManager(), new Transaction(){
 			{closeEntityManager = true;}
 			@Override

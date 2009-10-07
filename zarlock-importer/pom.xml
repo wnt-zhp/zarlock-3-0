@@ -18,5 +18,9 @@
             <artifactId>zarlock10</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>cx.ath.jbzdak.zarlock</groupId>
+            <artifactId>zarlock-db</artifactId>
+        </dependency>
     </dependencies>
 </project>
