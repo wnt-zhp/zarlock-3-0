@@ -1,9 +1,9 @@
 package cx.ath.jbzdak.zarlok.raport.kartoteki;
 
-import cx.ath.jbzdak.jpaGui.ReturnableTransaction;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
-import cx.ath.jbzdak.jpaGui.db.Transaction;
+import cx.ath.jbzdak.jpaGui.db.JPAReturnableTransaction;
+import cx.ath.jbzdak.jpaGui.db.JPATransaction;
 import cx.ath.jbzdak.zarlok.config.Preferences;
 import cx.ath.jbzdak.zarlok.raport.Raport;
 import cx.ath.jbzdak.zarlok.raport.RaportException;
@@ -24,7 +24,7 @@ public class KartotekaRaportFactory {
    private DBManager manager;
 
    private Raport makeRaport(final KartotekaRaportBean kartotekaRaportBean){
-      return Transaction.execute(manager, new ReturnableTransaction<Raport>() {
+      return JPATransaction.execute(manager, new JPAReturnableTransaction<Raport>() {
          @Override
          public Raport doTransaction(EntityManager entityManager) {
             Query q = entityManager.createNamedQuery("getKartotekaContentsStage2");
@@ -72,7 +72,7 @@ public class KartotekaRaportFactory {
                    "" + f + ". Usuń go ręcznie i spróbuj jeszcze raz");
         }
      }
-     List<KartotekaRaportBean> kartoteki = Transaction.execute(manager, new ReturnableTransaction<List<KartotekaRaportBean>>() {
+     List<KartotekaRaportBean> kartoteki = JPATransaction.execute(manager, new JPAReturnableTransaction<List<KartotekaRaportBean>>() {
         @Override
         public List<KartotekaRaportBean> doTransaction(EntityManager entityManager) {
            return entityManager.createNamedQuery("getKartotekiContents").getResultList();

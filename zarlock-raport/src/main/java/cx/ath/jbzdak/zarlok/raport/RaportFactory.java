@@ -1,10 +1,10 @@
 package cx.ath.jbzdak.zarlok.raport;
 
-import cx.ath.jbzdak.jpaGui.ReturnableTransaction;
-import cx.ath.jbzdak.jpaGui.TransactionException;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
-import cx.ath.jbzdak.jpaGui.db.Transaction;
+import cx.ath.jbzdak.jpaGui.db.JPAReturnableTransaction;
+import cx.ath.jbzdak.jpaGui.db.JPATransaction;
+import cx.ath.jbzdak.jpaGui.db.TransactionException;
 import cx.ath.jbzdak.zarlok.entities.Dzien;
 import cx.ath.jbzdak.zarlok.raport.kartoteki.KartotekaRaportFactory;
 import cx.ath.jbzdak.zarlok.raport.stany.StanMagazynuFactory;
@@ -59,7 +59,7 @@ public class RaportFactory {
    public void saveDokumentacja() throws RaportException{
       stanMagazynuFactory.cleanStanMagazynuFolder();
       zzFactory.cleanZZFolder();
-      List<Dzien> dni = Transaction.execute(manager, new ReturnableTransaction<List<Dzien>>() {
+      List<Dzien> dni = JPATransaction.execute(manager, new JPAReturnableTransaction<List<Dzien>>() {
          @Override
          public List<Dzien> doTransaction(EntityManager entityManager) {
             return entityManager.createQuery("SELECT d FROM Dzien d").getResultList();
@@ -67,7 +67,7 @@ public class RaportFactory {
       });
       for(final Dzien d : dni){
          try {
-            Transaction.execute(manager, new Transaction(){
+            JPATransaction.execute(manager, new JPATransaction(){
                @Override
                public void doTransaction(EntityManager entityManager) throws RaportException
                {

@@ -8,4 +8,20 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>zarlock-raport</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>cx.ath.jbzdak.zarlock</groupId>
+            <artifactId>zarlock-entities</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cx.ath.jbzdak.zarlock</groupId>
+            <artifactId>zarlok-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cx.ath.jbzdak.gui</groupId>
+            <artifactId>beanFormatter</artifactId>
+        </dependency>
+
+    </dependencies>
 </project>
