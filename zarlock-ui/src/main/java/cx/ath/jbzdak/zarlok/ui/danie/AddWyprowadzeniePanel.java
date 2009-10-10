@@ -10,6 +10,8 @@ import cx.ath.jbzdak.jpaGui.ui.form.FormPanel;
 import cx.ath.jbzdak.jpaGui.ui.form.FormPanelConstraints;
 import cx.ath.jbzdak.jpaGui.ui.formatted.FormattedFieldElement;
 import cx.ath.jbzdak.jpaGui.ui.formatted.MyFormattedTextField;
+import cx.ath.jbzdak.jpaGui.ui.autoComplete.AutocompleteComboBox;
+import cx.ath.jbzdak.jpaGui.ui.autoComplete.ComboBoxElement;
 import cx.ath.jbzdak.zarlok.entities.Dzien;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.beansbinding.AutoBinding;

@@ -4,6 +4,7 @@ import cx.ath.jbzdak.jpaGui.app.ConfigEntry;
 import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 import cx.ath.jbzdak.zarlok.config.PreferencesConfig;
 import cx.ath.jbzdak.zarlok.config.PreferencesKeys;
+import cx.ath.jbzdak.zarlok.entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
