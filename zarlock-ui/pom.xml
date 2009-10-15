@@ -10,13 +10,18 @@
     <artifactId>zarlock-ui</artifactId>
     <dependencies>
 
-        <dependency>
+        <dependency> 
             <groupId>cx.ath.jbzdak.zarlock</groupId>
             <artifactId>zarlock-entities</artifactId>
         </dependency>
         <dependency>
             <groupId>cx.ath.jbzdak.zarlock</groupId>
             <artifactId>zarlock-db</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cx.ath.jbzdak.zarlock</groupId>
+            <artifactId>zarlock-common</artifactId>
         </dependency>
 
         <dependency>

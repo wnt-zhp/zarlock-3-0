@@ -1,9 +1,8 @@
 package cx.ath.jbzdak.zarlok.ui.autocolmpete.adaptor;
 
 import cx.ath.jbzdak.jpaGui.Utils;
+import cx.ath.jbzdak.jpaGui.ui.autoComplete.DbAdaptor;
 import static cx.ath.jbzdak.jpaGui.Utils.makeLogger;
-import cx.ath.jbzdak.jpaGui.autoComplete.AutoCompleteValueHolder;
-import cx.ath.jbzdak.jpaGui.autoComplete.DbAdaptor;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.zarlok.entities.ProductSearchCache;
 import cx.ath.jbzdak.zarlok.ui.formatted.formatters.ProductSearchCacheFormatter;
@@ -20,7 +19,7 @@ import java.util.*;
  * @author jb
  *
  */
-public class PartiaAdaptor extends DbAdaptor<List<ProductSearchCache>, AutoCompleteValueHolder>{
+public class PartiaAdaptor extends DbAdaptor<ProductSearchCache> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -105,31 +104,4 @@ public class PartiaAdaptor extends DbAdaptor<List<ProductSearchCache>, AutoCompl
 
 	}
 
-	@Override
-	protected void done() {
-		List<AutoCompleteValueHolder> acvh = new ArrayList<AutoCompleteValueHolder>(getUnsafe().size());
-		for(ProductSearchCache psc : getUnsafe()){
-			acvh.add(new AutoCompleteValueHolder(psc.toSearchFormat(), psc));
-		}
-		setCurentFilteredResults(acvh);
-	}
-
-	@Override
-	public AutoCompleteValueHolder getValueHolderFromFilter() {
-//		ProductSearchCache filtered;
-//		try {
-//			filtered = (ProductSearchCache) formatter.parseValue(getFilter());
-//			EntityManager entityManager = manager.createEntityManager();
-//			try{
-//				entityManager.createQuery()
-//			}finally{
-//				entityManager.close();
-//			}
-//		} catch (Exception e) {
-//			return null;
-//		}
-//
-//		return new AutoCompleteValueHolder(filtered.toSearchFormat(), filtered, true);
-		return null;
-	}
 }

@@ -1,7 +1,6 @@
 package cx.ath.jbzdak.zarlok.ui.autocolmpete.adaptor;
 
-import cx.ath.jbzdak.jpaGui.autoComplete.AutoCompleteValueHolder;
-import cx.ath.jbzdak.jpaGui.autoComplete.DbAdaptor;
+import cx.ath.jbzdak.jpaGui.ui.autoComplete.DbAdaptor;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
@@ -15,7 +14,7 @@ import java.util.List;
  * @author jb
  *
  */
-public class SpecyfikatorAdaptor extends DbAdaptor<List<String>, AutoCompleteValueHolder> {
+public class SpecyfikatorAdaptor extends DbAdaptor<String> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,24 +29,4 @@ public class SpecyfikatorAdaptor extends DbAdaptor<List<String>, AutoCompleteVal
 		q.setParameter("specyfikator", getFilter());
 		return q.getResultList();
 	}
-
-	@Override
-	protected void done() {
-		List<AutoCompleteValueHolder> list = new ArrayList<AutoCompleteValueHolder>(getUnsafe().size());
-		for(String s : getUnsafe()){
-			list.add(new AutoCompleteValueHolder(s));
-		}
-		setCurentFilteredResults(list);
-	}
-
-	@Override
-	public AutoCompleteValueHolder getValueHolderFromFilter() {
-		if(isEmpty(getFilter())){
-			return null;
-		}
-		return new AutoCompleteValueHolder(getFilter(), getFilter(), true);
-	}
-
-
-
 }

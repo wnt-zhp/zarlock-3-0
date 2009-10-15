@@ -1,7 +1,7 @@
 package cx.ath.jbzdak.zarlok.ui.dzien;
 
-import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.jpaGui.db.Transaction;
+import cx.ath.jbzdak.jpaGui.db.dao.DAO;
 import cx.ath.jbzdak.jpaGui.genericListeners.DoStuffMouseListener;
 import cx.ath.jbzdak.jpaGui.task.Task;
 import cx.ath.jbzdak.jpaGui.ui.form.DAOForm;
@@ -11,10 +11,12 @@ import cx.ath.jbzdak.zarlok.entities.Dzien;
 import cx.ath.jbzdak.zarlok.entities.DzienUtils;
 import cx.ath.jbzdak.zarlok.entities.Posilek;
 import cx.ath.jbzdak.zarlok.main.MainWindowModel;
-import cx.ath.jbzdak.zarlok.raport.RaportFactory;
 import cx.ath.jbzdak.zarlok.ui.iloscOsob.IloscOsobDialog;
 import cx.ath.jbzdak.zarlok.ui.posilek.PosilekPanel;
 import cx.ath.jbzdak.zarlok.ui.posilek.PosilekPanelCache;
+import cx.ath.jbzdak.zarlok.raport.RaportFactory;
+import cx.ath.jbzdak.zarlok.DBManagerHolder;
+import cx.ath.jbzdak.zarlok.RaportFactoryHolder;
 import net.miginfocom.swing.MigLayout;
 
 import javax.annotation.Nullable;
@@ -50,22 +52,19 @@ class DniTreePanelModel {
 
    private final DAOForm<Dzien,?> form;
 
-   private final DzienDao dzienDao;
-
-   private final DBManager manager;
+   private final DAO<Dzien> dzienDao;
 
    private final JTree tree;
 
    final RaportFactory raportFactory;
 
-   public DniTreePanelModel(DAOForm<Dzien, ?> form, DzienDao dzienDao, MainWindowModel mainWindowModel, DBManager manager, JTree tree) {
+   public DniTreePanelModel(DAOForm<Dzien, ?> form, JTree tree) {
       this.form = form;
-      this.dzienDao = dzienDao;
-      form.setDao(dzienDao);
-      form.setEntity(new Dzien());
+      this.dzienDao = DBManagerHolder.getDBManager().getDao(Dzien.class);
+      dzienDao.setAutoCreateEntity(true);
+      form.setBeanHolder(dzienDao);
       form.startEditing();
-      raportFactory = mainWindowModel.getRaportFactory();
-      this.manager = manager;
+      raportFactory = RaportFactoryHolder.getRaportFactory();
       this.tree = tree;
    }
 
@@ -87,6 +86,7 @@ class DniTreePanelModel {
    }
 
    public void removeDzien(final Dzien d){
+      dzienDao.
       Transaction.execute(entityManager, new Transaction() {
          @Override
          public void doTransaction(EntityManager entityManager) throws Exception {
@@ -188,14 +188,6 @@ class DniTreePanelModel {
 
    public DzienDao getDzienDao() {
       return dzienDao;
-   }
-
-   public EntityManager getEntityManager() {
-      return entityManager;
-   }
-
-   public void setEntityManager(EntityManager entityManager) {
-      this.entityManager = entityManager;
    }
 
    public void setDetailsPanel(JPanel detailsPanel) {

@@ -14,7 +14,6 @@ import cx.ath.jbzdak.zarlok.entities.Produkt;
 import cx.ath.jbzdak.zarlok.main.MainWindowModel;
 import cx.ath.jbzdak.zarlok.raport.RaportException;
 import cx.ath.jbzdak.zarlok.ui.dzien.DniTab;
-import cx.ath.jbzdak.zarlok.ui.dzien.DniTabListener;
 import cx.ath.jbzdak.zarlok.ui.opcje.OpcjeEditPanel;
 import cx.ath.jbzdak.zarlok.ui.partia.PartiaAddDialog;
 import cx.ath.jbzdak.zarlok.ui.partia.PartieListPanel;
@@ -182,7 +181,6 @@ public class MainFrame extends JFrame {
          jTabbedPane.addTab("Dni", null, getDniTab(), null);
          //jTabbedPane.addTabCloseable("XXX", IconManager.getIconSafe("accept"), new JPanel(), null, true);
          jTabbedPane.addListener(getStanMagazynuPanel(), getPartieActionListener());
-         jTabbedPane.addListener(getDniTab(), new DniTabListener());
          jTabbedPane.addListener(getPartieListPanel(), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

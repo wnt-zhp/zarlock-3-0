@@ -1,9 +1,6 @@
 package cx.ath.jbzdak.zarlok.ui.danie;
 
 import cx.ath.jbzdak.common.famfamicons.IconManager;
-import cx.ath.jbzdak.jpaGui.autoComplete.AutoCompleteValueHolder;
-import cx.ath.jbzdak.jpaGui.autoComplete.AutocompleteComboBox;
-import cx.ath.jbzdak.jpaGui.autoComplete.ComboBoxElement;
 import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.jpaGui.ui.form.FormPanel;
@@ -55,13 +52,12 @@ public class AddWyprowadzeniePanel extends JPanel{
         partiaBox = new AutocompleteComboBox(model.new Adapter(dbManager));
         partiaBox.setStrict(true);
         iloscField = new MyFormattedTextField(model.new IloscJednostekFormatter());
-        FormPanel<AutocompleteComboBox> boxFormPanel;
-
-        boxFormPanel = new FormPanel<AutocompleteComboBox>(new ComboBoxElement(partiaBox, "Wybierz partię","insertedProduct"),
+        FormPanel boxFormPanel;
+        boxFormPanel = new FormPanel(new ComboBoxElement(partiaBox, "Wybierz partię","insertedProduct"),
             FormPanelConstraints.createCompactConstraints());
         Map<String, String> formPanelConstraints =
                 FormPanelConstraints.createCompactConstraints();
-        FormPanel<MyFormattedTextField> textFieldFormPanel
+        FormPanel textFieldFormPanel
             = new FormPanel(new FormattedFieldElement(iloscField, "Wprowadź ilość", "quantiy"), formPanelConstraints);
         maxQuantity = new JLabel("");
         sendWyprowadzeniaButton = new JButton("Dodaj wyprowadzenia", IconManager.getIconSafe("wydaj"));
@@ -84,21 +80,6 @@ public class AddWyprowadzeniePanel extends JPanel{
         AutoBinding partiaBoxBinding =
                 Bindings.createAutoBinding(UpdateStrategy.READ, partiaBox,
                         BeanProperty.create("selectedItem"), model, BeanProperty.create("insertedProduct"));
-        partiaBoxBinding.setConverter(new Converter() {
-            @Override
-            public Object convertForward(Object value) {
-                if (value instanceof AutoCompleteValueHolder) {
-                    AutoCompleteValueHolder autoCompleteValueHolder = (AutoCompleteValueHolder) value;
-                    return autoCompleteValueHolder.getValue();
-                }
-                return value;
-            }
-
-            @Override
-            public Object convertReverse(Object value) {
-                return value;
-            }
-        });
         partiaBoxBinding.bind();
         AutoBinding quantityBinding =
                 Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, iloscField,

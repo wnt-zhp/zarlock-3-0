@@ -1,6 +1,5 @@
 package cx.ath.jbzdak.zarlok.ui.danie;
 
-import cx.ath.jbzdak.jpaGui.autoComplete.AutoCompleteValueHolder;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 
 import javax.swing.*;
@@ -17,7 +16,7 @@ public class PartiaSelectRenderer extends DefaultListCellRenderer {
 			int index, boolean isSelected, boolean cellHasFocus) {
 			super.getListCellRendererComponent(list, value, index, isSelected,
 				cellHasFocus);
-			Partia p = (Partia) ((AutoCompleteValueHolder)value).getValue();
+			Partia p = (Partia) value;
 			if(p.getIloscTeraz().equals(BigDecimal.ZERO)){
 				setEnabled(false);
 			}

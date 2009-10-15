@@ -18,7 +18,7 @@ import java.util.List;
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: 2009-04-28
  */
-public class RaportFactory {
+public class RaportFactoryImpl implements RaportFactory {
 
    private static final Logger LOGGER = Utils.makeLogger();
 
@@ -31,7 +31,7 @@ public class RaportFactory {
 
    private final KartotekaRaportFactory kartotekaRaportFactory;
 
-   public RaportFactory() {
+   public RaportFactoryImpl() {
       this.stanMagazynuFactory = new StanMagazynuFactory();
       this.kartotekaRaportFactory = new KartotekaRaportFactory();
    }

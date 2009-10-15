@@ -2,7 +2,7 @@ package cx.ath.jbzdak.zarlok.ui.danie;
 
 import static cx.ath.jbzdak.jpaGui.Utils.makeLogger;
 import cx.ath.jbzdak.jpaGui.autoComplete.AutoCompleteValueHolder;
-import cx.ath.jbzdak.jpaGui.autoComplete.DbAdaptor;
+import cx.ath.jbzdak.jpaGui.ui.autoComplete.DbAdaptor;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.entities.ProductSearchCache;
