@@ -33,6 +33,7 @@
   <component name="CopyrightManager" default="">
     <module2copyright />
   </component>
+  <component name="CppTools.Loader" reportImplicitCastToBool="false" version="2" compilerSelect="AUTO" />
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
@@ -93,6 +94,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/zarlock-common/pom.xml" />
       </list>
     </option>
   </component>
@@ -227,6 +229,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/zarlock-assembly/zarlock-assembly.iml" filepath="$PROJECT_DIR$/zarlock-assembly/zarlock-assembly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-common/zarlock-common.iml" filepath="$PROJECT_DIR$/zarlock-common/zarlock-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-config/zarlock-config.iml" filepath="$PROJECT_DIR$/zarlock-config/zarlock-config.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-db/zarlock-db.iml" filepath="$PROJECT_DIR$/zarlock-db/zarlock-db.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-entities/zarlock-entities.iml" filepath="$PROJECT_DIR$/zarlock-entities/zarlock-entities.iml" />

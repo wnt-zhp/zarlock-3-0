@@ -25,10 +25,10 @@
         <module>zarlock-entities</module>
         <module>zarlock-db</module>
         <module>zarlock-config</module>
-        <module>zarlock-ui</module>
         <module>zarlock-raport</module>
         <module>zarlock-runners</module>
         <module>zarlock-assembly</module>
+        <module>zarlock-common</module>
     </modules>
     <repositories>
         <repository>
@@ -99,6 +99,11 @@
             <dependency>
                 <groupId>cx.ath.jbzdak.zarlock</groupId>
                 <artifactId>zarlock-db</artifactId>
+                <version>3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>cx.ath.jbzdak.zarlock</groupId>
+                <artifactId>zarlock-common</artifactId>
                 <version>3.0</version>
             </dependency>
             <!-- JPA Gui dependencies -->
