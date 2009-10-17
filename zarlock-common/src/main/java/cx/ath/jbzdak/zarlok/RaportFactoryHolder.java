@@ -9,6 +9,6 @@ import cx.ath.jbzdak.zarlok.raport.RaportFactory;
 public class RaportFactoryHolder {
 
    public static RaportFactory getRaportFactory(){
-
+      return null;
    }
 }

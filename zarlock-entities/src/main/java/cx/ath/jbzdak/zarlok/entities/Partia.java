@@ -64,24 +64,23 @@ import java.util.List;
                         "ORDER BY p.dataWaznosci ASC, " +
                         "p.dataKsiegowania DESC, " +
                         "p.iloscTeraz ASC"
-        ),
-        @NamedQuery(
-                name = "getKartotekiContents",
-                query = "SELECT new cx.ath.jbzdak.zarlok.raport.kartoteki.KartotekaRaportBean(" +
-                        "p.produkt.nazwa, " +
-                        "p.specyfikator," +
-                        "p.cena) " +
-                        "FROM Partia p " +
-                        "GROUP BY p.produkt.nazwa, p.jednostka, p.specyfikator, p.cena "
-        ),
-        @NamedQuery(
-                name = "getKartotekaContentsStage2",
-                query = "SELECT DISTINCT (p) " +
-                        "FROM Partia p " +
-                        "LEFT JOIN FETCH p.wyprowadzenia " +
-                        "WHERE p.produkt.nazwa = :nazwa  AND p.specyfikator = :specyfikator AND p.cena = :cena"
-
-        )
+        )//,
+//        @NamedQuery(
+//                name = "getKartotekiContents",
+//                query = "SELECT new cx.ath.jbzdak.zarlok.raport.kartoteki.KartotekaRaportBean(" +
+//                        "p.produkt.nazwa, " +
+//                        "p.specyfikator," +
+//                        "p.cena) " +
+//                        "FROM Partia p " +
+//                        "GROUP BY p.produkt.nazwa, p.jednostka, p.specyfikator, p.cena "
+//        ),
+//        @NamedQuery(
+//                name = "getKartotekaContentsStage2",
+//                query = "SELECT DISTINCT (p) " +
+//                        "FROM Partia p " +
+//                        "LEFT JOIN FETCH p.wyprowadzenia " +
+//                        "WHERE p.produkt.nazwa = :nazwa  AND p.specyfikator = :specyfikator AND p.cena = :cena"
+//        )
 })
 @EntityListeners({PartiaSearchCacheUpdater.class})
 public class Partia implements ProductSeachCacheSearchable{

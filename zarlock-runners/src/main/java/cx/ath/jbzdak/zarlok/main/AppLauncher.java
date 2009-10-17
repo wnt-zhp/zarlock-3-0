@@ -1,6 +1,7 @@
 package cx.ath.jbzdak.zarlok.main;
 
 import cx.ath.jbzdak.jpaGui.Utils;
+import cx.ath.jbzdak.jpaGui.task.TasksExecutor;
 import cx.ath.jbzdak.jpaGui.ui.error.DisplayErrorDetailsDialog;
 import org.slf4j.Logger;
 
@@ -18,6 +19,17 @@ public class AppLauncher {
 
    private static final Logger LOGGER = Utils.makeLogger();
 
+   private static final TasksExecutor<Void> INIT_TASKS= new TasksExecutor<Void>();
+
+   static{
+      INIT_TASKS.addTask(new LoadConfigTask());
+      INIT_TASKS.addTask(new InitFolders());
+      INIT_TASKS.addTask(new InitLogging());
+      INIT_TASKS.addTask(new StartDBTask());
+   }
+
+
+
 	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
    public static void main(String[] args) throws Exception {
       try{
@@ -29,17 +41,15 @@ public class AppLauncher {
          LOGGER.info("zarlockstart");          
          LOGGER.info("************************************************************");
          LOGGER.info("************************************************************");
-         MainWindowModel model = new  MainWindowModel();
-         MainWindowInitializer.initialize(model);
-         model.startApp();
+         INIT_TASKS.executeThrow(null);
       } catch (Exception e){
          SQLException exception = Utils.findCauseOfClass(e, SQLException.class);
          if(exception != null && "08001".equals(exception.getSQLState())){
             JOptionPane.showMessageDialog(null,
                     "Nie można otworzyć bierzącej bazy danych, gdyż ta jest otwarta przez inną instancję programu.\nProgram nie może kontynuować");
          }else{
-            DisplayErrorDetailsDialog.showErrorDialog(e, null);
             LOGGER.error("", e);
+            DisplayErrorDetailsDialog.showErrorDialog(e, null);
          }
          System.exit(42);
       }

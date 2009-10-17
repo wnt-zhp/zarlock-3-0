@@ -8,4 +8,30 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>zarlock-runners</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>cx.ath.jbzdak.gui</groupId>
+            <artifactId>ui-components</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cx.ath.jbzdak.zarlock</groupId>
+            <artifactId>zarlock-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cx.ath.jbzdak.gui</groupId>
+            <artifactId>db-h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+    </dependencies>
+    
 </project>
