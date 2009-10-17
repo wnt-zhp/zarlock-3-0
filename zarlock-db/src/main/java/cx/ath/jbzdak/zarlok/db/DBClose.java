@@ -2,7 +2,6 @@ package cx.ath.jbzdak.zarlok.db;
 
 import static cx.ath.jbzdak.jpaGui.Utils.makeLogger;
 import cx.ath.jbzdak.jpaGui.task.TasksExecutor;
-import cx.ath.jbzdak.zarlok.db.tasks.CleanImportTables;
 import cx.ath.jbzdak.zarlok.db.tasks.DeleteProductSearchCache;
 import org.slf4j.Logger;
 
@@ -29,7 +28,7 @@ public class DBClose {
 
    {
       preStopTasks.addTask(new DeleteProductSearchCache());
-      preStopTasks.addTask(new CleanImportTables());
+      
    }
 
    public DBClose() {

@@ -44,7 +44,6 @@ public class DBSetup {
 		dbSetup.addTask(new InitListenerDbManager(ProductSearchCacheUpdater.class));
 		dbSetup.addTask(new InitListenerDbManager(PartiaSearchCacheUpdater.class));
 		dbSetup.addTask(new UpdateIloscTeraz());
-		dbSetup.addTask(new CleanImportTables());
       dbSetup.addTask(new UpdateKoszty());
       dbSetup.addTask(new SetCollation());
 	}
