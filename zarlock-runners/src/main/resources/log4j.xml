@@ -17,8 +17,14 @@
   <logger name="cx">
     <level value="debug"/> 
   </logger>
+   <logger name="org.hibernate">
+    <level value="WARN"/> 
+  </logger>
+   <logger name="h2database">
+    <level value="WARN"/> 
+  </logger>
   <root> 
-    <priority value ="FATAL" /> 
+    <priority value ="WARN" /> 
     <appender-ref ref="CONSOLE" />
     <appender-ref ref="R" /> 
   </root> 

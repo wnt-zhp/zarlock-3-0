@@ -1,8 +1,6 @@
 package cx.ath.jbzdak.zarlok.main;
 
-import cx.ath.jbzdak.jpaGui.db.DBLifecyclePhase;
-import cx.ath.jbzdak.jpaGui.db.DBManager;
-import cx.ath.jbzdak.jpaGui.db.LifecycleManager;
+import cx.ath.jbzdak.jpaGui.db.*;
 import cx.ath.jbzdak.jpaGui.db.h2.DefaultH2Configuration;
 import cx.ath.jbzdak.jpaGui.db.h2.H2Configuration;
 import cx.ath.jbzdak.zarlok.ConfigHolder;
@@ -21,6 +19,7 @@ class DBLauncher implements LifecycleManager<DBManager<EntityManager>>{
 
    DBLauncher() {
       h2Configuration.setDatbaseUri(new File(ConfigHolder.getProperties().getProperty("file.db")).toURI());
+      h2Configuration.setSchemaAutoCreate(Hbm2ddl.valueOf(ConfigHolder.getProperties().getProperty("schemaAutoCreate")));
    }
 
    public List mayGoToPhase(DBLifecyclePhase phase) {
@@ -41,5 +40,9 @@ class DBLauncher implements LifecycleManager<DBManager<EntityManager>>{
 
    public void closeDB() throws Exception {
       h2Configuration.closeDB();
+   }
+
+   public JpaDbManager getDbManager() {
+      return h2Configuration.getDbManager();
    }
 }

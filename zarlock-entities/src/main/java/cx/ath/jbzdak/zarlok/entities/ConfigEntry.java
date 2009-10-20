@@ -5,7 +5,6 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.NotEmpty;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Encja zawierająca jeden klucz konfiguracji.
@@ -14,10 +13,11 @@ import java.io.Serializable;
 @Table(name = "CONFIG_ENTRY")
 @NamedQuery(name = "getConfigEntryByName", query = "SELECT ce FROM ConfigEntry ce WHERE ce.name = :name")
 @EntityListeners(value = { BlockConfigEntryUpdate.class })
+@SequenceGenerator(name = "ZARLOCK_SEQUENCE_GENERATOR", sequenceName = "ZARLOCK_SEQUENCE", allocationSize = 32, initialValue = 0)
 public class ConfigEntry {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ZARLOCK_SEQUENCE_GENERATOR")
 	@Column(name = "ID")
 	Long id;
 
@@ -28,7 +28,7 @@ public class ConfigEntry {
 
 	@Lob
 	@Column(name = "VALUE")
-	Serializable value;
+	String value;
 
 	/**
 	 * Czy jest widoczna dla użyszkodnika.
@@ -62,11 +62,11 @@ public class ConfigEntry {
 		this.name = name;
 	}
 
-	public Serializable getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(Serializable value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 

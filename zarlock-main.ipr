@@ -34,6 +34,7 @@
     <module2copyright />
   </component>
   <component name="CppTools.Loader" reportImplicitCastToBool="false" version="2" compilerSelect="AUTO" />
+  <component name="DataSourceManagerImpl" compressed="false" />
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
@@ -45,6 +46,24 @@
     <option name="MAXIMUM_HEAP_SIZE" value="128" />
   </component>
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="FacetAutodetectingManager">
+    <autodetection-disabled>
+      <facet-type id="jpa">
+        <modules>
+          <module name="zarlock-entities">
+            <files>
+              <file url="file://$PROJECT_DIR$/zarlock-entities/src/main/resources/META-INF/persistence.xml" />
+            </files>
+          </module>
+          <module name="zarlock-main">
+            <files>
+              <file url="file://$PROJECT_DIR$/.build/META-INF/persistence.xml" />
+            </files>
+          </module>
+        </modules>
+      </facet-type>
+    </autodetection-disabled>
+  </component>
   <component name="IdProvider" IDEtalkID="6305A26E33C16562AD439DDB47F0590B" />
   <component name="InspectionProjectProfileManager">
     <option name="PROJECT_PROFILE" value="Project Default" />
@@ -2184,26 +2203,18 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-entitymanager/3.4.0.GA/hibernate-entitymanager-3.4.0.GA-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: hibernate-entitymanager:ejb3-persistence:3.3.2.GA">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/hibernate-entitymanager/ejb3-persistence/3.3.2.GA/ejb3-persistence-3.3.2.GA.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/hibernate-entitymanager/ejb3-persistence/3.3.2.GA/ejb3-persistence-3.3.2.GA-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/hibernate-entitymanager/ejb3-persistence/3.3.2.GA/ejb3-persistence-3.3.2.GA-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: org.hibernate:hibernate-validator:3.0.0.ga">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-validator/3.0.0.ga/hibernate-validator-3.0.0.ga.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-validator/3.0.0.GA/hibernate-validator-3.0.0.GA.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-validator/3.0.0.ga/hibernate-validator-3.0.0.ga-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-validator/3.0.0.GA/hibernate-validator-3.0.0.GA-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-validator/3.0.0.ga/hibernate-validator-3.0.0.ga-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-validator/3.0.0.GA/hibernate-validator-3.0.0.GA-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: cx.ath.jbzdak.gui:db-h2:2.0.1">
@@ -2217,17 +2228,6 @@
         <root url="jar://$MAVEN_REPOSITORY$/cx/ath/jbzdak/gui/db-h2/2.0.1/db-h2-2.0.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: cx.ath.jbzdak.gui:configuration:2.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/cx/ath/jbzdak/gui/configuration/2.0/configuration-2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/cx/ath/jbzdak/gui/configuration/2.0/configuration-2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/cx/ath/jbzdak/gui/configuration/2.0/configuration-2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: com.h2database:h2:1.1.119">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/com/h2database/h2/1.1.119/h2-1.1.119.jar!/" />
@@ -2237,6 +2237,39 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/com/h2database/h2/1.1.119/h2-1.1.119-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: junit:junit:4.5">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.5/junit-4.5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.5/junit-4.5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.5/junit-4.5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: cx.ath.jbzdak.gui:configuration:2.0.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/cx/ath/jbzdak/gui/configuration/2.0.1/configuration-2.0.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/cx/ath/jbzdak/gui/configuration/2.0.1/configuration-2.0.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/cx/ath/jbzdak/gui/configuration/2.0.1/configuration-2.0.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.hibernate:hibernate-validator:3.1.0.GA">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-validator/3.1.0.GA/hibernate-validator-3.1.0.GA.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-validator/3.1.0.GA/hibernate-validator-3.1.0.GA-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-validator/3.1.0.GA/hibernate-validator-3.1.0.GA-sources.jar!/" />
       </SOURCES>
     </library>
   </component>

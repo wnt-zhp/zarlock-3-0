@@ -12,13 +12,13 @@ import org.apache.log4j.RollingFileAppender;
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: 2009-10-17
  */
-class InitLogging extends Task<Void>{
+class InitLogging extends Task<Object>{
    public InitLogging() {
       super(50, "INIT_LOGGING");
    }
 
    @Override
-   public void doTask(@Nullable Void aVoid, @Nullable Object... objects) throws Exception {
+   public void doTask(@Nullable Object aVoid, @Nullable Object... objects) throws Exception {
       RollingFileAppender appender = new RollingFileAppender();
       appender.setLayout(new PatternLayout("%d [%t] %-5p %c - %m%n"));
       appender.setFile(ConfigHolder.getProperties().getProperty("file.log"));

@@ -5,7 +5,10 @@ import cx.ath.jbzdak.zarlok.ConfigHolder;
 import cx.ath.jbzdak.zarlok.Constants;
 import edu.umd.cs.findbugs.annotations.Nullable;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -13,15 +16,22 @@ import java.util.Properties;
  *         Date: 2009-10-15
  */
 class LoadConfigTask extends Task<Object>{
+   private final String propertiesFilePath;
 
-   public LoadConfigTask() {
+
+    LoadConfigTask() {
       super(0, "LOAD_CONFIG");
+      propertiesFilePath= "/zarlock.properties";
+   }
+
+   LoadConfigTask(String propertiesFilePath) {
+      this.propertiesFilePath = propertiesFilePath;
    }
 
    @Override
    public void doTask(@Nullable Object o, @Nullable Object[] objects) throws Exception {
       Properties defautProperties = new Properties();
-      defautProperties.load(getClass().getResourceAsStream("/zarlock.properties"));
+      defautProperties.load(getClass().getResourceAsStream(propertiesFilePath));
       Properties properties = new Properties(defautProperties);
       File configDir = new File(Constants.configDir);
       File configFile = new File(configDir, Constants.configFile);
@@ -31,7 +41,6 @@ class LoadConfigTask extends Task<Object>{
       } catch (IOException e) {
          configDir.mkdirs();
          configFile.createNewFile();
-         defautProperties.store(new BufferedOutputStream(new FileOutputStream(configFile)), "");
       }
       ConfigHolder.setProperties(properties);
    }

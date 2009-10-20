@@ -26,16 +26,15 @@
             <artifactId>beanFormatter</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>hibernate-entitymanager</groupId>
-            <artifactId>ejb3-persistence</artifactId>
-            <version>3.3.2.GA</version>
-        </dependency>
+         <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>ejb3-persistence</artifactId>
+			<version>1.0.2.GA</version>
+		</dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>3.0.0.ga</version>
-            <scope>provided</scope>
+            <version>3.1.0.GA</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>

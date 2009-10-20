@@ -9,7 +9,6 @@ import javax.persistence.Transient;
 @Embeddable
 public class IloscOsob implements Cloneable{
 
-
 	@NotNull
 	//@Range(min=0)
 	@Column(name = "ILOSC_UCZESTNIKOW")

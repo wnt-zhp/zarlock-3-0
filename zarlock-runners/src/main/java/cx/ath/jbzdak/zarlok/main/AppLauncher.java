@@ -19,29 +19,29 @@ public class AppLauncher {
 
    private static final Logger LOGGER = Utils.makeLogger();
 
-   private static final TasksExecutor<Void> INIT_TASKS= new TasksExecutor<Void>();
+   protected final TasksExecutor<AppLauncher> INIT_TASKS= new TasksExecutor<AppLauncher>();
 
-   static{
+   public DBLauncher dbLauncher;
+
+   {
       INIT_TASKS.addTask(new LoadConfigTask());
+      INIT_TASKS.addTask(new InitDBLauncher());
       INIT_TASKS.addTask(new InitFolders());
       INIT_TASKS.addTask(new InitLogging());
       INIT_TASKS.addTask(new StartDBTask());
    }
 
-
-
-	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
-   public static void main(String[] args) throws Exception {
-      try{
+   public void start(){
+        try{
          LOGGER.info("************************************************************");
          LOGGER.info("************************************************************");
          LOGGER.info("");
          LOGGER.info("Starting zarlock ");
          LOGGER.info("");
-         LOGGER.info("zarlockstart");          
+         LOGGER.info("zarlockstart");
          LOGGER.info("************************************************************");
          LOGGER.info("************************************************************");
-         INIT_TASKS.executeThrow(null);
+         INIT_TASKS.executeThrow(this);
       } catch (Exception e){
          SQLException exception = Utils.findCauseOfClass(e, SQLException.class);
          if(exception != null && "08001".equals(exception.getSQLState())){
@@ -53,6 +53,11 @@ public class AppLauncher {
          }
          System.exit(42);
       }
+   }
+
+	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
+   public static void main(String[] args) throws Exception {
+      new AppLauncher().start();
 	}
 
 }

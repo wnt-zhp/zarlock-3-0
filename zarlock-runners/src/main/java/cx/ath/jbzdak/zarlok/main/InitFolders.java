@@ -15,7 +15,7 @@ import java.util.Properties;
 class InitFolders extends Task<Object>{
 
    public InitFolders() {
-      super(1, "INIT_FOLDERS");
+      super(10, "INIT_FOLDERS");
    }
 
    //TODO dla visty i XP i windows 7
