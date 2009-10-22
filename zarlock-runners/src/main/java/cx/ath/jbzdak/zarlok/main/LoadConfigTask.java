@@ -32,7 +32,8 @@ class LoadConfigTask extends Task<Object>{
    public void doTask(@Nullable Object o, @Nullable Object[] objects) throws Exception {
       Properties defautProperties = new Properties();
       defautProperties.load(getClass().getResourceAsStream(propertiesFilePath));
-      Properties properties = new Properties(defautProperties);
+      Properties properties = new Properties();
+      properties.putAll(defautProperties);
       File configDir = new File(Constants.configDir);
       File configFile = new File(configDir, Constants.configFile);
       System.out.println(configDir.getAbsolutePath());

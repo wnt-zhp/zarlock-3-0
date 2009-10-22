@@ -24,12 +24,16 @@ public class Posilek {
 
 	@Id
 	@GeneratedValue
+   @Column(name = "ID")
 	private Long id;
 
+   @Column(name = "NAZWA")
 	private String nazwa;
 
+   @Column(name = "DODATKOWY")
 	private Boolean dodatkowy = Boolean.FALSE;
 
+   @JoinColumn(name = "DZIEN_ID")
 	@ManyToOne(fetch=FetchType.EAGER, optional=false)
 	private Dzien dzien;
 
@@ -39,8 +43,10 @@ public class Posilek {
 	@OneToMany(cascade= {CascadeType.PERSIST, CascadeType.REMOVE} )
 	private List<Danie> dania = new ArrayList<Danie>();
 
+   @Column(name = "KOSZT")
 	private BigDecimal koszt = BigDecimal.ZERO;
 
+   @Column(name = "COST_STRICT")
 	private Boolean costStrict = Boolean.FALSE;
 
 	public Posilek() {

@@ -1,14 +1,12 @@
 package cx.ath.jbzdak.zarlok.entities;
 
-import cx.ath.jbzdak.jpaGui.Utils;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +36,7 @@ public class Danie {
 
 	@NotNull
 	@ManyToOne
+   @JoinColumn(name = "POSILEK_ID")
 	Posilek posilek;
 
 	@NotEmpty
@@ -50,11 +49,11 @@ public class Danie {
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "danie")
 	List<PlanowaneWyprowadzenie> planowaneWyprowadzenia = new ArrayList<PlanowaneWyprowadzenie>();
 
-	@Nullable
+	@CheckForNull
+   @Column(name = "KOSZT")
 	BigDecimal koszt;
 
 	@Nonnull
-	@NotNull
 	Boolean costStrict;
 
 	public Long getId() {
@@ -97,22 +96,6 @@ public class Danie {
 		this.koszt = koszt;
 	}
 
-	@PrePersist @PreUpdate
-	public void updateKoszt(){
-		if(getPosilek().getIloscOsob()==null){
-			koszt = null;
-			costStrict = Boolean.FALSE;
-			return;
-		}
-		BigDecimal koszt = BigDecimal.ZERO;
-		for(Wyprowadzenie w : getWyprowadzenia()){
-			koszt = koszt.add(w.getWartosc(), MathContext.DECIMAL32);
-		}
-		costStrict = planowaneWyprowadzenia.isEmpty();
-		koszt = koszt.divide(BigDecimal.valueOf(getPosilek().getIloscOsob().getSuma()), MathContext.DECIMAL32);
-		this.koszt = Utils.round(koszt,2);
-      getPosilek().recalculateCost();
-	}
 
 	public Posilek getPosilek() {
 		return posilek;

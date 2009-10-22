@@ -100,7 +100,7 @@ public class Partia implements ProductSeachCacheSearchable{
 	 */
 	@Nonnull
 	@NotEmpty
-	@Column(name="Specyfikator")
+	@Column(name="SPECYFIKATOR")
    private String specyfikator;
 
 	@Column(name="CENA", precision=16, scale=6)

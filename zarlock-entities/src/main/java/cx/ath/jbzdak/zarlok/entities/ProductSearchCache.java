@@ -6,7 +6,7 @@ import org.hibernate.validator.NotNull;
 
 import javax.persistence.*;
 
-@Entity
+
 @NamedQueries({
 	@NamedQuery(
 			name="getProductSearchCache",
@@ -37,28 +37,33 @@ import javax.persistence.*;
 					"(psc.jednostka IS NULL OR LOWER(psc.jednostka) like LOWER('%' || :jednostka || '%'))"
 	)
 })
+@Entity
+@Table(name = "PRODUCT_SEARCH_CACHE")
 public class ProductSearchCache implements ProductSeachCacheSearchable {
 
 	@Id
 	@GeneratedValue
    private
+   @Column(name = "ID")
    Long id;
 
 	@NotEmpty
+   @Column(name = "NAZWA_PRODUKTU")
    private
    String nazwaProduktu;
 
+   @Column(name = "SPECYFIKATOR")
 	String specyfikator;
 
+   @Column(name = "JEDNOSTKA6")
 	private String jednostka;
 
 	@NotNull
-   private
-   Long productId;
+   @Column(name = "PRODUCT_ID")
+   private Long productId;
 
 	@Transient
-   private
-   Produkt product;
+   private Produkt product;
 
     public ProductSearchCache() {
 		super();

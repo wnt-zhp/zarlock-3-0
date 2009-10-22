@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "PLANOWANE_WYPROWADZENIE")
 public class PlanowaneWyprowadzenie implements Cloneable, ProductSeachCacheSearchable{
 
 	@Id

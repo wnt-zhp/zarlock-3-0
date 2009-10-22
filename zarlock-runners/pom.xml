@@ -10,6 +10,10 @@
     <artifactId>zarlock-runners</artifactId>
     <dependencies>
         <dependency>
+            <groupId>cx.ath.jbzdak.zarlock</groupId>
+            <artifactId>zarlock-db-classpath</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cx.ath.jbzdak.gui</groupId>
             <artifactId>ui-components</artifactId>
         </dependency>

@@ -21,7 +21,16 @@
             <groupId>cx.ath.jbzdak.zarlock</groupId>
             <artifactId>zarlok-config</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>cx.ath.jbzdak.zarlock</groupId>
+            <artifactId>zarlock-db-classpath</artifactId>
+        </dependency>
+        <dependency>
+               <groupId>hibernate</groupId>
+               <artifactId>hibernate-entitymanager</artifactId>
+               <version>3.4.0.GA</version>
+           </dependency>
+        
 
     </dependencies>
 

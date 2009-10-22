@@ -17,15 +17,25 @@
             <groupId>cx.ath.jbzdak.zarlock</groupId>
             <artifactId>zarlok-config</artifactId>
         </dependency>
-              <dependency>
+        <dependency>
             <groupId>cx.ath.jbzdak.zarlock</groupId>
             <artifactId>zarlock-common</artifactId>
         </dependency>
-
         <dependency>
             <groupId>cx.ath.jbzdak.gui</groupId>
             <artifactId>beanFormatter</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext-rtf</artifactId>
+            <version>2.1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>2.1.5</version>
+        </dependency>
     </dependencies>
 </project>

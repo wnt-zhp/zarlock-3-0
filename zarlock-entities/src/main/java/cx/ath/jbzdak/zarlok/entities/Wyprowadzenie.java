@@ -28,6 +28,7 @@ public class Wyprowadzenie implements Cloneable, ProductSeachCacheSearchable{
 	@Column(name = "ID")
 	private Long id;
 
+   @JoinColumn(name = "PARTIA_ID")
 	@ManyToOne(optional=false, fetch = FetchType.EAGER)
 	private Partia partia;
 
@@ -56,6 +57,7 @@ public class Wyprowadzenie implements Cloneable, ProductSeachCacheSearchable{
       this.danie = danie;
    }
 
+   @JoinColumn(name = "DANIE_ID")
    @ManyToOne(optional = true, fetch = FetchType.LAZY)
    private Danie danie;
 

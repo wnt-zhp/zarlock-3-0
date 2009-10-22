@@ -1,6 +1,5 @@
 package cx.ath.jbzdak.zarlok.entities;
 
-import cx.ath.jbzdak.zarlok.entities.listeners.BlockConfigEntryUpdate;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotEmpty;
 
@@ -12,22 +11,21 @@ import javax.persistence.*;
 @Entity
 @Table(name = "CONFIG_ENTRY")
 @NamedQuery(name = "getConfigEntryByName", query = "SELECT ce FROM ConfigEntry ce WHERE ce.name = :name")
-@EntityListeners(value = { BlockConfigEntryUpdate.class })
-@SequenceGenerator(name = "ZARLOCK_SEQUENCE_GENERATOR", sequenceName = "ZARLOCK_SEQUENCE", allocationSize = 32, initialValue = 0)
+//@SequenceGenerator(name = "ZARLOCK_SEQUENCE_GENERATOR", sequenceName = "ZARLOCK_SEQUENCE", allocationSize = 32, initialValue = 0)
 public class ConfigEntry {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ZARLOCK_SEQUENCE_GENERATOR")
+	@GeneratedValue()
 	@Column(name = "ID")
 	Long id;
 
 	@NotEmpty
 	@Length(min = 1, max = 100)
-	@Column(name = "NAME")
+	@Column(name = "ENTRY_NAME")
 	String name;
 
-	@Lob
-	@Column(name = "VALUE")
+   @Length(max = 10000)
+	@Column(name = "ENTRY_VALUE")
 	String value;
 
 	/**
@@ -40,7 +38,7 @@ public class ConfigEntry {
 	 * Czy jest edytowalna (czyli updejtowalna) i czy da się ją usunąć
 	 */
 	@Column(name = "EDITABLE")
-	Boolean editable = Boolean.FALSE;
+	Boolean editable = Boolean.TRUE;
 
 	@Length(min = 0, max = 2000)
 	@Column(name = "DESCRIPTION")
