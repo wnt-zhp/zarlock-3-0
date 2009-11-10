@@ -98,11 +98,6 @@ public class Produkt {
       sb.append(", nazwa='").append(nazwa).append('\'');
       sb.append(", jednostka='").append(jednostka).append('\'');
       sb.append(", dataWaznosci=").append(dataWaznosci);
-//      try{
-//         sb.append(", partie=").append(partie);
-//      }catch (HibernateException e){
-//         sb.append(", partie=").append("BRAK PARTII");
-//      }
       sb.append('}');
       return sb.toString();
    }

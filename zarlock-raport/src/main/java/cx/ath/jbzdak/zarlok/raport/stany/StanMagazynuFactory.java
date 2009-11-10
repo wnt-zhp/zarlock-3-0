@@ -1,8 +1,7 @@
 package cx.ath.jbzdak.zarlok.raport.stany;
 
 import cx.ath.jbzdak.jpaGui.db.DBManager;
-import cx.ath.jbzdak.jpaGui.db.JPAReturnableTransaction;
-import cx.ath.jbzdak.jpaGui.db.JPATransaction;
+import cx.ath.jbzdak.jpaGui.db.ReturnableTransaction;
 import cx.ath.jbzdak.zarlok.config.Preferences;
 import cx.ath.jbzdak.zarlok.entities.Dzien;
 import cx.ath.jbzdak.zarlok.raport.Raport;
@@ -36,8 +35,8 @@ public class StanMagazynuFactory {
    }
 
    Raport createRaport(final Dzien dzien){
-      return JPATransaction.execute(manager, new JPAReturnableTransaction<Raport>() {
-         @Override
+      return (Raport) manager.executeTransaction(new ReturnableTransaction<EntityManager, Raport>() {
+        @Override
          public Raport doTransaction(EntityManager entityManager) {
             Query q = entityManager.createNamedQuery("getStanMagazynu");
             q.setParameter("data", dzien.getData());

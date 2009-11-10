@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///home/repo/git/jpa-framework-2-0/application/application.iml" filepath="/home/repo/git/jpa-framework-2-0/application/application.iml" />
-      <module fileurl="file:///home/repo/git/jpa-framework-2-0/beanFormatter/beanFormatter.iml" filepath="/home/repo/git/jpa-framework-2-0/beanFormatter/beanFormatter.iml" />
-      <module fileurl="file:///home/repo/git/jpa-framework-2-0/common/common.iml" filepath="/home/repo/git/jpa-framework-2-0/common/common.iml" />
-      <module fileurl="file:///home/repo/git/jpa-framework-2-0/configuration/configuration.iml" filepath="/home/repo/git/jpa-framework-2-0/configuration/configuration.iml" />
-      <module fileurl="file:///home/repo/git/jpa-framework-2-0/db-api/db-api.iml" filepath="/home/repo/git/jpa-framework-2-0/db-api/db-api.iml" />
-      <module fileurl="file:///home/repo/git/jpa-framework-2-0/db-h2/db-h2.iml" filepath="/home/repo/git/jpa-framework-2-0/db-h2/db-h2.iml" />
-      <module fileurl="file:///home/repo/git/jpa-framework-2-0/db-impl/db-impl.iml" filepath="/home/repo/git/jpa-framework-2-0/db-impl/db-impl.iml" />
-      <module fileurl="file:///home/repo/git/jpa-framework-2-0/jpa-framework.iml" filepath="/home/repo/git/jpa-framework-2-0/jpa-framework.iml" />
-      <module fileurl="file:///home/repo/git/jpa-framework-2-0/ui-components/ui-components.iml" filepath="/home/repo/git/jpa-framework-2-0/ui-components/ui-components.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jpa-framework-2-0/application/application.iml" filepath="$PROJECT_DIR$/../jpa-framework-2-0/application/application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jpa-framework-2-0/beanFormatter/beanFormatter.iml" filepath="$PROJECT_DIR$/../jpa-framework-2-0/beanFormatter/beanFormatter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jpa-framework-2-0/common/common.iml" filepath="$PROJECT_DIR$/../jpa-framework-2-0/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jpa-framework-2-0/configuration/configuration.iml" filepath="$PROJECT_DIR$/../jpa-framework-2-0/configuration/configuration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jpa-framework-2-0/db-api/db-api.iml" filepath="$PROJECT_DIR$/../jpa-framework-2-0/db-api/db-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jpa-framework-2-0/db-h2/db-h2.iml" filepath="$PROJECT_DIR$/../jpa-framework-2-0/db-h2/db-h2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jpa-framework-2-0/db-impl/db-impl.iml" filepath="$PROJECT_DIR$/../jpa-framework-2-0/db-impl/db-impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jpa-framework-2-0/jpa-framework.iml" filepath="$PROJECT_DIR$/../jpa-framework-2-0/jpa-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jpa-framework-2-0/ui-components/ui-components.iml" filepath="$PROJECT_DIR$/../jpa-framework-2-0/ui-components/ui-components.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-assembly/zarlock-assembly.iml" filepath="$PROJECT_DIR$/zarlock-assembly/zarlock-assembly.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-common/zarlock-common.iml" filepath="$PROJECT_DIR$/zarlock-common/zarlock-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-db/zarlock-db.iml" filepath="$PROJECT_DIR$/zarlock-db/zarlock-db.iml" />

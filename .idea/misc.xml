@@ -29,7 +29,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="/home/repo/git/jpa-framework-2-0/pom.xml" />
+        <option value="$PROJECT_DIR$/../jpa-framework-2-0/pom.xml" />
       </list>
     </option>
   </component>

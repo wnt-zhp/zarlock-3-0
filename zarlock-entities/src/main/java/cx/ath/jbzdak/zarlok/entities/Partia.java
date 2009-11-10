@@ -3,7 +3,6 @@ package cx.ath.jbzdak.zarlok.entities;
 import cx.ath.jbzdak.jpaGui.Utils;
 import static cx.ath.jbzdak.jpaGui.Utils.getRelativeDate;
 import cx.ath.jbzdak.zarlok.entities.listeners.PartiaSearchCacheUpdater;
-import org.hibernate.HibernateException;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
@@ -29,7 +28,7 @@ import java.util.List;
         ),
         @NamedQuery(
                 name = "getPartiaSpecyfikator",
-                query = "SELECT DISTINCT p.specyfikator FROM Partia p WHERE LOWER(p.specyfikator) LIKE LOWER('%' || :specyfikator || '%')"
+                query = "SELECT DISTINCT p.specyfikator FROM Partia p WHERE LOWER(p.specyfikator) LIKE LOWER(CONCAT('%',CONCAT(:specyfikator,'%')))"
         ),
         @NamedQuery(
                 name = "getPartie",
@@ -357,7 +356,7 @@ public class Partia implements ProductSeachCacheSearchable{
       sb.append(", dataWprowadzenia=").append(dataWprowadzenia);
       try{
          sb.append(", wyprowadzenia=").append(getWyprowadzenia());
-      }catch (HibernateException e){
+      }catch (RuntimeException e){
           sb.append(", wyprowadzenia=NIE ZAŁADOWANO");
          //Hibernate exception moze polecieć -- olać!
       }

@@ -7,7 +7,7 @@ import edu.umd.cs.findbugs.annotations.Nullable;
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: 2009-10-20
  */
-public class InitDBLauncher extends Task<AppLauncher> {
+class InitDBLauncher extends Task<AppLauncher> {
    public InitDBLauncher() {
       super(25, "INIT_DB_LAUNCHER");
    }

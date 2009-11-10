@@ -35,11 +35,10 @@ public class AppLauncher {
         try{
          LOGGER.info("************************************************************");
          LOGGER.info("************************************************************");
-         LOGGER.info("");
-         LOGGER.info("Starting zarlock ");
-         LOGGER.info("");
-         LOGGER.info("zarlockstart");
-         LOGGER.info("************************************************************");
+         LOGGER.info("**                                                        **");
+         LOGGER.info("**                    Starting zarlock                    **");
+         LOGGER.info("**                                                        **");
+         LOGGER.info("**zarlockstart**********************************************");
          LOGGER.info("************************************************************");
          INIT_TASKS.executeThrow(this);
       } catch (Exception e){
