@@ -18,7 +18,7 @@ import java.util.List;
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: 2009-04-28
  */
-public class RaportFactoryImpl implements RaportFactory {
+public class RaportFactoryImpl implements ReportFactory {
 
    private static final Logger LOGGER = Utils.makeLogger();
 
@@ -37,26 +37,26 @@ public class RaportFactoryImpl implements RaportFactory {
    }
 
 
-   public void printStanMagazynu(Dzien d)throws RaportException{
+   public void printStanMagazynu(Dzien d)throws ReportException {
      stanMagazynuFactory.printStanMag(d);
    }
 
 
-   public void saveStanMagazynu(Dzien d)throws RaportException{
+   public void saveStanMagazynu(Dzien d)throws ReportException {
       stanMagazynuFactory.saveStanMagazynu(d, null);
    }
 
-   public void printZZ(Dzien d) throws RaportException{
+   public void printZZ(Dzien d) throws ReportException {
       zzFactory.printZZ(d);
    }
 
-   public void saveZZ(Dzien d) throws RaportException{
+   public void saveZZ(Dzien d) throws ReportException {
       zzFactory.saveZZ(d);
    }
 
-   public void saveKartoteki() throws RaportException {kartotekaRaportFactory.saveKartoteki();}
+   public void saveKartoteki() throws ReportException {kartotekaRaportFactory.saveKartoteki();}
 
-   public void saveDokumentacja() throws RaportException{
+   public void saveDokumentacja() throws ReportException {
       stanMagazynuFactory.cleanStanMagazynuFolder();
       zzFactory.cleanZZFolder();
       List<Dzien> dni = (List<Dzien>) manager.executeTransaction(new ReturnableTransaction<EntityManager, List<Dzien>>() {
@@ -69,7 +69,7 @@ public class RaportFactoryImpl implements RaportFactory {
          try {
             manager.executeTransaction(new Transaction<EntityManager>(){
                @Override
-               public void doTransaction(EntityManager entityManager) throws RaportException
+               public void doTransaction(EntityManager entityManager) throws ReportException
                {
                   Dzien d2 = entityManager.find(Dzien.class, d.getId());
                   stanMagazynuFactory.saveStanMagazynu(d2, null);
@@ -77,7 +77,7 @@ public class RaportFactoryImpl implements RaportFactory {
                }
             });
          } catch (TransactionException e) {
-            throw (RaportException) e.getCause();
+            throw (ReportException) e.getCause();
          }
 
       }

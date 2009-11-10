@@ -5,16 +5,16 @@ package cx.ath.jbzdak.zarlok.raport;
  *         Date: 2009-04-28
  */
 @SuppressWarnings({"WeakerAccess"})
-public class RaportException extends Exception{
-   public RaportException(String message) {
+public class ReportException extends Exception{
+   public ReportException(String message) {
       super(message);
    }
 
-   public RaportException(String message, Throwable cause) {
+   public ReportException(String message, Throwable cause) {
       super(message, cause);
    }
 
-   public RaportException(Throwable cause) {
+   public ReportException(Throwable cause) {
       super(cause);
    }
 }

@@ -2,8 +2,8 @@ package cx.ath.jbzdak.zarlok.raport.zz;
 
 import cx.ath.jbzdak.zarlok.config.Preferences;
 import cx.ath.jbzdak.zarlok.entities.Dzien;
-import cx.ath.jbzdak.zarlok.raport.RaportException;
-import cx.ath.jbzdak.zarlok.raport.RaportExceptionForUser;
+import cx.ath.jbzdak.zarlok.raport.ReportException;
+import cx.ath.jbzdak.zarlok.raport.ReportExceptionForUser;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
  */
 public class ZZFactory {
 
-   public void printZZ(Dzien d) throws RaportException {
+   public void printZZ(Dzien d) throws ReportException {
       ZZRaport raport = new ZZRaport();
      ZZRaportBean zzRaportBean = new ZZRaportBean(d);
 
@@ -22,7 +22,7 @@ public class ZZFactory {
      raport.print();
    }
 
-   public void saveZZ(Dzien d) throws RaportException {
+   public void saveZZ(Dzien d) throws ReportException {
      ZZRaport raport = new ZZRaport();
       ZZRaportBean zzRaportBean = new ZZRaportBean(d);
       File file = new File(Preferences.getZapotrzebowaniaFolder(), "ZZ" + new SimpleDateFormat("yyyy-MM-dd").format(d.getData()) +".pdf");
@@ -30,10 +30,10 @@ public class ZZFactory {
       raport.save(file);
    }
 
-     public void cleanZZFolder() throws RaportExceptionForUser {
+     public void cleanZZFolder() throws ReportExceptionForUser {
       for(String filename : Preferences.getZapotrzebowaniaFolder().list()){
          if(!new File(Preferences.getZapotrzebowaniaFolder(), filename).delete()){
-            throw new RaportExceptionForUser("Nie udało się usunąć starego pliku z zapotrzebowaniem, " +
+            throw new ReportExceptionForUser("Nie udało się usunąć starego pliku z zapotrzebowaniem, " +
                     "możliwe że jest on otwarty w innym programie. Zamknij go i spróbuj ponownie.\nNazwa pliku to :'"
             +filename + "'");
          }

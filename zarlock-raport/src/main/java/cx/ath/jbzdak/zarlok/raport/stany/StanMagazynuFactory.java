@@ -5,8 +5,8 @@ import cx.ath.jbzdak.jpaGui.db.ReturnableTransaction;
 import cx.ath.jbzdak.zarlok.config.Preferences;
 import cx.ath.jbzdak.zarlok.entities.Dzien;
 import cx.ath.jbzdak.zarlok.raport.Raport;
-import cx.ath.jbzdak.zarlok.raport.RaportException;
-import cx.ath.jbzdak.zarlok.raport.RaportExceptionForUser;
+import cx.ath.jbzdak.zarlok.raport.ReportException;
+import cx.ath.jbzdak.zarlok.raport.ReportExceptionForUser;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -90,7 +90,7 @@ public class StanMagazynuFactory {
 //      });
 //   }
 
-   public void printStanMag(Dzien d) throws RaportException {
+   public void printStanMag(Dzien d) throws ReportException {
       Raport rap = createRaport(d);
       rap.print();
    }
@@ -99,17 +99,17 @@ public class StanMagazynuFactory {
       return new File(Preferences.getStanMagazynuFolder(), "Stan" + simpleDateFormat.format(d.getData()) + ".pdf");
    }
 
-   public void cleanStanMagazynuFolder() throws RaportExceptionForUser {
+   public void cleanStanMagazynuFolder() throws ReportExceptionForUser {
       for(String filename : Preferences.getStanMagazynuFolder().list()){
          if(!new File(Preferences.getStanMagazynuFolder(), filename).delete()){
-            throw new RaportExceptionForUser("Nie udało się usunąć starego pliku ze stanami magazynów, " +
+            throw new ReportExceptionForUser("Nie udało się usunąć starego pliku ze stanami magazynów, " +
                     "możliwe że jest on otwarty w innym programie. Zamknij go i spróbuj ponownie.\nNazwa pliku to :'"
             +filename + "'");
          }
       }
    }
 
-      public void saveStanMagazynu(@Nonnull Dzien d, @CheckForNull File f) throws RaportException {
+      public void saveStanMagazynu(@Nonnull Dzien d, @CheckForNull File f) throws ReportException {
      if(f==null){
         f = createDefaultFile(d);
      }

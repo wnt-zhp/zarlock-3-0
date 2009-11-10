@@ -5,8 +5,8 @@ import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.jpaGui.db.ReturnableTransaction;
 import cx.ath.jbzdak.zarlok.config.Preferences;
 import cx.ath.jbzdak.zarlok.raport.Raport;
-import cx.ath.jbzdak.zarlok.raport.RaportException;
-import cx.ath.jbzdak.zarlok.raport.RaportExceptionForUser;
+import cx.ath.jbzdak.zarlok.raport.ReportException;
+import cx.ath.jbzdak.zarlok.raport.ReportExceptionForUser;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -40,12 +40,12 @@ public class KartotekaRaportFactory {
 
 
 
-   private void saveKartoteka(KartotekaRaportBean kartotekaRaportBean) throws RaportException {
+   private void saveKartoteka(KartotekaRaportBean kartotekaRaportBean) throws ReportException {
       Raport raport = makeRaport(kartotekaRaportBean);
       try {
          raport.save(getKartotekaFile(kartotekaRaportBean));
       } catch (IOException e) {
-         throw new RaportExceptionForUser("Nie można utworzyć pliku z kartotekami, spróbój jeszcze raz", e);
+         throw new ReportExceptionForUser("Nie można utworzyć pliku z kartotekami, spróbój jeszcze raz", e);
       }
    }
 
@@ -63,11 +63,11 @@ public class KartotekaRaportFactory {
                       Utils.cleanFileName("" + bean.getNazwa() + "_" + bean.getSpecyfikator() + "_" + ordinal) +  ".pdf");
    }
 
-  public void saveKartoteki() throws RaportException {
+  public void saveKartoteki() throws ReportException {
      for(String filename : Preferences.getKatrotekaFolder().list()){
         File f = new File(Preferences.getKatrotekaFolder(), filename);
         if(!f.delete()){
-           throw new RaportExceptionForUser("Nie można usunąć pliku ze starą kartoteką o nazwie: " +
+           throw new ReportExceptionForUser("Nie można usunąć pliku ze starą kartoteką o nazwie: " +
                    "" + f + ". Usuń go ręcznie i spróbuj jeszcze raz");
         }
      }

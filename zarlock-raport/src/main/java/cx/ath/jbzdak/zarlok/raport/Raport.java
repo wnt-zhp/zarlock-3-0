@@ -74,10 +74,10 @@ public abstract class Raport {
       document.add(new Paragraph(new Chunk(PreferencesConfig.getConfigurationSource().getConfiguration().get(PreferencesKeys.NAZWA_OBOZU_3).getSingleValue().toString(), defaultParagraphFont)));
    }
 
-   public void print() throws RaportException {
+   public void print() throws ReportException {
       if((!Desktop.isDesktopSupported()) || (! Desktop.getDesktop().isSupported(Action.PRINT) && ! Desktop.getDesktop().isSupported(
               Action.OPEN)) ){
-         throw new RaportExceptionForUser("Nie wspieramy drukowania na tym systemie, ciagle " +
+         throw new ReportExceptionForUser("Nie wspieramy drukowania na tym systemie, ciagle " +
                  "możesz zapisać dokumenty jako pliki pdf i wydrukowac je ręcznie. Jeśli korzystasz z linuksa" +
                  "być może brakuje bibliotek GTK, równie dobrze drukowanie może w ogóle nie być wspierane... " +
                  " Najprościej - zapisz raport do pliku i wydrukuj z poziomu czytnika .pdf.");
@@ -97,9 +97,9 @@ public abstract class Raport {
             Desktop.getDesktop().open(resultFile);
          }
       } catch (DocumentException e) {
-         throw new RaportException(DOC_EXCEPTION_MESSAGE,e);
+         throw new ReportException(DOC_EXCEPTION_MESSAGE,e);
       } catch (IOException e) {
-         throw new RaportExceptionForUser(IO_EXCEPTION_MESSAGE, e);
+         throw new ReportExceptionForUser(IO_EXCEPTION_MESSAGE, e);
       }
    }
 
@@ -127,15 +127,15 @@ public abstract class Raport {
       return result;
    }
 
-   public void save(File file) throws RaportException{
+   public void save(File file) throws ReportException {
       try {
          file.createNewFile();
          setResultFile(file);
          makeReport();
       } catch (IOException e) {
-         throw new RaportExceptionForUser(IO_EXCEPTION_MESSAGE, e);
+         throw new ReportExceptionForUser(IO_EXCEPTION_MESSAGE, e);
       } catch (DocumentException e) {
-         throw  new RaportException(DOC_EXCEPTION_MESSAGE, e);
+         throw  new ReportException(DOC_EXCEPTION_MESSAGE, e);
       }
    }
 
