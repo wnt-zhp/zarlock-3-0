@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/zarlock-assembly/zarlock-assembly.iml" filepath="$PROJECT_DIR$/zarlock-assembly/zarlock-assembly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-common/zarlock-common.iml" filepath="$PROJECT_DIR$/zarlock-common/zarlock-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-db/zarlock-db.iml" filepath="$PROJECT_DIR$/zarlock-db/zarlock-db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-db-classpath/zarlock-db-classpath.iml" filepath="$PROJECT_DIR$/zarlock-db-classpath/zarlock-db-classpath.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-entities/zarlock-entities.iml" filepath="$PROJECT_DIR$/zarlock-entities/zarlock-entities.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-main.iml" filepath="$PROJECT_DIR$/zarlock-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-raport/zarlock-raport.iml" filepath="$PROJECT_DIR$/zarlock-raport/zarlock-raport.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-runners/zarlock-runners.iml" filepath="$PROJECT_DIR$/zarlock-runners/zarlock-runners.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-ui/zarlock-ui.iml" filepath="$PROJECT_DIR$/zarlock-ui/zarlock-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-config/zarlok-config.iml" filepath="$PROJECT_DIR$/zarlock-config/zarlok-config.iml" />
+    </modules>
+  </component>
+</project>
+

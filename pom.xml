@@ -30,6 +30,8 @@
         <module>zarlock-assembly</module>
         <module>zarlock-common</module>
         <module>zarlock-db-classpath</module>
+        <!--module>zarlock-ui-old</module-->
+        <module>zarlock-ui</module>
     </modules>
     <repositories>
         <repository>
