@@ -10,10 +10,10 @@ import java.sql.SQLException;
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: 2009-10-22
  */
-public class WyprowadzenieUpdateProductTrigger extends DefaultTrigger{
+public class ExpenditureUpdateProductTrigger extends DefaultTrigger{
    @Override
    protected void init(Connection conn) {
-      assertTableName("WYPROWADZENIE");
+      assertTableName("EXPENDITURE");
    }
 
    @Override

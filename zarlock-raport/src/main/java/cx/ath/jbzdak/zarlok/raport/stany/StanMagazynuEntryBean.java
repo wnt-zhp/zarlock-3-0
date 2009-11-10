@@ -1,7 +1,7 @@
 package cx.ath.jbzdak.zarlok.raport.stany;
 
-import cx.ath.jbzdak.zarlok.entities.Partia;
-import cx.ath.jbzdak.zarlok.entities.Produkt;
+import cx.ath.jbzdak.zarlok.entities.Batch;
+import cx.ath.jbzdak.zarlok.entities.Product;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -13,7 +13,7 @@ import java.math.MathContext;
 @SuppressWarnings({"WeakerAccess"})
 public class StanMagazynuEntryBean {
 
-   private final Produkt produkt;
+   private final Product product;
 
    private final String  specyfikator;
 
@@ -21,23 +21,23 @@ public class StanMagazynuEntryBean {
 
    private  BigDecimal iloscJednostek;
 
-   public StanMagazynuEntryBean(Partia p, BigDecimal iloscWyprowadzona) {
-      this.produkt = p.getProdukt();
-      this.specyfikator = p.getSpecyfikator();
-      this.jednostka = p.getJednostka();
+   public StanMagazynuEntryBean(Batch p, BigDecimal iloscWyprowadzona) {
+      this.product = p.getProduct();
+      this.specyfikator = p.getSpecifier();
+      this.jednostka = p.getUnit();
       iloscWyprowadzona=iloscWyprowadzona!=null?iloscWyprowadzona:BigDecimal.ZERO;
-      this.iloscJednostek =  p.getIloscPocz().subtract(iloscWyprowadzona, MathContext.DECIMAL32);
+      this.iloscJednostek =  p.getStartQty().subtract(iloscWyprowadzona, MathContext.DECIMAL32);
    }
 
-    public StanMagazynuEntryBean(Partia p) {
-      this.produkt = p.getProdukt();
-      this.specyfikator = p.getSpecyfikator();
-      this.jednostka = p.getJednostka();
-      this.iloscJednostek =  p.getIloscPocz();
+    public StanMagazynuEntryBean(Batch p) {
+      this.product = p.getProduct();
+      this.specyfikator = p.getSpecifier();
+      this.jednostka = p.getUnit();
+      this.iloscJednostek =  p.getStartQty();
    }
 
-   public Produkt getProdukt() {
-      return produkt;
+   public Product getProdukt() {
+      return product;
    }
 
    public String getSpecyfikator() {
@@ -64,14 +64,14 @@ public class StanMagazynuEntryBean {
       StanMagazynuEntryBean that = (StanMagazynuEntryBean) o;
 
       if (!jednostka.equals(that.jednostka)) return false;
-      if (!produkt.getNazwa().equals(that.produkt.getNazwa())) return false;
+      if (!product.getName().equals(that.product.getName())) return false;
       return specyfikator.equals(that.specyfikator);
 
    }
 
    @Override
    public int hashCode() {
-      int result = produkt.getNazwa().hashCode();
+      int result = product.getName().hashCode();
       result = 31 * result + specyfikator.hashCode();
       result = 31 * result + jednostka.hashCode();
       return result;

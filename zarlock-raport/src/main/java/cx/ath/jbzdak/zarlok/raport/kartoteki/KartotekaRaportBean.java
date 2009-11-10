@@ -1,7 +1,7 @@
 package cx.ath.jbzdak.zarlok.raport.kartoteki;
 
-import cx.ath.jbzdak.zarlok.entities.Partia;
-import cx.ath.jbzdak.zarlok.entities.Wyprowadzenie;
+import cx.ath.jbzdak.zarlok.entities.Batch;
+import cx.ath.jbzdak.zarlok.entities.Expenditure;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -38,11 +38,11 @@ public class KartotekaRaportBean {
       return cena;
    }
 
-   public void setPartie(List<Partia> partie) {
+   public void setPartie(List<Batch> partie) {
       zawartoscKartoteki = new ArrayList<KartotekaEntryBean>();
-      for(Partia p : partie){
+      for(Batch p : partie){
          zawartoscKartoteki.add(KartotekaEntryBean.createPrzychodBean(p));
-         for(Wyprowadzenie w : p.getWyprowadzenia()){
+         for(Expenditure w : p.getWyprowadzenia()){
             zawartoscKartoteki.add(KartotekaEntryBean.createRozchodBean(w));
          }
       }

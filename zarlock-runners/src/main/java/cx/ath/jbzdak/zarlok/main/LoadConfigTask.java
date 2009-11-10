@@ -19,12 +19,12 @@ class LoadConfigTask extends Task<Object>{
    private final String propertiesFilePath;
 
 
-    LoadConfigTask() {
-      super(0, "LOAD_CONFIG");
-      propertiesFilePath= "/zarlock.properties";
+   LoadConfigTask() {
+      this("/zarlock.properties");
    }
 
    LoadConfigTask(String propertiesFilePath) {
+      super(0, "LOAD_CONFIG");
       this.propertiesFilePath = propertiesFilePath;
    }
 

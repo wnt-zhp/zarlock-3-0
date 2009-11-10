@@ -13,18 +13,18 @@ import java.util.regex.Pattern;
 public class ProductSearchCacheUtils {
 
    @SuppressWarnings({"WeakerAccess"})
-   public static final Pattern PROUCT_SEARCH_CACHE_PATTERN = Pattern.compile("([\\p{L}\\s]+)(?:-([\\p{L}\\s]+)?)?(?:\\[([\\p{L}\\s]+)\\]?)?");
+   public static final Pattern PRODUCT_SEARCH_CACHE_PATTERN = Pattern.compile("([\\p{L}\\s]+)(?:-([\\p{L}\\s]+)?)?(?:\\[([\\p{L}\\s]+)\\]?)?");
 
-   public static final String format(ProductSeachCacheSearchable bean){
+   public static final String format(IProductSearchCache bean){
       StringBuilder sbr = new StringBuilder();
-      sbr.append(bean.getNazwaProduktu());
-      if(!StringUtils.isEmpty(bean.getSpecyfikator())){
+      sbr.append(bean.getProductName());
+      if(!StringUtils.isEmpty(bean.getSpecifier())){
          sbr.append(" - ");
-         sbr.append(bean.getSpecyfikator());
+         sbr.append(bean.getSpecifier());
       }
-      if(!StringUtils.isEmpty(bean.getJednostka())){
+      if(!StringUtils.isEmpty(bean.getUnit())){
          sbr.append("[");
-         sbr.append(bean.getJednostka());
+         sbr.append(bean.getUnit());
          sbr.append("]");
       }
      return sbr.toString();
@@ -34,14 +34,14 @@ public class ProductSearchCacheUtils {
       if(StringUtils.isEmpty(text)){
 			return new ProductSearchCache("","","",null);
 		}
-		Matcher matcher = PROUCT_SEARCH_CACHE_PATTERN.matcher(text);
+		Matcher matcher = PRODUCT_SEARCH_CACHE_PATTERN.matcher(text);
 		if(!matcher.matches()){
 			throw new ParsingException("Błędny format produktu");
 		}
 		ProductSearchCache cache = new ProductSearchCache();
-		cache.setNazwaProduktu(matcher.group(1));
-		cache.setSpecyfikator(matcher.group(2));
-		cache.setJednostka(matcher.group(3));
+		cache.setProductName(matcher.group(1));
+		cache.setSpecifier(matcher.group(2));
+		cache.setUnit(matcher.group(3));
 		return cache;
    }
 }

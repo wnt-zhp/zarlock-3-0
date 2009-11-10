@@ -3,16 +3,16 @@ package cx.ath.jbzdak.zarlok.entities;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 
-public class WyprowadzenieUtils {
+public class ExpenditureUtils {
 
-	public static boolean compareContents(Wyprowadzenie w, Wyprowadzenie w2){
+	public static boolean compareContents(Expenditure w, Expenditure w2){
 			if(!Utils.equals(w.getId(), w2.getId()))
 				return false;
-			if(w.getPartia()==null ^ w2.getPartia()==null){
+			if(w.getBatch()==null ^ w2.getBatch()==null){
 				return false;
-			}else if(w.getPartia()!=null && !Utils.equals(w.getPartia().getId(), w2.getPartia().getId()))
+			}else if(w.getBatch()!=null && !Utils.equals(w.getBatch().getId(), w2.getBatch().getId()))
 				return false;
-			if(!Utils.equals(w.getIloscJednostek(), w2.getIloscJednostek()))
+			if(!Utils.equals(w.getQuantity(), w2.getQuantity()))
 				return false;
 			return true;
 	}
@@ -20,7 +20,7 @@ public class WyprowadzenieUtils {
 
 	private static final PatternBeanFormatter beanFormatter = new PatternBeanFormatter("{posilek.dzien.data} na posiłek {posilek.nazwa} ");
 
-	public static String getTytulemFromDanie(Danie d){
+	public static String getTytulemFromDanie(Course d){
 		return beanFormatter.format(d);
 	}
 

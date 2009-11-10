@@ -56,7 +56,7 @@ public class StanMagazynuFactory {
                }
                @Override
                public int compare(StanMagazynuEntryBean o1, StanMagazynuEntryBean o2) {
-                  return collator.compare(o1.getProdukt().getNazwa(), o2.getProdukt().getNazwa());
+                  return collator.compare(o1.getProdukt().getName(), o2.getProdukt().getName());
                }
             });
             for(StanMagazynuEntryBean bean : results){
@@ -85,7 +85,7 @@ public class StanMagazynuFactory {
 //      Collections.sort(smeb, new Comparator<StanMagazynuEntryBean>() {
 //         @Override
 //         public int compare(StanMagazynuEntryBean o1, StanMagazynuEntryBean o2) {
-//            return collator.compare(o1.getProdukt().getNazwa(), o2.getProdukt().getNazwa());
+//            return collator.compare(o1.getProdukt().getName(), o2.getProdukt().getName());
 //         }
 //      });
 //   }

@@ -5,7 +5,7 @@
     <groupId>cx.ath.jbzdak.zarlock</groupId>
     <artifactId>zarlock-main</artifactId>
     <packaging>pom</packaging>
-    <version>3.0</version>
+    <version>3.1</version>
     <build>
         <pluginManagement>
             <plugins>
@@ -23,9 +23,9 @@
     </build>
     <modules>
         <module>zarlock-entities</module>
-        <module>zarlock-db</module>
+        <!--module>zarlock-db</module-->
         <module>zarlock-config</module>
-        <module>zarlock-raport</module>
+        <!--module>zarlock-raport</module-->
         <module>zarlock-runners</module>
         <module>zarlock-assembly</module>
         <module>zarlock-common</module>
@@ -72,27 +72,22 @@
             <dependency>
                 <groupId>cx.ath.jbzdak.zarlock</groupId>
                 <artifactId>zarlock-entities</artifactId>
-                <version>3.0</version>
+                <version>3.1</version>
             </dependency>
             <dependency>
                 <groupId>cx.ath.jbzdak.zarlock</groupId>
-                <artifactId>zarlok-config</artifactId>
-                <version>3.0</version>
-            </dependency>
-            <dependency>
-                <groupId>cx.ath.jbzdak.zarlock</groupId>
-                <artifactId>zarlock-db</artifactId>
-                <version>3.0</version>
+                <artifactId>zarlock-config</artifactId>
+                <version>3.1</version>
             </dependency>
             <dependency>
                 <groupId>cx.ath.jbzdak.zarlock</groupId>
                 <artifactId>zarlock-common</artifactId>
-                <version>3.0</version>
+                <version>3.1</version>
             </dependency>
             <dependency>
                 <groupId>cx.ath.jbzdak.zarlock</groupId>
                 <artifactId>zarlock-db-classpath</artifactId>
-                <version>3.0</version>
+                <version>3.1</version>
             </dependency>
             <!-- JPA Gui dependencies -->
             <dependency>

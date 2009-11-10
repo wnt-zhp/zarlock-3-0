@@ -6,7 +6,7 @@ import com.lowagie.text.pdf.PdfPTable;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
 import static cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter.formatMessage;
-import cx.ath.jbzdak.zarlok.entities.Wyprowadzenie;
+import cx.ath.jbzdak.zarlok.entities.Expenditure;
 import cx.ath.jbzdak.zarlok.raport.Raport;
 import org.slf4j.Logger;
 
@@ -171,7 +171,7 @@ class ZZRaport extends Raport{
       for(int ii =0; ii < bean.getPosilkiDodatkowe().size(); ii++){
          Paragraph par = new Paragraph();
          par.add(new Chunk(bean.getNazwaPosilkuDoda(ii) + ": ", f));
-         for(Wyprowadzenie w : bean.getPosilkiDodatkowe().get(ii)){
+         for(Expenditure w : bean.getPosilkiDodatkowe().get(ii)){
            par.add(new Chunk(bean.formatWyprowadzenie(w) +",", defaultParagraphFont));
          }
          document.add(par);

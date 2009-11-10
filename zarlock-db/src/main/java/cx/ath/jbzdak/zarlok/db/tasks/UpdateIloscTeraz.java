@@ -29,7 +29,7 @@ public class UpdateIloscTeraz extends Task<ZarlockDBManager> {
                  .getResultList();
          for (Long i : results) {
             Number number = (Number) em.createQuery(
-                    "SELECT SUM(w.iloscJednostek) FROM Wyprowadzenie w WHERE w.partia.id = :id GROUP BY w.partia")
+                    "SELECT SUM(w.iloscJednostek) FROM Expenditure w WHERE w.partia.id = :id GROUP BY w.partia")
                     .setParameter("id", i).getSingleResult();
             Query update = em
                     .createQuery("UPDATE Partia p SET p.iloscTeraz = (p.iloscPocz - :ilosc) WHERE (p.id = :id)")

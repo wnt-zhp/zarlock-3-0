@@ -1,8 +1,8 @@
 package cx.ath.jbzdak.zarlok.raport.kartoteki;
 
 import cx.ath.jbzdak.jpaGui.Utils;
-import cx.ath.jbzdak.zarlok.entities.Partia;
-import cx.ath.jbzdak.zarlok.entities.Wyprowadzenie;
+import cx.ath.jbzdak.zarlok.entities.Batch;
+import cx.ath.jbzdak.zarlok.entities.Expenditure;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -30,7 +30,7 @@ public class KartotekaEntryBean implements Comparable<KartotekaEntryBean> {
 
    private final BigDecimal rozchodWartosc;
 
-   public static KartotekaEntryBean createPrzychodBean(Partia partia){
+   public static KartotekaEntryBean createPrzychodBean(Batch partia){
       return new KartotekaEntryBean(partia.getDataKsiegowania(),
                                     partia.getNumerFaktury(),
                                     partia.getIloscPocz(),
@@ -38,7 +38,7 @@ public class KartotekaEntryBean implements Comparable<KartotekaEntryBean> {
                                     null, null);
    }
 
-   public static  KartotekaEntryBean createRozchodBean(Wyprowadzenie wyprowadzenie){
+   public static  KartotekaEntryBean createRozchodBean(Expenditure wyprowadzenie){
       return new KartotekaEntryBean(wyprowadzenie.getDataWyprowadzenia(),
                                     wyprowadzenie.getTytulem(),
                                     null,

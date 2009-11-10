@@ -54,7 +54,7 @@ class StanMagazynuRaport extends Raport{
 
    private void addTable() throws DocumentException {
       PdfPTable table = new PdfPTable(new float[]{6,2,2} );
-      table.addCell(getHeaderCell("Produkt"));
+      table.addCell(getHeaderCell("Product"));
       table.addCell(getHeaderCell("Jednostka"));
       table.addCell(getHeaderCell("Ilość"));
       table.setHeaderRows(1);

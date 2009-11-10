@@ -8,7 +8,7 @@ import javax.persistence.*;
 /**
  * Encja zawierająca jeden klucz konfiguracji.
  */
-@Entity
+@Entity()
 @Table(name = "CONFIG_ENTRY")
 @NamedQuery(name = "getConfigEntryByName", query = "SELECT ce FROM ConfigEntry ce WHERE ce.name = :name")
 //@SequenceGenerator(name = "ZARLOCK_SEQUENCE_GENERATOR", sequenceName = "ZARLOCK_SEQUENCE", allocationSize = 32, initialValue = 0)

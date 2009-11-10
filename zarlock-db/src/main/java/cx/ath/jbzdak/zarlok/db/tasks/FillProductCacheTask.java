@@ -4,7 +4,7 @@ import cx.ath.jbzdak.jpaGui.task.Task;
 import cx.ath.jbzdak.zarlok.db.ZarlockDBManager;
 import cx.ath.jbzdak.zarlok.entities.Partia;
 import cx.ath.jbzdak.zarlok.entities.ProductSearchCache;
-import cx.ath.jbzdak.zarlok.entities.Produkt;
+
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 import javax.persistence.Query;
@@ -24,7 +24,7 @@ public class FillProductCacheTask extends Task<ZarlockDBManager> {
 	}
 
 	/**
-	 * Działą tak: zczytuje odpowiednie dane z tabelek {@link Produkt} i {@link Partia}
+	 * Działą tak: zczytuje odpowiednie dane z tabelek {@link cx.ath.jbzdak.zarlok.entities.Product} i {@link Partia}
 	 * po czym wywala duplikaty.
 	 */
 	@SuppressWarnings("unchecked")

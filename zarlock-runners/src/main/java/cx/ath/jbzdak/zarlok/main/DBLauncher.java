@@ -1,10 +1,7 @@
 package cx.ath.jbzdak.zarlok.main;
 
 import cx.ath.jbzdak.jpaGui.Factory;
-import cx.ath.jbzdak.jpaGui.db.DBLifecyclePhase;
-import cx.ath.jbzdak.jpaGui.db.DBManager;
-import cx.ath.jbzdak.jpaGui.db.JpaDbManager;
-import cx.ath.jbzdak.jpaGui.db.LifecycleManager;
+import cx.ath.jbzdak.jpaGui.db.*;
 import cx.ath.jbzdak.jpaGui.db.h2.DefaultH2Configuration;
 import cx.ath.jbzdak.jpaGui.db.h2.H2Configuration;
 import cx.ath.jbzdak.jpaGui.db.lifecycleListenerPack.CheckVersionListener;
@@ -30,9 +27,10 @@ class DBLauncher implements LifecycleManager<DBManager<EntityManager>>{
    private final H2Configuration h2Configuration = new DefaultH2Configuration(false);
 
    DBLauncher() {
+      h2Configuration.setPersistrenceUnit("zarlockPu");
       h2Configuration.setDialect(H2Dialect.class.getCanonicalName());
       h2Configuration.setDatbaseUri(new File(ConfigHolder.getProperties().getProperty("file.db")).toURI());
-      //h2Configuration.setSchemaAutoCreate(Hbm2ddl.valueOf(ConfigHolder.getProperties().getProperty("schemaAutoCreate")));
+      h2Configuration.setSchemaAutoCreate(Hbm2ddl.valueOf(ConfigHolder.getProperties().getProperty("schemaAutoCreate")));
       h2Configuration.addListenerPack(new InitializeDBPack(new Factory<Reader>() {
          @Override
          public Reader make() {

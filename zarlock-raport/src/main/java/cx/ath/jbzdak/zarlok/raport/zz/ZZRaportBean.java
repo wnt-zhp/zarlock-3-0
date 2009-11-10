@@ -24,9 +24,9 @@ public class ZZRaportBean {
 
    private int maxRowIdx = 0;
 
-   private final List<List<Wyprowadzenie>> posilki;
+   private final List<List<Expenditure>> posilki;
 
-   private final List<List<Wyprowadzenie>> posilkiDodatkowe;
+   private final List<List<Expenditure>> posilkiDodatkowe;
 
    private final List<String> posilkiNames;
    private final List<String> posilkiDodatkoweNames;
@@ -47,31 +47,31 @@ public class ZZRaportBean {
             posilki.add(p);
          }
       }
-      this.posilkiDodatkowe = new ArrayList<List<Wyprowadzenie>>(posilkiDodatkowe.size());
-      this.posilki = new ArrayList<List<Wyprowadzenie>>(posilki.size());
+      this.posilkiDodatkowe = new ArrayList<List<Expenditure>>(posilkiDodatkowe.size());
+      this.posilki = new ArrayList<List<Expenditure>>(posilki.size());
       this.posilkiNames = new ArrayList<String>(posilki.size());
       this.posilkiDodatkoweNames = new ArrayList<String>(posilkiDodatkowe.size());
       for (int ii = 0; ii < posilki.size(); ii++) {
          Posilek posilek = posilki.get(ii);
          posilkiNames.add(posilek.getNazwa());
-         List<Wyprowadzenie> wyprowadzenia = new ArrayList<Wyprowadzenie>();
+         List<Expenditure> wyprowadzenia = new ArrayList<Expenditure>();
          this.posilki.add(wyprowadzenia);
          for (Danie danie : posilek.getDania()) {
-            for (Wyprowadzenie wyprowadzenie : danie.getWyprowadzenia()) {
+            for (Expenditure wyprowadzenie : danie.getWyprowadzenia()) {
                wyprowadzenia.add(wyprowadzenie);
             }
          }
       }
       for(Posilek p : posilkiDodatkowe){
          posilkiDodatkoweNames.add(p.getNazwa());
-         List<Wyprowadzenie> wyprowadzenia = new ArrayList<Wyprowadzenie>();
+         List<Expenditure> wyprowadzenia = new ArrayList<Expenditure>();
          for(Danie d : p.getDania()){
             wyprowadzenia.addAll(d.getWyprowadzenia());
          }
          this.posilkiDodatkowe.add(wyprowadzenia);
       }
       maxRowIdx = -1;
-      for (List<Wyprowadzenie> list : this.posilki) {
+      for (List<Expenditure> list : this.posilki) {
          maxRowIdx = Math.max(list.size(), maxRowIdx);
       }
    }
@@ -97,7 +97,7 @@ public class ZZRaportBean {
    }
 
    public String getNextWyprowadzenieForPosilek(int number){
-      List<Wyprowadzenie> wyp = posilki.get(number);
+      List<Expenditure> wyp = posilki.get(number);
       if(wyp.size() <= rowIdx){
          return "";
       }
@@ -115,11 +115,11 @@ public class ZZRaportBean {
 
 
 
-   String formatWyprowadzenie(Wyprowadzenie wyprowadzenie){
+   String formatWyprowadzenie(Expenditure wyprowadzenie){
       return wyprowadzeniaFormatter.format(wyprowadzenie);
    }
 
-   public List<List<Wyprowadzenie>> getPosilkiDodatkowe() {
+   public List<List<Expenditure>> getPosilkiDodatkowe() {
       return posilkiDodatkowe;
    }
 

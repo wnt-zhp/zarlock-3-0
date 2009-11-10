@@ -7,39 +7,39 @@ import org.hibernate.validator.NotNull;
 import javax.persistence.*;
 
 
-@NamedQueries({
-	@NamedQuery(
-			name="getProductSearchCache",
-			query="SELECT DISTINCT new cx.ath.jbzdak.zarlok.entities.ProductSearchCache (pr.nazwa, pa.specyfikator, pa.jednostka, pr.id) " +
-					"FROM Produkt pr, IN(pr.partie) pa"
-	),
-	@NamedQuery(
-			name="getProductSearchCache2",
-			query="SELECT DISTINCT new cx.ath.jbzdak.zarlok.entities.ProductSearchCache(pr.nazwa, pr.jednostka, pr.id) " +
-					"FROM Produkt pr"
-	),
-	@NamedQuery(
-			name="finishProductSearchCache",
-			query="DELETE FROM ProductSearchCache psc WHERE " +
-					"psc.specyfikator IS NULL AND " +
-					"EXISTS(SELECT pp FROM ProductSearchCache pp WHERE pp.nazwaProduktu = psc.nazwaProduktu AND pp.specyfikator IS NOT NULL)"
-	),
-	@NamedQuery(
-			name="deleteProductSearchCache",
-			query="DELETE FROM ProductSearchCache"
-	),
-	@NamedQuery(
-			name="filterProductSearchCache",
-			query="SELECT psc FROM ProductSearchCache psc " +
-					"WHERE " +
-					"(LOWER(nazwaProduktu) like LOWER('%' || :nazwaProduktu || '%')) AND " +
-					"(psc.specyfikator IS NULL OR LOWER(psc.specyfikator) like LOWER('%' || :specyfikator || '%')) AND " +
-					"(psc.jednostka IS NULL OR LOWER(psc.jednostka) like LOWER('%' || :jednostka || '%'))"
-	)
-})
+//@NamedQueries({
+//	@NamedQuery(
+//			name="getProductSearchCache",
+//			query="SELECT DISTINCT new cx.ath.jbzdak.zarlok.entities.ProductSearchCache (pr.name, pa.specifier, pa.unit, pr.id) " +
+//					"FROM Product pr, IN(pr.partie) pa"
+//	),
+//	@NamedQuery(
+//			name="getProductSearchCache2",
+//			query="SELECT DISTINCT new cx.ath.jbzdak.zarlok.entities.ProductSearchCache(pr.name, pr.unit, pr.id) " +
+//					"FROM Product pr"
+//	),
+//	@NamedQuery(
+//			name="finishProductSearchCache",
+//			query="DELETE FROM ProductSearchCache psc WHERE " +
+//					"psc.specifier IS NULL AND " +
+//					"EXISTS(SELECT pp FROM ProductSearchCache pp WHERE pp.productName = psc.productName AND pp.specifier IS NOT NULL)"
+//	),
+//	@NamedQuery(
+//			name="deleteProductSearchCache",
+//			query="DELETE FROM ProductSearchCache"
+//	),
+//	@NamedQuery(
+//			name="filterProductSearchCache",
+//			query="SELECT psc FROM ProductSearchCache psc " +
+//					"WHERE " +
+//					"(LOWER(productName) like LOWER('%' || :productName || '%')) AND " +
+//					"(psc.specifier IS NULL OR LOWER(psc.specifier) like LOWER('%' || :specifier || '%')) AND " +
+//					"(psc.unit IS NULL OR LOWER(psc.unit) like LOWER('%' || :unit || '%'))"
+//	)
+//})
 @Entity
 @Table(name = "PRODUCT_SEARCH_CACHE")
-public class ProductSearchCache implements ProductSeachCacheSearchable {
+public class ProductSearchCache implements IProductSearchCache {
 
 	@Id
 	@GeneratedValue
@@ -48,24 +48,24 @@ public class ProductSearchCache implements ProductSeachCacheSearchable {
    Long id;
 
 	@NotEmpty
-   @Column(name = "NAZWA_PRODUKTU")
+   @Column(name = "PRODUCT_NAME")
    private
-   String nazwaProduktu;
+   String productName;
 
-   @Column(name = "SPECYFIKATOR")
-	String specyfikator;
+   @Column(name = "SPECIFIER")
+	String specifier;
 
-   @Column(name = "JEDNOSTKA6")
-	private String jednostka;
+   @Column(name = "UNIT")
+	private String unit;
 
 	@NotNull
    @Column(name = "PRODUCT_ID")
    private Long productId;
 
 	@Transient
-   private Produkt product;
+   private Product product;
 
-    public ProductSearchCache() {
+   public ProductSearchCache() {
 		super();
 	}
 
@@ -73,25 +73,25 @@ public class ProductSearchCache implements ProductSeachCacheSearchable {
 	public ProductSearchCache(Long id, String productName) {
 		super();
 		this.id = id;
-		this.nazwaProduktu = productName;
+		this.productName = productName;
 	}
 
 	public ProductSearchCache(String productName,
-			String jednostka, Long productId) {
+			String unit, Long productId) {
 		super();
-		this.nazwaProduktu = productName;
-		this.jednostka = jednostka;
+		this.productName = productName;
+		this.unit = unit;
 		this.productId = productId;
 	}
 
 
 	@SuppressWarnings({"SameParameterValue"})
-   public ProductSearchCache(String productName, String specyfikator,
-			String jednostka, Long productId) {
+   public ProductSearchCache(String productName, String specifier,
+			String unit, Long productId) {
 		super();
-		this.nazwaProduktu = productName;
-		this.specyfikator = specyfikator;
-		this.jednostka = jednostka;
+		this.productName = productName;
+		this.specifier = specifier;
+		this.unit = unit;
 		this.productId = productId;
 	}
 
@@ -111,37 +111,37 @@ public class ProductSearchCache implements ProductSeachCacheSearchable {
 		this.id = id;
 	}
 
-	public String getNazwaProduktu() {
-		return nazwaProduktu;
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setNazwaProduktu(String nazwaProduktu) {
-		this.nazwaProduktu = nazwaProduktu;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
-	public String getSpecyfikator() {
-		return specyfikator;
+	public String getSpecifier() {
+		return specifier;
 	}
 
-	public void setSpecyfikator(String specyfikator) {
-		this.specyfikator = specyfikator;
+	public void setSpecifier(String specifier) {
+		this.specifier = specifier;
 	}
 
-	public String getJednostka() {
-		return jednostka;
+	public String getUnit() {
+		return unit;
 	}
 
-	public void setJednostka(String jednostka) {
-		this.jednostka = jednostka;
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 
    @Override
    public String toString() {
       return new ToStringBuilder(this).
               append("id", id).
-              append("nazwaProduktu", nazwaProduktu).
-              append("specyfikator", specyfikator).
-              append("jednostka", jednostka).
+              append("productName", productName).
+              append("specifier", specifier).
+              append("unit", unit).
               append("productId", productId).
               append("product", product).
               toString();
@@ -152,12 +152,12 @@ public class ProductSearchCache implements ProductSeachCacheSearchable {
 	}
 
 
-	public Produkt getProduct() {
+	public Product getProduct() {
 		return product;
 	}
 
 
-	public void setProduct(Produkt produkt) {
-		this.product = produkt;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 }

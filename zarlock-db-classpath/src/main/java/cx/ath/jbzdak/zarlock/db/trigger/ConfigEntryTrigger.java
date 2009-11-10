@@ -22,6 +22,6 @@ public class ConfigEntryTrigger extends DefaultTrigger{
 
    @Override
    protected void init(Connection conn) {
-      
+      assertTableName("CONFIG_ENTRY");
    }
 }

@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "PLANOWANE_WYPROWADZENIE")
-public class PlanowaneWyprowadzenie implements Cloneable, ProductSeachCacheSearchable{
+@Table(name = "PLANNED_EXPENDITURE")
+public class PlannedExpenditure implements Cloneable, IProductSearchCache {
 
 	@Id
 	@GeneratedValue
@@ -21,65 +21,65 @@ public class PlanowaneWyprowadzenie implements Cloneable, ProductSeachCacheSearc
 	private Long id;
 
 	@ManyToOne(optional=false, fetch = FetchType.EAGER)
-	private Produkt produkt;
+	private Product product;
 
-	private String specyfikator;
+	private String specifier;
 
 	@NotEmpty
-	private String jednostka;
+	private String unit;
 
 	@NotNull
-	@Column(name="ILOSC_JEDNOSTEK")
-	private BigDecimal iloscJednostek;
+	@Column(name="QUANTITY")
+	private BigDecimal quantity;
 
    @ManyToOne
-   private Danie danie;
+   private Course course;
 
 	@ManyToMany
-	private List<Wyprowadzenie> wyprowadzenia = new ArrayList<Wyprowadzenie>();
+	private List<Expenditure> expenditures = new ArrayList<Expenditure>();
 
 	@Transient
 	private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-	public Long getId() {
+   public Long getId() {
 		return id;
 	}
 
-	public Produkt getProdukt() {
-		return produkt;
+	public Product getProdukt() {
+		return product;
 	}
 
-	public String getSpecyfikator() {
-		return specyfikator;
+	public String getSpecifier() {
+		return specifier;
 	}
 
-	public String getJednostka() {
-		return jednostka;
+	public String getUnit() {
+		return unit;
 	}
 
-	public BigDecimal getIloscJednostek() {
-		return iloscJednostek;
+	public BigDecimal getQuantity() {
+		return quantity;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public void setProdukt(Produkt produkt) {
-		this.produkt = produkt;
+	public void setProdukt(Product product) {
+		this.product = product;
 	}
 
 	public void setContents(ProductSearchCache productSearchCache) {
 		if(productSearchCache==null){
-			this.produkt = null;
+			this.product = null;
 			return;
 		}
-		this.produkt = productSearchCache.getProduct();
-		if(isEmpty(getSpecyfikator())){
-			setSpecyfikator(productSearchCache.getSpecyfikator());
+		this.product = productSearchCache.getProduct();
+		if(isEmpty(getSpecifier())){
+			setSpecifier(productSearchCache.getSpecifier());
 		}
-		if(isEmpty(getJednostka())){
-			setJednostka(productSearchCache.getJednostka());
+		if(isEmpty(getUnit())){
+			setUnit(productSearchCache.getUnit());
 		}
 	}
 
@@ -94,30 +94,30 @@ public class PlanowaneWyprowadzenie implements Cloneable, ProductSeachCacheSearc
 	}
 
 	@SuppressWarnings({"WeakerAccess"})
-   public void setSpecyfikator(String specyfikator) {
-		String oldVal = this.specyfikator;
-		this.specyfikator = specyfikator;
-		support.firePropertyChange("specyfikator", oldVal, this.specyfikator);
+   public void setSpecifier(String specifier) {
+		String oldVal = this.specifier;
+		this.specifier = specifier;
+		support.firePropertyChange("specifier", oldVal, this.specifier);
 	}
 
 	@SuppressWarnings({"WeakerAccess"})
-   public void setJednostka(String jednostka) {
-		String oldval = this.jednostka;
-		this.jednostka = jednostka;
-		support.firePropertyChange("jednostka", oldval, this.jednostka);
+   public void setUnit(String unit) {
+		String oldVal = this.unit;
+		this.unit = unit;
+		support.firePropertyChange("unit", oldVal, this.unit);
 	}
 
-	public void setIloscJednostek(BigDecimal iloscJednostek) {
-		this.iloscJednostek = iloscJednostek;
+	public void setQuantity(BigDecimal quantity) {
+		this.quantity = quantity;
 	}
 
 
-	protected List<Wyprowadzenie> getWyprowadzenia() {
-		return wyprowadzenia;
+	protected List<Expenditure> getExpenditures() {
+		return expenditures;
 	}
 
-	protected void setWyprowadzenia(List<Wyprowadzenie> wyprowadzenia) {
-		this.wyprowadzenia = wyprowadzenia;
+	protected void setExpenditures(List<Expenditure> expenditures) {
+		this.expenditures = expenditures;
 	}
 
 	@Override
@@ -159,8 +159,8 @@ public class PlanowaneWyprowadzenie implements Cloneable, ProductSeachCacheSearc
 	}
 
     @Override
-    public String getNazwaProduktu() {
-        return getProdukt().getNazwa();
+    public String getProductName() {
+        return getProdukt().getName();
     }
 
    public String getSearchFormat(){
@@ -168,12 +168,12 @@ public class PlanowaneWyprowadzenie implements Cloneable, ProductSeachCacheSearc
    }
 
 
-   public Danie getDanie() {
-      return danie;
+   public Course getDanie() {
+      return course;
    }
 
-   public void setDanie(Danie danie) {
-      this.danie = danie;
+   public void setDanie(Course course) {
+      this.course = course;
    }
 
 }
