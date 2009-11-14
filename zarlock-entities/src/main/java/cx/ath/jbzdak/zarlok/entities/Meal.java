@@ -61,24 +61,6 @@ public class Meal {
 		this.day = d;
 	}
 
-   @PrePersist @PreUpdate
-	public void recalculateCost(){
-		BigDecimal cost = BigDecimal.ZERO;
-		boolean costStrict = true;
-		if(dania.isEmpty()){
-			setCostStrict(false);
-			return;
-		}
-		for(Course d : dania){
-			cost = cost.add(d.getCost()!=null?d.getCost():BigDecimal.ZERO, MathContext.DECIMAL32);
-			costStrict&=d.getCost()!=null;
-			costStrict&=d.getPlannedExpenditures().isEmpty();
-		}
-      setCostStrict(costStrict);
-      getDzien().recalculateDayCost();
-		setCost(Utils.round(cost, 2));
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -89,10 +71,6 @@ public class Meal {
 
 	public Boolean getAdditional() {
 		return additional;
-	}
-
-	public PeopleNo getIloscOsob() {
-		return peopleNo;
 	}
 
 	public List<Course> getDania() {
@@ -109,10 +87,6 @@ public class Meal {
 
 	public void setAdditional(Boolean additional) {
 		this.additional = additional;
-	}
-
-	public void setIloscOsob(PeopleNo peopleNo) {
-		this.peopleNo = peopleNo;
 	}
 
 	public void setDania(List<Course> dania) {
@@ -136,13 +110,19 @@ public class Meal {
 		this.costStrict = costStrict;
 	}
 
-	public Day getDzien() {
-		return day;
-	}
+   public Day getDay() {
+      return day;
+   }
 
-	public void setDzien(Day day) {
-		this.day = day;
-	}
+   public void setDay(Day day) {
+      this.day = day;
+   }
 
+   public PeopleNo getPeopleNo() {
+      return peopleNo;
+   }
 
+   public void setPeopleNo(PeopleNo peopleNo) {
+      this.peopleNo = peopleNo;
+   }
 }

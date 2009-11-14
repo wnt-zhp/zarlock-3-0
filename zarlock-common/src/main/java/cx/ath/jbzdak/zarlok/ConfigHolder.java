@@ -17,4 +17,6 @@ public class ConfigHolder {
    public static void setProperties(Properties PROPERTIES) {
       ConfigHolder.PROPERTIES = PROPERTIES;
    }
+   
+
 }

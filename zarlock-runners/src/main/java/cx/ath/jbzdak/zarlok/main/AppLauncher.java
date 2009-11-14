@@ -3,6 +3,8 @@ package cx.ath.jbzdak.zarlok.main;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.task.TasksExecutor;
 import cx.ath.jbzdak.jpaGui.ui.error.DisplayErrorDetailsDialog;
+import cx.ath.jbzdak.zarlok.LoadResouresTask;
+import cx.ath.jbzdak.zarlok.StartDBTask;
 import org.slf4j.Logger;
 
 import javax.swing.*;
@@ -29,6 +31,7 @@ public class AppLauncher {
       INIT_TASKS.addTask(new InitFolders());
       INIT_TASKS.addTask(new InitLogging());
       INIT_TASKS.addTask(new StartDBTask());
+      INIT_TASKS.addTask(new LoadResouresTask());
    }
 
    public void start(){

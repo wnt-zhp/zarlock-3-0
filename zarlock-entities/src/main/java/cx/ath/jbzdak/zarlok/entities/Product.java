@@ -8,26 +8,26 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedQueries({
+        @NamedQuery(
+                name="getProductIdByName",
+                query = "SELECT p.id FROM Product p WHERE p.name = :name"
+        ),
+        @NamedQuery(
+                name = "getStockLevelsForProduct",
+                query = "SELECT new cx.ath.jbzdak.zarlok.entities.misc.StockLevelBean(b.specifier, b.unit, SUM(b.currentQty)) FROM Product p, IN(p.batches) b where p.id = :id GROUP BY b.specifier, b.unit ORDER BY b.specifier, b.unit "
+        ),
+        @NamedQuery(
+                name = "getDistinctSpecifiersAndUnits",
+                query = "SELECT DISTINCT b.specifier, b.unit FROM Product p, IN(p.batches) b WHERE p.id = :id"
+        ),
+        @NamedQuery(
+                name = "getProductByName",
+                query = "SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', CONCAT(:name, '%')))"
+        )
+})
 @Entity
 @Table(name="PRODUCT")
-//@NamedQueries({
-//	@NamedQuery(
-//		name="getProduktNazwa",
-//		query = "SELECT DISTINCT p.name FROM Product p WHERE p.name LIKE CONCAT(CONCAT('%', :name), '%')"
-//	),
-//	@NamedQuery(
-//		name="getProduktByNazwa",
-//		query = "SELECT p FROM Product p WHERE p.name LIKE CONCAT(CONCAT('%', :name), '%')"
-//	),
-//	@NamedQuery(
-//			name="getProduktJednostka",
-//			query = "SELECT DISTINCT p.unit FROM Product p WHERE LOWER(p.unit) LIKE LOWER(CONCAT(CONCAT('%', :unit), '%'))"
-//	),
-//	@NamedQuery(
-//			name="countProduktNazwa",
-//			query = "SELECT COUNT(p) FROM Product p WHERE p.name = :name"
-//   )
-//})
 public class Product {
 
 	@Id

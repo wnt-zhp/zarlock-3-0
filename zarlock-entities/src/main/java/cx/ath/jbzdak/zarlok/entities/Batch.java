@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Batch produktu.
  */
-@Entity(name = "zarlockPu")
+@Entity()
 @Table(name="BATCH")
 //@NamedQueries({
 //        @NamedQuery(

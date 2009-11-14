@@ -41,12 +41,13 @@ public class PlannedExpenditure implements Cloneable, IProductSearchCache {
 	@Transient
 	private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
+   /**
+    * Czyli że dane planowane wyprowadzenie zostalo wyprowadzone realnie
+    */
+   Boolean spent; 
+
    public Long getId() {
 		return id;
-	}
-
-	public Product getProdukt() {
-		return product;
 	}
 
 	public String getSpecifier() {
@@ -65,11 +66,23 @@ public class PlannedExpenditure implements Cloneable, IProductSearchCache {
 		this.id = id;
 	}
 
-	public void setProdukt(Product product) {
-		this.product = product;
-	}
+   public Product getProduct() {
+      return product;
+   }
 
-	public void setContents(ProductSearchCache productSearchCache) {
+   public void setProduct(Product product) {
+      this.product = product;
+   }
+
+   public Boolean isSpent() {
+      return spent;
+   }
+
+   public void setSpent(Boolean spent) {
+      this.spent = spent;
+   }
+
+   public void setContents(ProductSearchCache productSearchCache) {
 		if(productSearchCache==null){
 			this.product = null;
 			return;
@@ -83,15 +96,6 @@ public class PlannedExpenditure implements Cloneable, IProductSearchCache {
 		}
 	}
 
-	/**
-    * @return .
-	 */
-	@Transient
-	public ProductSearchCache getContents(){
-		ProductSearchCache cache = new ProductSearchCache();
-		cache.setProduct(getProdukt());
-		return cache;
-	}
 
 	@SuppressWarnings({"WeakerAccess"})
    public void setSpecifier(String specifier) {
@@ -160,7 +164,7 @@ public class PlannedExpenditure implements Cloneable, IProductSearchCache {
 
     @Override
     public String getProductName() {
-        return getProdukt().getName();
+        return getProduct().getName();
     }
 
    public String getSearchFormat(){
@@ -168,11 +172,11 @@ public class PlannedExpenditure implements Cloneable, IProductSearchCache {
    }
 
 
-   public Course getDanie() {
+   public Course getCourse() {
       return course;
    }
 
-   public void setDanie(Course course) {
+   public void setCourse(Course course) {
       this.course = course;
    }
 

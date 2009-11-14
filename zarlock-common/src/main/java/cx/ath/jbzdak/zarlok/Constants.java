@@ -18,7 +18,7 @@ public interface Constants {
 
    public static final String logDir = "log";
 
-   public static final String configFile = "zarlock.properties";
+   public static final String configFile = "zarlockBoundle.properties";
 
    public static final String logFile = "zarlock.log";
 }

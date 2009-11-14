@@ -51,12 +51,15 @@ public class Expenditure implements Cloneable, IProductSearchCache {
    @ManyToOne(optional = true, fetch = FetchType.LAZY)
    private Course course;
 
-   @PrePersist
-	public void prePersist(){
-		createDate = new Date();
-		recalculatePartia();
+
+   public Expenditure() {
+		super();
 	}
 
+	public Expenditure(Batch batch) {
+		super();
+		this.batch = batch;
+	}
 
    @SuppressWarnings({"WeakerAccess"})
    public Course getDanie() {
@@ -66,13 +69,6 @@ public class Expenditure implements Cloneable, IProductSearchCache {
    public void setDanie(Course course) {
       this.course = course;
    }
-   
-
-	@SuppressWarnings({"WeakerAccess"})
-   @PreUpdate @PreRemove
-	public void recalculatePartia(){
-        quantity = Utils.round(quantity, 2);
-	}
 
 	public Long getId() {
 		return id;
@@ -122,17 +118,8 @@ public class Expenditure implements Cloneable, IProductSearchCache {
       this.batch = batch;
    }
 
-   public Expenditure() {
-		super();
-	}
-
-	public Expenditure(Batch batch) {
-		super();
-		this.batch = batch;
-	}
-
     @Transient
-    public BigDecimal getWartosc(){
+    public BigDecimal getValue(){
         return Utils.round(getBatch().getPrice().multiply(getQuantity(), MathContext.DECIMAL32),2);
     }
 
@@ -149,25 +136,6 @@ public class Expenditure implements Cloneable, IProductSearchCache {
    @Override
    public String getSpecifier() {
       return getBatch().getSpecifier();
-   }
-
-
-
-
-   @LifecycleListener({LifecyclePhase.PostRemove, LifecyclePhase.PostUpdate, LifecyclePhase.PostPersist})
-   public void updateKosztDania(EntityManager entityManager){
-      LOGGER.debug("updating cost dania");
-      if(getDanie()==null){
-         return;
-      }
-      Query q = entityManager.createQuery("SELECT SUM(w.quantity) FROM Course d, IN(d.expenditures) w WHERE " +
-              "d = :course ");
-      q.setParameter("course", getDanie());
-      Query update = entityManager.createQuery("UPDATE Course d SET d.cost = :cost WHERE d = :course");
-      update.setParameter("course", getDanie());
-      update.setParameter("cost", q.getSingleResult());
-      update.executeUpdate();
-      LOGGER.info("Koszt dania updated");
    }
 
    @Override

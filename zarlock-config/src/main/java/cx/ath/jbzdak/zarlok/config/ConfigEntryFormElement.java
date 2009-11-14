@@ -2,14 +2,14 @@ package cx.ath.jbzdak.zarlok.config;
 
 import cx.ath.jbzdak.jpaGui.BeanHolder;
 import cx.ath.jbzdak.jpaGui.ui.form.PropertyFormElement;
-import cx.ath.jbzdak.jpaGui.ui.formatted.MyFormattedTextField;
+import cx.ath.jbzdak.jpaGui.ui.formatted.FormattedTextField;
 import org.jdesktop.beansbinding.Property;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: 2009-04-25
  */
-public class ConfigEntryFormElement<T extends MyFormattedTextField> extends PropertyFormElement<T, Object, Object, BeanHolder<Object>> {
+public class ConfigEntryFormElement<T extends FormattedTextField> extends PropertyFormElement<T, Object, Object, BeanHolder<Object>> {
    public ConfigEntryFormElement(T t, String s) {
       super(t, s);
    }

@@ -19,7 +19,7 @@ public class DBHolder {
       return  LIFECYCLE_MANAGER;
    }
 
-   public static  void setLifecycleManager(LifecycleManager lifecycleManager){
+   static void setLifecycleManager(LifecycleManager lifecycleManager){
       LIFECYCLE_MANAGER = lifecycleManager;
    }
 

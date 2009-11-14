@@ -457,7 +457,7 @@
     </inspection_tool>
     <inspection_tool class="FinalizeNotProtected" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="FinallyBlockCannotCompleteNormally" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="FindBugs-IDEA" enabled="false" level="SERVER PROBLEM" enabled_by_default="false" />
+    <inspection_tool class="FindBugs-IDEA" level="SERVER PROBLEM" enabled="false" />
     <inspection_tool class="FloatingPointEquality" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ForCanBeForeach" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="REPORT_INDEXED_LOOP" value="true" />
@@ -1165,7 +1165,7 @@
     <inspection_tool class="SpellCheckingInspection" enabled="true" level="TYPO" enabled_by_default="true">
       <option name="processCode" value="true" />
       <option name="processLiterals" value="true" />
-      <option name="processComments" value="true" />
+      <option name="processComments" value="false" />
     </inspection_tool>
     <inspection_tool class="SpringAopErrorsInspection" level="ERROR" enabled="true" />
     <inspection_tool class="SpringAopWarningsInspection" level="WARNING" enabled="true" />
