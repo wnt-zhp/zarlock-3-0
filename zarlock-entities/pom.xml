@@ -17,10 +17,6 @@
             <groupId>cx.ath.jbzdak.gui</groupId>
             <artifactId>db-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>cx.ath.jbzdak.gui</groupId>
-            <artifactId>beanFormatter</artifactId>
-        </dependency>
          <dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>ejb3-persistence</artifactId>
