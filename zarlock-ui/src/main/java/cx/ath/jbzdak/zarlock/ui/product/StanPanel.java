@@ -1,5 +1,7 @@
 package cx.ath.jbzdak.zarlock.ui.product;
 
+import cx.ath.jbzdak.zarlok.entities.misc.StockLevelBean;
+import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 import org.jdesktop.beansbinding.AutoBinding;
@@ -12,6 +14,8 @@ import cx.ath.jbzdak.zarlok.entities.Product;
 import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getString;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
@@ -30,8 +34,9 @@ public class StanPanel extends JPanel{
    }
 
    private void initBindings(){
-      JTableBinding binding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ,
-              stanPanelModel, BeanProperty.create("stockLevels"), stanTable);
+      JTableBinding binding
+              = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ,
+              stanPanelModel,  BeanProperty.<StanPanelModel, List<StockLevelBean>>create("stockLevels"), stanTable);
       binding.addColumnBinding(BeanProperty.create("specifier"))
               .setEditable(false)
               .setColumnName(getString("product.specifier"));

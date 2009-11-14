@@ -41,7 +41,7 @@ public class AppLauncher {
          LOGGER.info("**                                                        **");
          LOGGER.info("**                    Starting zarlock                    **");
          LOGGER.info("**                                                        **");
-         LOGGER.info("**zarlockstart**********************************************");
+         LOGGER.info("**zarlockStart**********************************************");
          LOGGER.info("************************************************************");
          INIT_TASKS.executeThrow(this);
       } catch (Exception e){
