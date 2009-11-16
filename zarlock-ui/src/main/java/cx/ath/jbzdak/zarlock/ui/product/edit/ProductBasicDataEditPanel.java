@@ -1,18 +1,18 @@
 package cx.ath.jbzdak.zarlock.ui.product.edit;
 
+import cx.ath.jbzdak.jpaGui.db.dao.DAO;
+import cx.ath.jbzdak.jpaGui.ui.form.FormFactory;
+import cx.ath.jbzdak.jpaGui.ui.form.FormPanel;
+import cx.ath.jbzdak.jpaGui.ui.form.SimpleDAOForm;
+import cx.ath.jbzdak.zarlock.ui.UnitAdaptor;
+import cx.ath.jbzdak.zarlock.ui.product.ProductNameFormatter;
+import cx.ath.jbzdak.zarlok.ZarlockBoundle;
+import cx.ath.jbzdak.zarlok.entities.Product;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.awt.*;
 
-import cx.ath.jbzdak.jpaGui.ui.formatted.FormattedTextField;
-import cx.ath.jbzdak.jpaGui.ui.autoComplete.AutocompleteComboBox;
-import cx.ath.jbzdak.jpaGui.ui.form.*;
-import cx.ath.jbzdak.jpaGui.db.dao.DAO;
-import cx.ath.jbzdak.zarlok.entities.Product;
-import cx.ath.jbzdak.zarlok.ZarlockBoundle;
-import cx.ath.jbzdak.zarlock.ui.product.ProductNameFormatter;
-import cx.ath.jbzdak.zarlock.ui.UnitAdaptor;
+import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getString;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
@@ -25,10 +25,10 @@ public class ProductBasicDataEditPanel extends JPanel{
    public ProductBasicDataEditPanel() {
       super(new MigLayout("fillx, wrap 1", "[grow]"));
       FormFactory<Product> formFactory = new FormFactory<Product>();
-      formFactory.setResourceBundle(ZarlockBoundle.getZarlockBounle());
-      FormPanel namePanel  = formFactory.decorateFormattedTextField("Nazwa produktu", "name", new ProductNameFormatter());
-      FormPanel unitPanel = formFactory.decotrateComboBox("Jednostka", "unit", new UnitAdaptor(), false);
-      FormPanel expiryPanel = formFactory.decorateFormattedTextField("Data ważności", "expiryDate", new ProductExpiryFormatter());
+      formFactory.setResourceBundle(ZarlockBoundle.getZarlockBundle());
+      FormPanel namePanel  = formFactory.decorateFormattedTextField(getString("product.name"), "name", new ProductNameFormatter());
+      FormPanel unitPanel = formFactory.decotrateComboBox(getString("product.unit"), "unit", new UnitAdaptor(), false);
+      FormPanel expiryPanel = formFactory.decorateFormattedTextField(getString("product.expiryDate"), "expiryDate", new ProductExpiryFormatter());
       add(namePanel);
       add(unitPanel);
       add(expiryPanel);

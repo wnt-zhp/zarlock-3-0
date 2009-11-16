@@ -32,6 +32,7 @@
         <module>zarlock-db-classpath</module>
         <!--module>zarlock-ui-old</module-->
         <module>zarlock-ui</module>
+        <module>zarlock-drl</module>
     </modules>
     <repositories>
         <repository>
@@ -87,6 +88,16 @@
             <dependency>
                 <groupId>cx.ath.jbzdak.zarlock</groupId>
                 <artifactId>zarlock-db-classpath</artifactId>
+                <version>3.1</version>
+            </dependency>
+             <dependency>
+                <groupId>cx.ath.jbzdak.zarlock</groupId>
+                <artifactId>zarlock-ui</artifactId>
+                <version>3.1</version>
+            </dependency>
+             <dependency>
+                <groupId>cx.ath.jbzdak.zarlock</groupId>
+                <artifactId>zarlock-drl</artifactId>
                 <version>3.1</version>
             </dependency>
             <!-- JPA Gui dependencies -->

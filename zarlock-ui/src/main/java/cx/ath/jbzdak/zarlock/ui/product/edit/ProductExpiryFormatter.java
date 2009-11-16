@@ -21,11 +21,14 @@ public class ProductExpiryFormatter implements Formatter<Integer, Integer>{
       if(integer < 0){
          throw new ParsingException("Data ważności musi być niezerowa. Pole może być puste");
       }
-      return null;  //To change body of implemented methods use File | Settings | File Templates.
+      return integer;  //To change body of implemented methods use File | Settings | File Templates.
    }
 
    @Override
    public String formatValue(Integer value) throws FormattingException {
+      if(value == null){
+         return "";
+      }
       if(value == -1){
          return "";
       }

@@ -1,16 +1,16 @@
 package cx.ath.jbzdak.zarlock.ui.product.edit;
 
+import cx.ath.jbzdak.jpaGui.db.dao.DAO;
+import cx.ath.jbzdak.jpaGui.utils.DBUtils;
+import cx.ath.jbzdak.zarlok.DBHolder;
+import cx.ath.jbzdak.zarlok.entities.Product;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-
-import cx.ath.jbzdak.zarlock.ui.ButtonFactory;
-import static cx.ath.jbzdak.zarlock.ui.ButtonFactory.*;
-import cx.ath.jbzdak.zarlok.entities.Product;
-import cx.ath.jbzdak.zarlok.DBHolder;
-
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static cx.ath.jbzdak.zarlock.ui.ButtonFactory.createButton;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
@@ -18,7 +18,7 @@ import java.awt.event.ActionEvent;
  */
 public class ProductEditPanel extends JPanel{
 
-   ProductBasicDataEditPanel productBasicDataEditPanel;
+   ProductBasicDataEditPanel productBasicDataEditPanel = new ProductBasicDataEditPanel();
 
    JButton editButton;
 
@@ -29,6 +29,8 @@ public class ProductEditPanel extends JPanel{
    private boolean editing;
 
    private Product product;
+
+   private DAO<Product> dao;
 
    public ProductEditPanel() {
       super(new MigLayout("wrap 1, fillx", "[grow]"));
@@ -43,7 +45,8 @@ public class ProductEditPanel extends JPanel{
       add(buttonPanel);
       setEditing(false);
       initEvents();
-      productBasicDataEditPanel.setBeanHolder(DBHolder.getDbManager().getDao(Product.class));
+      dao = DBHolder.getDbManager().getDao(Product.class);
+      productBasicDataEditPanel.setBeanHolder(dao);
    }
 
    private void initEvents() {
@@ -88,9 +91,15 @@ public class ProductEditPanel extends JPanel{
 
    public void setProduct(Product product) {
       if(isEditing()){
-          productBasicDataEditPanel.getForm().rollback();
-          setEditing(false);
+         productBasicDataEditPanel.getForm().rollback();
       }
       this.product = product;
+      dao.setBean(product);
+      setEditing(DBUtils.isIdNull(product));
+      if(isEditing()){
+         productBasicDataEditPanel.getForm().startEditing();
+      }else{
+         productBasicDataEditPanel.getForm().startViewing();
+      }
    }
 }

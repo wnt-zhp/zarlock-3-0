@@ -14,6 +14,10 @@ import java.util.List;
                 query = "SELECT p.id FROM Product p WHERE p.name = :name"
         ),
         @NamedQuery(
+                name = "getProductNamesByName",
+                query = "SELECT p.name FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', CONCAT(:name, '%')))"
+        ),
+        @NamedQuery(
                 name = "getStockLevelsForProduct",
                 query = "SELECT new cx.ath.jbzdak.zarlok.entities.misc.StockLevelBean(b.specifier, b.unit, SUM(b.currentQty)) FROM Product p, IN(p.batches) b where p.id = :id GROUP BY b.specifier, b.unit ORDER BY b.specifier, b.unit "
         ),

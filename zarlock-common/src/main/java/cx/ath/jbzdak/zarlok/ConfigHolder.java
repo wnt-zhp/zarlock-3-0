@@ -10,6 +10,14 @@ public class ConfigHolder {
 
    private static Properties PROPERTIES;
 
+   public static String getString(String key){
+      return getProperties().getProperty(key);
+   }
+
+   public static int getInt(String key){
+      return Integer.parseInt(getString(key));
+   }
+
    public static Properties getProperties() {
       return PROPERTIES;
    }

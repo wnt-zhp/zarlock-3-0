@@ -1,19 +1,17 @@
 package cx.ath.jbzdak.zarlock.ui;
 
 import cx.ath.jbzdak.jpaGui.Factory;
-import cx.ath.jbzdak.zarlok.ZarlockBoundle;
-import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getString;
-import static cx.ath.jbzdak.zarlock.ui.DefaultIconManager.*;
-
-import javax.swing.*;
-import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
-import java.util.Map;
-import java.util.HashMap;
-
-import org.apache.commons.collections.map.DefaultedMap;
-import org.apache.commons.collections.map.LazyMap;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.map.LazyMap;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.swing.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import static cx.ath.jbzdak.zarlock.ui.DefaultIconManager.ICON_MANAGER;
+import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getString;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
@@ -51,8 +49,8 @@ public class ButtonFactory {
          if(iconName!= null){
             return new JButton(getString(buttonLabel), ICON_MANAGER.getIcon(iconName));
          }
-         if(ICON_MANAGER.getIcon(getString(buttonLabel))!=null){
-            return new JButton(getString(buttonLabel), ICON_MANAGER.getIcon(getString(buttonLabel)));
+         if(ICON_MANAGER.getIcon(buttonLabel)!=null){
+            return new JButton(getString(buttonLabel), ICON_MANAGER.getIcon(buttonLabel));
          }
          return new JButton(getString(buttonLabel));
       }

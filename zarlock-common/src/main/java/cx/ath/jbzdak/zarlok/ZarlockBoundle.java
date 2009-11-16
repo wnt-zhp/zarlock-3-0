@@ -1,8 +1,8 @@
 package cx.ath.jbzdak.zarlok;
 
-import java.util.ResourceBundle;
-import java.util.Locale;
 import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
@@ -10,11 +10,11 @@ import java.text.MessageFormat;
  */
 public class ZarlockBoundle {
 
-   static ResourceBundle zarlockBounle;
+   static ResourceBundle zarlockBundle;
 
    public static String getString(String label){
-      if(label!= null && zarlockBounle != null && zarlockBounle.containsKey(label)){
-         return zarlockBounle.getString(label);
+      if(label!= null && zarlockBundle != null && zarlockBundle.containsKey(label)){
+         return zarlockBundle.getString(label);
       }
       return label;
    }
@@ -25,12 +25,12 @@ public class ZarlockBoundle {
        return format.format(parameters);
     }
 
-   public static ResourceBundle getZarlockBounle() {
-      return zarlockBounle;
+   public static ResourceBundle getZarlockBundle() {
+      return zarlockBundle;
    }
 
-   static void setZarlockBounle(ResourceBundle zarlockBounle) {
-      ZarlockBoundle.zarlockBounle = zarlockBounle;
+   static void setZarlockBundle(ResourceBundle zarlockBounle) {
+      ZarlockBoundle.zarlockBundle = zarlockBounle;
    }
 
 }
