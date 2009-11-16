@@ -1,0 +1,53 @@
+#created on: 2009-11-14
+package cx.ath.jbzdak.zarlock.droolsPackages.scaler
+
+#list any import classes here.
+
+import java.util.List
+
+import cx.ath.jbzdak.zarlok.entities.UnitConverter
+import cx.ath.jbzdak.zarlok.entities.UnitConverterState
+import cx.ath.jbzdak.zarlok.entities.UnitConverterType
+
+global java.lang.Integer maxReflexivityDepth;
+
+global java.util.List changed;
+
+#declare any global variables here
+
+
+rule "FindTransitive"
+	when
+		uc1 : UnitConverter( state != UnitConverterState.DELETED, transitive  == true, resultFrom : unitFrom, tempTo: unitTo)
+		uc2 : UnitConverter( state != UnitConverterState.DELETED, transitive == true, unitFrom == tempTo, unitTo != resultFrom, resultTo : unitTo)
+		eval(uc2.getReflexivityDepth() + uc1.getReflexivityDepth() <= maxReflexivityDepth) 
+	then 
+	   UnitConverter result = new UnitConverter(); 
+	   result.setScale(uc1.getScale().multiply(uc2.getScale()));
+	   result.setUnitFrom(resultFrom);
+	   result.setUnitTo(resultTo);
+	   result.setTransitive(true);
+	   result.setReflexive(false);
+	   result.setConverterType(UnitConverterType.TRANSITIVE);
+	   result.setReflexivityDepth(uc2.getReflexivityDepth() + uc1.getReflexivityDepth());
+	   insert(result);
+	   changed.add(result);
+end
+
+
+rule "FindReflexive"
+	when
+		uc : UnitConverter( state != UnitConverterState.DELETED, reflexive == true )
+		not (UnitConverter( state != UnitConverterState.DELETED, unitFrom == uc.unitTo, unitTo == uc.unitFrom, converterType < UnitConverterType.BY_USER ))
+	then 
+		UnitConverter result = new UnitConverter(); 
+	   result.setScale(java.math.BigDecimal.ONE.divide(uc.getScale()));
+	   result.setUnitFrom(uc.getUnitTo());
+	   result.setUnitTo(uc.getUnitFrom());
+	   result.setTransitive(uc.isTransitive());
+	   result.setReflexive(false);
+	   result.setConverterType(UnitConverterType.REFLECTIVE);
+	   result.setReflexivityDepth(uc.getReflexivityDepth());
+	   insert(result);		
+	   changed.add(result);
+end

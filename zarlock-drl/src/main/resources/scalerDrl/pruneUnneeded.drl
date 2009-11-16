@@ -1,0 +1,42 @@
+#created on: 2009-11-14
+package cx.ath.jbzdak.zarlock.droolsPackages.scaler
+
+#list any import classes here.
+
+import java.util.List
+
+import cx.ath.jbzdak.zarlok.entities.UnitConverter
+import cx.ath.jbzdak.zarlok.entities.UnitConverterState
+import cx.ath.jbzdak.zarlok.entities.UnitConverterType
+
+global java.lang.Integer maxReflexivityDepth;
+
+global java.util.List changed;
+
+#declare any global variables here
+
+rule "Prune unused1"
+    when 
+        uc : UnitConverter(state != UnitConverterState.DELETED)
+        UnitConverter(state != UnitConverterState.DELETED, unitFrom == uc.unitFrom, unitTo  == uc.unitTo, converterType > uc.converterType)
+    then
+        if(uc.getState() == UnitConverterState.NEW){
+            retract(uc);
+        }else{
+            uc.setState(UnitConverterState.DELETED);
+        }
+        changed.add(uc);
+end
+
+rule "Prune unused2"
+    when 
+        uc : UnitConverter(state != UnitConverterState.DELETED, converterType == UnitConverterType.TRANSITIVE )
+        UnitConverter(state != UnitConverterState.DELETED, unitFrom == uc.unitFrom, unitTo  == uc.unitTo, converterType == UnitConverterType.TRANSITIVE,  reflexivityDepth < uc.reflexivityDepth)
+    then
+        if(uc.getState() == UnitConverterState.NEW){
+            retract(uc);
+        }else{
+            uc.setState(UnitConverterState.DELETED);
+        }
+        changed.add(uc);
+end
