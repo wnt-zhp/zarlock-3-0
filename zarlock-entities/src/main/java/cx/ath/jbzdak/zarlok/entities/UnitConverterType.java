@@ -5,5 +5,5 @@ package cx.ath.jbzdak.zarlok.entities;
  *         Date: 2009-11-14
  */
 public enum UnitConverterType {
-   BY_USER, REFLECTIVE, TRANSITIVE
+   BY_USER, REFLECTIVE, TRANSITIVE, AUTOMATIC
 }

@@ -18,9 +18,15 @@ public class UnitConverter {
    @Column(precision = 12, scale = 6)
    BigDecimal scale;
 
+   @Column(name = "UNIT_FROM")
    String unitFrom;
 
+   @Column(name = "UNIT_TO")
    String unitTo;
+   
+   Boolean reflexive = Boolean.FALSE; 
+   
+   Boolean transitive= Boolean.FALSE; 
 
    @Enumerated(EnumType.STRING)
    @Column(name = "CONVERTER_TYPE")
@@ -31,6 +37,18 @@ public class UnitConverter {
 
    @Transient
    UnitConverterState  state = UnitConverterState.NEW;
+
+   public UnitConverter(){}
+   
+   public UnitConverter(BigDecimal scale, String unitFrom, String unitTo,
+		UnitConverterType converterType, Integer reflexivityDepth) {
+		super();
+		this.scale = scale;
+		this.unitFrom = unitFrom;
+		this.unitTo = unitTo;
+		this.converterType = converterType;
+		this.reflexivityDepth = reflexivityDepth;
+   }
 
    @PostLoad @PostPersist
    public void postLoad(){
@@ -92,4 +110,22 @@ public class UnitConverter {
    public void setUnitTo(String unitTo) {
       this.unitTo = unitTo;
    }
+
+   public Boolean isReflexive() {
+		return reflexive;
+	}
+	
+   public void setReflexive(Boolean reflexive) {
+		this.reflexive = reflexive;
+	}
+	
+   public Boolean isTransitive() {
+		return transitive;
+	}
+	
+   public void setTransitive(Boolean transitive) {
+		this.transitive = transitive;
+	}
+	   
+   
 }
