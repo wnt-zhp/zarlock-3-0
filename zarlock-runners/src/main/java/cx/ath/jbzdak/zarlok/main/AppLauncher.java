@@ -3,11 +3,13 @@ package cx.ath.jbzdak.zarlok.main;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.task.TasksExecutor;
 import cx.ath.jbzdak.jpaGui.ui.error.DisplayErrorDetailsDialog;
+import cx.ath.jbzdak.zarlock.ui.ZarlockFrame;
 import cx.ath.jbzdak.zarlok.LoadResouresTask;
 import cx.ath.jbzdak.zarlok.StartDBTask;
 import org.slf4j.Logger;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.SQLException;
 
 /**
@@ -60,6 +62,15 @@ public class AppLauncher {
 	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
    public static void main(String[] args) throws Exception {
       new AppLauncher().start();
+      SwingUtilities.invokeLater(new Runnable() {
+         @Override
+         public void run() {
+            ZarlockFrame zf =new ZarlockFrame();
+            zf.setVisible(true);
+            zf.setExtendedState(Frame.MAXIMIZED_BOTH | zf.getExtendedState());
+
+         }
+      });
 	}
 
 }

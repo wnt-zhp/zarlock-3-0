@@ -1,14 +1,12 @@
 package cx.ath.jbzdak.zarlok;
 
 import cx.ath.jbzdak.jpaGui.task.Task;
-import cx.ath.jbzdak.zarlok.ZarlockBoundle;
 import edu.umd.cs.findbugs.annotations.Nullable;
-
-import java.util.ResourceBundle;
-import java.util.Locale;
-
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
@@ -33,7 +31,7 @@ public class LoadResouresTask extends Task<Object>{
             LOGGER.warn("Exceptin while parsing override locale. ", e);
          }
       }
-      ResourceBundle resourceBundle = ResourceBundle.getBundle("zarlock", locale);
-      ZarlockBoundle.setZarlockBounle(resourceBundle);
+      ResourceBundle resourceBundle = ResourceBundle.getBundle("zarlockBoundle", locale);
+      ZarlockBoundle.setZarlockBundle(resourceBundle);
    }
 }

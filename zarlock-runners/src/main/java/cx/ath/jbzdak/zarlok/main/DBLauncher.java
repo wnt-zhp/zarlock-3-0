@@ -8,7 +8,6 @@ import cx.ath.jbzdak.jpaGui.db.lifecycleListenerPack.CheckVersionListener;
 import cx.ath.jbzdak.jpaGui.db.lifecycleListenerPack.DefaultUpdateDBPack;
 import cx.ath.jbzdak.jpaGui.db.lifecycleListenerPack.InitializeDBPack;
 import cx.ath.jbzdak.zarlok.ConfigHolder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.EntityManager;
 import java.io.File;
@@ -37,7 +36,7 @@ class DBLauncher implements LifecycleManager<DBManager<EntityManager>>{
             return new InputStreamReader(getClass().getResourceAsStream("/schema.sql"), Charset.forName("ASCII"));
          }
       }));
-      h2Configuration.addListener(EnumSet.of(DBLifecyclePhase.PRE_START), new CheckVersionListener("SELECT ENTRY_VALUE FROM CONFIG_ENTRY WHERE ENTRY_NAME = 'DATABASE_VERSION' ") );
+      h2Configuration.addListener(EnumSet.of(DBLifecyclePhase.PRE_START, DBLifecyclePhase.SHEMA_CREATE), new CheckVersionListener("SELECT ENTRY_VALUE FROM CONFIG_ENTRY WHERE ENTRY_NAME = 'DATABASE_VERSION' ") );
       if(ConfigHolder.getProperties().getProperty("dbVersions")!=null){
          String dbVersions =  ConfigHolder.getProperties().getProperty("dbVersions");
          h2Configuration.addListenerPack( new DefaultUpdateDBPack(dbVersions, "/updateSchemas"));

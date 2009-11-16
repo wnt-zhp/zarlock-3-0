@@ -11,16 +11,25 @@
     <dependencies>
         <dependency>
             <groupId>cx.ath.jbzdak.zarlock</groupId>
+            <artifactId>zarlock-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cx.ath.jbzdak.zarlock</groupId>
+            <artifactId>zarlock-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cx.ath.jbzdak.zarlock</groupId>
+            <artifactId>zarlock-drl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cx.ath.jbzdak.zarlock</groupId>
             <artifactId>zarlock-db-classpath</artifactId>
         </dependency>
         <dependency>
             <groupId>cx.ath.jbzdak.gui</groupId>
             <artifactId>ui-components</artifactId>
         </dependency>
-        <dependency>
-            <groupId>cx.ath.jbzdak.zarlock</groupId>
-            <artifactId>zarlock-common</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>cx.ath.jbzdak.gui</groupId>
             <artifactId>db-h2</artifactId>
@@ -37,5 +46,5 @@
         </dependency>
 
     </dependencies>
-    
+
 </project>
