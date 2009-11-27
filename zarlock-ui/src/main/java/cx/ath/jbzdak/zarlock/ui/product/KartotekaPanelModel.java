@@ -1,22 +1,22 @@
 package cx.ath.jbzdak.zarlock.ui.product;
 
-import cx.ath.jbzdak.zarlok.entities.Product;
-import cx.ath.jbzdak.zarlok.DBHolder;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
-import cx.ath.jbzdak.jpaGui.db.ReturnableTransaction;
 import cx.ath.jbzdak.jpaGui.db.JPAReturnableTransaction;
+import cx.ath.jbzdak.jpaGui.db.ReturnableTransaction;
+import cx.ath.jbzdak.zarlok.DBHolder;
+import cx.ath.jbzdak.zarlok.entities.Product;
 
 import javax.persistence.EntityManager;
-import java.util.List;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: 2009-11-11
  */
-public class KartotekaPanelModel {
+class KartotekaPanelModel {
 
    final Product product;
 

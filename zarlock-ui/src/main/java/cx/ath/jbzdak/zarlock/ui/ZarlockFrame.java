@@ -1,7 +1,6 @@
 package cx.ath.jbzdak.zarlock.ui;
 
 import cx.ath.jbzdak.jpaGui.ui.tabbed.JBTabbedPane;
-import cx.ath.jbzdak.zarlock.ui.product.ProductTab;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +14,11 @@ import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getString;
  */
 public class ZarlockFrame extends JFrame{
 
-   private JBTabbedPane mainPanel = new JBTabbedPane();
+
+   ZarlockModel zarlockModel = new ZarlockModel();
+
+   private JBTabbedPane mainPanel = zarlockModel.getMainPanel();
+
 
    public ZarlockFrame() {
       initialize();
@@ -26,6 +29,13 @@ public class ZarlockFrame extends JFrame{
       setLayout(new BorderLayout());
       add(mainPanel, BorderLayout.CENTER);
       mainPanel.addTabCloseable(getString("product.tab.tabname"), ICON_MANAGER.getIcon("product"),
-              new ProductTab(), getString("product.tab.tooltip"), false);
+              zarlockModel.getProductTab(), getString("product.tab.tooltip"), false);
+      mainPanel.addTabCloseable(getString("productList.tab.tabname"), ICON_MANAGER.getIcon("product.list"),
+              zarlockModel.getProductList(), getString("productList.tab.tooltip"), false);
+      mainPanel.addListener(zarlockModel.getProductList(), zarlockModel.getProductListListener());
+   }
+
+   public ZarlockModel getZarlockModel() {
+      return zarlockModel;
    }
 }

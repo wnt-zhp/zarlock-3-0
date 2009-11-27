@@ -16,6 +16,7 @@
       <module fileurl="file://$PROJECT_DIR$/zarlock-common/zarlock-common.iml" filepath="$PROJECT_DIR$/zarlock-common/zarlock-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-config/zarlock-config.iml" filepath="$PROJECT_DIR$/zarlock-config/zarlock-config.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-db-classpath/zarlock-db-classpath.iml" filepath="$PROJECT_DIR$/zarlock-db-classpath/zarlock-db-classpath.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zarlock-drl/zarlock-drl.iml" filepath="$PROJECT_DIR$/zarlock-drl/zarlock-drl.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-entities/zarlock-entities.iml" filepath="$PROJECT_DIR$/zarlock-entities/zarlock-entities.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-main.iml" filepath="$PROJECT_DIR$/zarlock-main.iml" />
       <module fileurl="file://$PROJECT_DIR$/zarlock-runners/zarlock-runners.iml" filepath="$PROJECT_DIR$/zarlock-runners/zarlock-runners.iml" />

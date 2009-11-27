@@ -23,7 +23,7 @@ public class ProductBasicDataEditPanel extends JPanel{
    private final SimpleDAOForm<Product> form;
 
    public ProductBasicDataEditPanel() {
-      super(new MigLayout("fillx, wrap 1", "[grow]"));
+      super(new MigLayout("fillx, wrap 1", "[grow, fill]"));
       FormFactory<Product> formFactory = new FormFactory<Product>();
       formFactory.setResourceBundle(ZarlockBoundle.getZarlockBundle());
       FormPanel namePanel  = formFactory.decorateFormattedTextField(getString("product.name"), "name", new ProductNameFormatter());

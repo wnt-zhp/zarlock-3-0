@@ -1,20 +1,19 @@
 package cx.ath.jbzdak.zarlock.ui.product;
 
 import cx.ath.jbzdak.jpaGui.beanFormatter.PatternBeanFormatter;
-import cx.ath.jbzdak.zarlok.ZarlockBoundle;
 import cx.ath.jbzdak.zarlok.entities.Product;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
-import org.jdesktop.swingbinding.SwingBindings;
 import org.jdesktop.swingbinding.JTableBinding;
+import org.jdesktop.swingbinding.SwingBindings;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.ComponentAdapter;
 import org.jdesktop.swingx.decorator.HighlightPredicate;
 
 import javax.swing.*;
-import java.util.List;
 import java.awt.*;
+import java.util.List;
 
 import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getString;
 
@@ -22,8 +21,7 @@ import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getString;
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: 2009-11-11
  */
-public class KartotekaPanel extends JPanel {
-
+class KartotekaPanel extends JPanel {
 
    private KartotekaPanelModel model;
 
@@ -31,15 +29,19 @@ public class KartotekaPanel extends JPanel {
 
    private JTabbedPane jTabbedPane = new JTabbedPane();
 
-   public KartotekaPanel(Product product) {
+   public KartotekaPanel() {
       setLayout(new BorderLayout());
+      setBorder(BorderFactory.createTitledBorder(getString("product.tab.kartoteka.title")));
+      add(jTabbedPane, BorderLayout.CENTER);
+
+   }
+
+   public void setProduct(Product product){
       model = new KartotekaPanelModel(product);
-      setBorder(BorderFactory.createTitledBorder(getString("kartoteka")));
+      jTabbedPane.removeAll();
       for(KartotekaEntry entry : model.entries){
          jTabbedPane.addTab(tabTitleFormatter.format(entry), new KartotekaTab(entry.getKartotekaEntryList()));
       }
-      add(jTabbedPane, BorderLayout.CENTER);
-
    }
 
    private class KartotekaTab extends JPanel{

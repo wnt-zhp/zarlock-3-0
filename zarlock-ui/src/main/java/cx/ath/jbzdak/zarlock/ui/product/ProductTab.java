@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.EnumSet;
+import java.util.List;
 
 import static cx.ath.jbzdak.zarlock.ui.DefaultIconManager.ICON_MANAGER;
 import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getString;
@@ -32,13 +33,20 @@ public class ProductTab extends JPanel{
 
    ProductEditPanel productEditPanel = new ProductEditPanel();
 
+   StockLevelPanel stockLevelPanel = new StockLevelPanel();
+
+   KartotekaPanel kartotekaPanel = new KartotekaPanel(); 
+
    Product product;
 
    public ProductTab() {
-      setLayout(new MigLayout("fillx, filly", "[][grow][grow]", "[][grow]"));
-      productEditPanel.setBorder(BorderFactory.createTitledBorder(getString("product.tab.basicData")));
-      add(new ControlPanel(), "wrap 1");
-      add(productEditPanel, "");
+      setLayout(new MigLayout("fillx, filly", "[][grow]", "[][grow][grow]"));
+      productEditPanel.setBorder(BorderFactory.createTitledBorder(getString("product.tab.basicData.title")));
+      stockLevelPanel.setBorder(BorderFactory.createTitledBorder(getString("product.tab.stockLevel.title")));
+      add(new ControlPanel(), "");
+      add(kartotekaPanel, "span 1 3, wrap, growx, growy");
+      add(productEditPanel, "wrap, growx");
+      add(stockLevelPanel);
 
    }
 
@@ -64,10 +72,19 @@ public class ProductTab extends JPanel{
          super(new MigLayout("fillx"));
          add(new FormPanel(new DefaultFormElement(productSelection, "product.tab.selectProduct", ZarlockBoundle.getZarlockBundle()), null, EnumSet.of(FormPanelVisibility.HIDE_ERROR_ICON)));
          add(addEditButton);
-         productSelection.addPropertyChangeListener("selectedItemFromModel", new PropertyChangeListener(){
+         productSelection.addPropertyChangeListener("selectedItem", new PropertyChangeListener(){
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-               setWillCreate((Boolean)evt.getNewValue());
+               String name = (String) evt.getNewValue();
+               Query q = DBHolder.getDbManager().createNamedQuery("getProductIdByName");
+               try{
+                  q.setParameter("name", productSelection.getSelectedValue());
+                  List<String> results = q.getResultList();
+                  System.out.println("esults.size()" + results.size());
+                  setWillCreate(results.size()==0);
+               }finally {
+                  q.close();
+               }
             }
          });
 

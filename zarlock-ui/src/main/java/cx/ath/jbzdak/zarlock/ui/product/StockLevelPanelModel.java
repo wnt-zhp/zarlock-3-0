@@ -1,22 +1,22 @@
 package cx.ath.jbzdak.zarlock.ui.product;
 
-import cx.ath.jbzdak.zarlok.entities.Product;
-import cx.ath.jbzdak.zarlok.DBHolder;
-import cx.ath.jbzdak.zarlok.entities.misc.StockLevelBean;
 import cx.ath.jbzdak.jpaGui.db.DBManager;
 import cx.ath.jbzdak.jpaGui.db.JPAReturnableTransaction;
+import cx.ath.jbzdak.zarlok.DBHolder;
+import cx.ath.jbzdak.zarlok.entities.Product;
+import cx.ath.jbzdak.zarlok.entities.misc.StockLevelBean;
 
 import javax.persistence.EntityManager;
-import java.util.List;
-import java.util.Collections;
-import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: 2009-11-11
  */
-public class StanPanelModel {
+public class StockLevelPanelModel {
 
    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
