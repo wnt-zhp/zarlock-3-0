@@ -4,11 +4,13 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.NotEmpty;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * Encja zawierająca jeden klucz konfiguracji.
  */
-@Entity()
+@Entity
+@XmlType
 @Table(name = "CONFIG_ENTRY")
 @NamedQuery(name = "getConfigEntryByName", query = "SELECT ce FROM ConfigEntry ce WHERE ce.name = :name")
 //@SequenceGenerator(name = "ZARLOCK_SEQUENCE_GENERATOR", sequenceName = "ZARLOCK_SEQUENCE", allocationSize = 32, initialValue = 0)
@@ -21,7 +23,7 @@ public class ConfigEntry {
 
 	@NotEmpty
 	@Length(min = 1, max = 100)
-	@Column(name = "ENTRY_NAME")
+	@Column(name = "ENTRY_NAME", unique = true)
 	String name;
 
    @Length(max = 10000)

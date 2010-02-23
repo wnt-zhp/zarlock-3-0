@@ -1,8 +1,10 @@
 package cx.ath.jbzdak.zarlok.entities.xml;
 
+import cx.ath.jbzdak.jpaGui.utils.DBUtils;
 import cx.ath.jbzdak.zarlok.entities.*;
 
 import javax.persistence.EntityManager;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,120 +45,53 @@ public class XMLLoader {
       loadExpenditures();
    }
 
-   
+   /**
+    * Magia jest taka, a to jest wysoka magia. . .
+    *
+    * Przed persysowaniem każgego jednego obiektu ustawiamy jego Id na null,
+    * w ten sposób Id samo się wygeneruje (nie wspieramy nie autogenerowalnych id).
+    * Metoda persist ustawi ida ponieważ JAXB zasadniczo buduje całe drzewo obiektów Javy,
+    *  to owo ID będzie ustawione na dobre id we wszystkich obiektach potomnych. Magia!
+    *
+    * Teraz tylko trzeba pilnować żeby w dobrej kolejności persystować obiekty, tj:
+    * jeśli Batch zawiera odniesienie do Productu to product musi byś spersystowany pierwsz
+    * quick and dirty!.
+    * @param objects
+    */
+   public void loadCollection(Collection<?> objects){
+      for(Object o : objects){
+         DBUtils.setId(o, null, Long.class);
+         entityManager.persist(o);
+      }
+   }
+
    public void loadMeals(){
-      executeTransaction(new TransactionExec() {
-         @Override
-         public void doTransaction(EntityManager entityManager) {
-            for (Meal m : xmlStore.getMeals()){
-               Long id = m.getId();
-               Long dayId = m.getDay().getId();
-               m.setDay(entityManager.find(Day.class, daysMapper.get(dayId)));
-               m.setId(null);
-               entityManager.persist(m);
-               mealMapper.put(id, m.getId());
-            }
-         }
-      });
+      loadCollection(xmlStore.getMeals());
    }
 
    public void loadCourses(){
-      executeTransaction(new TransactionExec() {
-         @Override
-         public void doTransaction(EntityManager entityManager) {
-            for(Course course : xmlStore.getCourses()){
-               Long id = course.getId();
-               Long mealId = course.getMeal().getId();
-               course.setMeal(entityManager.find(Meal.class, mealMapper.get(mealId)));
-               course.setId(null);
-               entityManager.persist(course);
-               courseMapper.put(id, course.getId());
-            }
-         }
-      });
+      loadCollection(xmlStore.getCourses());
    }
 
    public void loadExpenditures(){
-      executeTransaction(new TransactionExec() {
-         @Override
-         public void doTransaction(EntityManager entityManager) {
-            for(Expenditure e : xmlStore.getExpenditures()){
-               e.setId(null);
-               e.setBatch(entityManager.find(Batch.class, batchIdMapper.get(e.getBatch().getId())));
-               if(e.getCourse()!=null){
-                  e.setCourse(entityManager.find(Course.class, courseMapper.get(e.getCourse().getId())));
-               }
-               entityManager.persist(e);
-            }
-         }
-      });
+     loadCollection(xmlStore.getExpenditures());
    }
 
    public void loadDays(){
-      executeTransaction(new TransactionExec() {
-         @Override
-         public void doTransaction(EntityManager entityManager) {
-            for(Day day : xmlStore.getDays()){
-               Long id = day.getId();
-               day.setId(null);
-               entityManager.persist(day);
-               daysMapper.put(id, day.getId());
-            }
-         }
-      });
+    loadCollection(xmlStore.getDays());
    }
 
    public void loadBatches(){
-      executeTransaction(new TransactionExec() {
-         @Override
-         public void doTransaction(EntityManager entityManager) {
-            for (Batch batch : xmlStore.getBatches()) {
-               Long id = batch.getId();
-               Long prodId = productIdMapper.get(batch.getProduct().getId());
-               batch.setProduct(entityManager.find(Product.class, prodId));
-               batch.setId(null);
-               entityManager.persist(batch);
-               batchIdMapper.put(id, batch.getId());
-            }
-         }
-      });
+      loadCollection(xmlStore.getBatches());
    }
 
    public void loadProducts(){
-      executeTransaction(new TransactionExec() {
-         @Override
-         public void doTransaction(EntityManager entityManager) {
-            for(Product p : xmlStore.getProducts()){
-               Long id = p.getId();
-               p.setId(null);
-               entityManager.persist(p);
-               productIdMapper.put(id, p.getId());
-            }
-         }
-      });
+   loadCollection(xmlStore.getProducts());
 
    }
 
    public void loadConfig(){
-      executeTransaction(new TransactionExec() {
-         @Override
-         public void doTransaction(EntityManager entityManager) {
-            for(ConfigEntry configEntry : xmlStore.getConfiguration()){
-               entityManager.persist(configEntry);
-            }
-         }
-      });
-   }
-
-   private void executeTransaction(TransactionExec transaction){
-//      entityManager.getTransaction().begin();
-//      try{
-         transaction.doTransaction(entityManager);
-//         entityManager.getTransaction().commit();
-//      }catch (RuntimeException e){
-//         entityManager.getTransaction().rollback();
-//         throw e;
-//      }
+   loadCollection(xmlStore.getConfiguration());
    }
 
    private static interface TransactionExec{

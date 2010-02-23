@@ -3,10 +3,13 @@ package cx.ath.jbzdak.zarlok.entities;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.db.dao.annotations.LifecycleListener;
 import cx.ath.jbzdak.jpaGui.db.dao.annotations.LifecyclePhase;
+import cx.ath.jbzdak.zarlok.entities.xml.adapters.ExpenditureAdapter;
 import org.hibernate.validator.NotNull;
 import org.slf4j.Logger;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Date;
@@ -17,6 +20,7 @@ import java.util.Date;
  *
  */
 @Entity
+@XmlType
 @Table(name = "EXPENDITURE")
 public class Expenditure implements Cloneable, IProductSearchCache {
 
@@ -62,14 +66,18 @@ public class Expenditure implements Cloneable, IProductSearchCache {
 	}
 
    @SuppressWarnings({"WeakerAccess"})
-   public Course getDanie() {
+   @XmlIDREF
+   @XmlElement(required = false)
+   public Course getCourse() {
       return course;
    }
 
-   public void setDanie(Course course) {
+   public void setCourse(Course course) {
       this.course = course;
    }
 
+   @XmlID
+   @XmlJavaTypeAdapter(ExpenditureAdapter.class)
 	public Long getId() {
 		return id;
 	}
@@ -78,6 +86,7 @@ public class Expenditure implements Cloneable, IProductSearchCache {
 		this.id = id;
 	}
 
+   @XmlAttribute(required = true)
 	public BigDecimal getQuantity() {
 		return quantity;
 	}
@@ -86,6 +95,7 @@ public class Expenditure implements Cloneable, IProductSearchCache {
 		this.quantity = quantity;
 	}
 
+   @XmlAttribute(required = true)
 	public Date getExpenditureDate() {
 		return expenditureDate;
 	}
@@ -94,6 +104,7 @@ public class Expenditure implements Cloneable, IProductSearchCache {
 		this.expenditureDate = expenditureDate;
 	}
 
+   @XmlElement()
 	public String getTytulem() {
 		return tytulem;
 	}
@@ -102,6 +113,7 @@ public class Expenditure implements Cloneable, IProductSearchCache {
 		this.tytulem = tytulem;
 	}
 
+   @XmlAttribute(required = true)
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -110,6 +122,8 @@ public class Expenditure implements Cloneable, IProductSearchCache {
 		this.createDate = createDate;
 	}
 
+   @XmlIDREF
+   @XmlElement(required = true)
    public Batch getBatch() {
       return batch;
    }

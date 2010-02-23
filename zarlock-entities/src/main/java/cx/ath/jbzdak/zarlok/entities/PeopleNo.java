@@ -5,8 +5,11 @@ import org.hibernate.validator.NotNull;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlType;
 
 @Embeddable
+@XmlType
 public class PeopleNo implements Cloneable{
 
 	@NotNull
@@ -36,14 +39,17 @@ public class PeopleNo implements Cloneable{
 		this.inniNo = inniNo;
 	}
 
+   @XmlAttribute(required = true)
    public Integer getUczestnicyNo() {
 		return uczestnicyNo;
 	}
 
+   @XmlAttribute(required = true)
 	public Integer getKadraNo() {
 		return kadraNo;
 	}
 
+   @XmlAttribute(required = true)
 	public Integer getInniNo() {
 		return inniNo;
 	}

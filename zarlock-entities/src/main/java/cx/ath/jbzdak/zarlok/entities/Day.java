@@ -1,8 +1,11 @@
 package cx.ath.jbzdak.zarlok.entities;
 
 import cx.ath.jbzdak.jpaGui.Utils;
+import cx.ath.jbzdak.zarlok.entities.xml.adapters.DayAdapter;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@XmlType
 @Table(name = "DAY")
 //@NamedQueries({
 //       @NamedQuery(
@@ -30,7 +34,7 @@ public class Day {
    Long id;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DATA", unique = true)
+	@Column(name = "DAY", unique = true)
    private
    Date date;
 
@@ -56,18 +60,21 @@ public class Day {
       rate = Utils.round(rate, 2);
    }
 
+   @XmlID
+   @XmlJavaTypeAdapter(DayAdapter.class)
 	public Long getId() {
 		return id;
 	}
 
+   @XmlAttribute(required = true)
 	public Date getDate() {
 		return date;
 	}
 
+   @XmlTransient
 	public List<Meal> getMeals() {
 		return meals;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;
@@ -81,6 +88,7 @@ public class Day {
 		this.meals = meals;
 	}
 
+   @XmlElement(required = true)
    public PeopleNo getPeopleNo() {
       return peopleNo;
    }
@@ -89,6 +97,7 @@ public class Day {
       this.peopleNo = peopleNo;
    }
 
+   @XmlAttribute(required = true)
    public BigDecimal getRate() {
       return rate;
    }

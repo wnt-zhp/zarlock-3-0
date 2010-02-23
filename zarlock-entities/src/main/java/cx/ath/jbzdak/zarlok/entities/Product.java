@@ -1,10 +1,16 @@
 package cx.ath.jbzdak.zarlok.entities;
 
+import cx.ath.jbzdak.zarlok.entities.xml.adapters.ProductAdapter;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.Range;
 
 import javax.annotation.Nonnull;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,66 +37,81 @@ import java.util.List;
         )
 })
 @Entity
+@XmlType
 @Table(name="PRODUCT")
 public class Product {
 
-	@Id
-	@GeneratedValue
-	@Column(name="ID")
-	private Long id;
+   @Id
+   @GeneratedValue
+   @Column(name="ID")
+   private Long id;
 
-	@Length(min=1, max=50)
-	@Column(name="name", unique=true, nullable=false)
-	private String name;
+   @Length(min=1, max=50)
+   @Column(name="name", unique=true, nullable=false)
+   private String name;
 
-	@Length(min=1, max=50)
-	@Column(name="unit")
-	private String unit;
+   @Length(min=1, max=50)
+   @Column(name="unit")
+   private String unit;
 
-	/**
-	 * Data ważności zero znaczy: nieustalona
-	 * -1 nieskończona
-	 */
-	@Nonnull
-	@Range(min=-1)
-	@Column(name="EXPIRY_DATE", nullable = false)
-	private Integer expiryDate;
+   /**
+    * Data ważności zero znaczy: nieustalona
+    * -1 nieskończona
+    */
+   @Nonnull
+   @Range(min=-1)
+   @Column(name="EXPIRY_DATE", nullable = false)
+   private Integer expiryDate;
 
-	@OneToMany(mappedBy="product")
+   @OneToMany(mappedBy="product")
    private
-	List<Batch> batches = new ArrayList<Batch>();
+   List<Batch> batches = new ArrayList<Batch>();
 
+   @XmlID
+   @XmlJavaTypeAdapter(ProductAdapter.class)
    public Long getId() {
-		return id;
-	}
+      return id;
+   }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+   public void setId(Long id) {
+      this.id = id;
+   }
 
-	public String getName() {
-		return name;
-	}
+   @XmlAttribute(name = "name", required = true)
+   public String getName() {
+      return name;
+   }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+   public void setName(String name) {
+      this.name = name;
+   }
 
-	public String getUnit() {
-		return unit;
-	}
+   @XmlAttribute(name = "unit", required = false)
+   public String getUnit() {
+      return unit;
+   }
 
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
+   public void setUnit(String unit) {
+      this.unit = unit;
+   }
 
-	public Integer getExpiryDate() {
-		return expiryDate;
-	}
+   @XmlAttribute(name = "expiryDate", required = false)
+   public Integer getExpiryDate() {
+      return expiryDate;
+   }
 
-	public void setExpiryDate(Integer expiryDate) {
-		this.expiryDate = expiryDate;
-	}
+   public void setExpiryDate(Integer expiryDate) {
+      this.expiryDate = expiryDate;
+   }
+
+   @XmlTransient
+   public List<Batch> getBatches() {
+      return batches;
+   }
+
+   public void setBatches(List<Batch> batches) {
+      this.batches = batches;
+   }
 
    @Override
    public String toString() {
@@ -103,10 +124,6 @@ public class Product {
       sb.append('}');
       return sb.toString();
    }
-
-   public List<Batch> getBatches() {
-		return batches;
-	}
 
    @Override
    public boolean equals(Object o) {
@@ -133,7 +150,4 @@ public class Product {
       return result;
    }
 
-   public void setBatches(List<Batch> batches) {
-		this.batches = batches;
-	}
 }

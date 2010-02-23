@@ -1,16 +1,20 @@
 package cx.ath.jbzdak.zarlok.entities;
 
+import cx.ath.jbzdak.zarlok.entities.xml.adapters.CourseAdapter;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity()
+@Entity
+@XmlType
 @NamedQueries({
 //        @NamedQuery(
 //            name = "fetchDaniaKoszt",
@@ -57,18 +61,23 @@ public class Course {
    @Column(name = "COST_STRICT")
 	Boolean costStrict;
 
+      @XmlID
+   @XmlJavaTypeAdapter(CourseAdapter.class)
    public Long getId() {
 		return id;
 	}
 
+   @XmlAttribute(required = true)
 	public String getName() {
 		return name;
 	}
 
+   @XmlTransient
 	public List<Expenditure> getExpenditures() {
 		return expenditures;
 	}
 
+   @XmlTransient
 	public List<PlannedExpenditure> getPlannedExpenditures() {
 		return plannedExpenditures;
 	}
@@ -89,6 +98,7 @@ public class Course {
 		this.plannedExpenditures = plannedExpenditures;
 	}
 
+   @XmlTransient
 	public BigDecimal getCost() {
 		return cost;
 	}
@@ -97,6 +107,7 @@ public class Course {
 		this.cost = cost;
 	}
 
+   @XmlIDREF
    public Meal getMeal() {
       return meal;
    }
@@ -105,6 +116,7 @@ public class Course {
       this.meal = meal;
    }
 
+   @XmlTransient
    public Boolean getCostStrict() {
 		return costStrict;
 	}

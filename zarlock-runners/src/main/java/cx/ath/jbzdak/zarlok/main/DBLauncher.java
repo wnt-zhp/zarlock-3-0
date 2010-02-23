@@ -59,11 +59,17 @@ class DBLauncher implements LifecycleManager<DBManager<EntityManager>>{
       h2Configuration.readBackup(objects);
    }
 
+   @Override
    public void closeDB() throws Exception {
       h2Configuration.closeDB();
    }
 
    public JpaDbManager getDbManager() {
       return h2Configuration.getDbManager();
+   }
+
+   @Override
+   public void clearDB() throws Exception {
+      h2Configuration.clearDB();
    }
 }

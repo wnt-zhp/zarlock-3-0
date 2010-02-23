@@ -43,6 +43,10 @@
             <id>skimble-private</id>
             <url>http://localhost:8081/nexus/content/groups/private</url>
         </repository>
+       <repository>
+          <id>jboss</id>
+          <url>http://repository.jboss.com/maven2/</url>
+       </repository>
     </repositories>
     <dependencies>
         <dependency>

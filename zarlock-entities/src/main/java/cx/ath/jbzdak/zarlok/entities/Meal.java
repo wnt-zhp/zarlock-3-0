@@ -1,8 +1,11 @@
 package cx.ath.jbzdak.zarlok.entities;
 
 import cx.ath.jbzdak.jpaGui.Utils;
+import cx.ath.jbzdak.zarlok.entities.xml.adapters.MealAdapter;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import java.util.List;
 
 @SuppressWarnings({"WeakerAccess"})
 @Entity
+@XmlType
 //@NamedQueries({
 //        @NamedQuery(
 //            name = "fetchPosilekKoszt",
@@ -41,7 +45,7 @@ public class Meal {
 	@Embedded
 	private PeopleNo peopleNo;
 
-	@OneToMany(cascade= {CascadeType.PERSIST, CascadeType.REMOVE} )
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "meal")
 	private List<Course> dania = new ArrayList<Course>();
 
    @Column(name = "COST")
@@ -61,6 +65,8 @@ public class Meal {
 		this.day = d;
 	}
 
+   @XmlID
+   @XmlJavaTypeAdapter(MealAdapter.class)
 	public Long getId() {
 		return id;
 	}
@@ -69,11 +75,13 @@ public class Meal {
 		return name;
 	}
 
+   @XmlAttribute(required = true)
 	public Boolean getAdditional() {
 		return additional;
 	}
 
-	public List<Course> getDania() {
+   @XmlTransient
+	public List<Course> getCourses() {
 		return dania;
 	}
 
@@ -93,12 +101,13 @@ public class Meal {
 		this.dania = dania;
 	}
 
+   @XmlTransient
 	public BigDecimal getCost() {
 		return cost;
 	}
 
+   @XmlTransient
 	public Boolean getCostStrict() {
-
 		return costStrict;
 	}
 
@@ -110,6 +119,7 @@ public class Meal {
 		this.costStrict = costStrict;
 	}
 
+   @XmlIDREF
    public Day getDay() {
       return day;
    }

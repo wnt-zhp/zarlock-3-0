@@ -3,6 +3,7 @@ package cx.ath.jbzdak.zarlok.entities;
 import cx.ath.jbzdak.jpaGui.Utils;
 import static cx.ath.jbzdak.jpaGui.Utils.getRelativeDate;
 import cx.ath.jbzdak.zarlok.entities.listeners.PartiaSearchCacheUpdater;
+import cx.ath.jbzdak.zarlok.entities.xml.adapters.BatchAdapter;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
@@ -10,6 +11,8 @@ import org.hibernate.validator.NotNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +22,8 @@ import java.util.List;
 /**
  * Batch produktu.
  */
-@Entity()
+@Entity
+@XmlType
 @Table(name="BATCH")
 //@NamedQueries({
 //        @NamedQuery(
@@ -169,7 +173,7 @@ public class Batch implements IProductSearchCache {
 		recalculateCurrentQty();
       price = Utils.round(price, 2);
       startQty = Utils.round(startQty, 2);
-
+      currentQty = startQty;
 	}
 
 	@PreUpdate
@@ -198,14 +202,18 @@ public class Batch implements IProductSearchCache {
 	}
 
 
+   @XmlID
+   @XmlJavaTypeAdapter(BatchAdapter.class)
 	public Long getId() {
 		return id;
 	}
+
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+   @XmlIDREF
    public Product getProduct() {
       return product;
    }
@@ -214,6 +222,7 @@ public class Batch implements IProductSearchCache {
       this.product = product;
    }
 
+   @XmlAttribute(required = true)
    @Override
    public String getSpecifier() {
 		return specifier;
@@ -223,6 +232,7 @@ public class Batch implements IProductSearchCache {
 		this.specifier = specifier;
 	}
 
+   @XmlAttribute
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -231,6 +241,7 @@ public class Batch implements IProductSearchCache {
 		this.price = price;
 	}
 
+   @XmlAttribute(required = true)
 	public BigDecimal getStartQty() {
 		return startQty;
 	}
@@ -239,6 +250,7 @@ public class Batch implements IProductSearchCache {
 		this.startQty = startQty;
 	}
 
+   @XmlAttribute(required = true)
 	public Date getBookingDate() {
 		return bookingDate;
 	}
@@ -247,6 +259,7 @@ public class Batch implements IProductSearchCache {
 		this.bookingDate = bookingDate;
 	}
 
+   @XmlAttribute(required = true)
 	public Date getExpiryDate() {
 		return expiryDate;
 	}
@@ -255,6 +268,7 @@ public class Batch implements IProductSearchCache {
 		this.expiryDate = expiryDate;
 	}
 
+   @XmlAttribute(required = true)
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -263,6 +277,7 @@ public class Batch implements IProductSearchCache {
 		this.createDate = createDate;
 	}
 
+   @XmlElement
 	public String getDescription() {
 		return description;
 	}
@@ -272,6 +287,7 @@ public class Batch implements IProductSearchCache {
 	}
 
 	@Override
+   @XmlAttribute
    public String getUnit() {
 		return unit;
 	}
@@ -280,10 +296,12 @@ public class Batch implements IProductSearchCache {
 		this.unit = unit;
 	}
 
+   @XmlTransient
 	public BigDecimal getCurrentQty() {
 		return currentQty;
 	}
 
+   @XmlAttribute
    public String getFakturaNo() {
       return fakturaNo;
    }

@@ -2,7 +2,7 @@ package cx.ath.jbzdak.zarlok.main;
 
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.task.TasksExecutor;
-import cx.ath.jbzdak.jpaGui.ui.error.DisplayErrorDetailsDialog;
+import cx.ath.jbzdak.jpaGui.ui.error.ErrorDetailsDialog;
 import cx.ath.jbzdak.zarlock.ui.ZarlockFrame;
 import cx.ath.jbzdak.zarlok.LoadResouresTask;
 import cx.ath.jbzdak.zarlok.StartDBTask;
@@ -53,7 +53,7 @@ public class AppLauncher {
                     "Nie można otworzyć bierzącej bazy danych, gdyż ta jest otwarta przez inną instancję programu.\nProgram nie może kontynuować");
          }else{
             LOGGER.error("", e);
-            DisplayErrorDetailsDialog.showErrorDialog(e, null);
+            ErrorDetailsDialog.showErrorDialog(e, null);
          }
          System.exit(42);
       }
