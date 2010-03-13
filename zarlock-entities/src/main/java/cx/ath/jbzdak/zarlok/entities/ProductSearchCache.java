@@ -7,7 +7,7 @@ import org.hibernate.validator.NotNull;
 import javax.persistence.*;
 
 
-//@NamedQueries({
+@NamedQueries({
 //	@NamedQuery(
 //			name="getProductSearchCache",
 //			query="SELECT DISTINCT new cx.ath.jbzdak.zarlok.entities.ProductSearchCache (pr.name, pa.specifier, pa.unit, pr.id) " +
@@ -28,15 +28,15 @@ import javax.persistence.*;
 //			name="deleteProductSearchCache",
 //			query="DELETE FROM ProductSearchCache"
 //	),
-//	@NamedQuery(
-//			name="filterProductSearchCache",
-//			query="SELECT psc FROM ProductSearchCache psc " +
-//					"WHERE " +
-//					"(LOWER(productName) like LOWER('%' || :productName || '%')) AND " +
-//					"(psc.specifier IS NULL OR LOWER(psc.specifier) like LOWER('%' || :specifier || '%')) AND " +
-//					"(psc.unit IS NULL OR LOWER(psc.unit) like LOWER('%' || :unit || '%'))"
-//	)
-//})
+	@NamedQuery(
+			name="filterProductSearchCache",
+			query="SELECT psc FROM ProductSearchCache psc " +
+					"WHERE " +
+					"(LOWER(productName) like LOWER(CONCAT('%', CONCAT( :productName, '%')))) AND " +
+					"(psc.specifier IS NULL OR LOWER(psc.specifier) like LOWER(CONCAT('%', CONCAT(:specifier, '%')))) AND " +
+					"(psc.unit IS NULL OR LOWER(psc.unit) like LOWER(CONCAT('%', CONCAT(:unit, '%'))))"
+	)
+})
 @Entity
 @Table(name = "PRODUCT_SEARCH_CACHE")
 public class ProductSearchCache implements IProductSearchCache {
@@ -85,7 +85,15 @@ public class ProductSearchCache implements IProductSearchCache {
 	}
 
 
-	@SuppressWarnings({"SameParameterValue"})
+   public ProductSearchCache(Product product) {
+      this.product = product;
+      this.productName  = product.getName();
+      this.productId = product.getId();
+      this.specifier = null;
+      this.unit = product.getUnit();
+   }
+
+   @SuppressWarnings({"SameParameterValue"})
    public ProductSearchCache(String productName, String specifier,
 			String unit, Long productId) {
 		super();
@@ -137,14 +145,7 @@ public class ProductSearchCache implements IProductSearchCache {
 
    @Override
    public String toString() {
-      return new ToStringBuilder(this).
-              append("id", id).
-              append("productName", productName).
-              append("specifier", specifier).
-              append("unit", unit).
-              append("productId", productId).
-              append("product", product).
-              toString();
+      return toSearchFormat();
    }
 
    public String toSearchFormat(){

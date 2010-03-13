@@ -10,7 +10,18 @@ import java.awt.*;
 public class ZarlockUtils {
 
    public static ZarlockModel getZarlockModel(Component component){
+      if(component instanceof Window){
+         return getModelNotRecursive((Window)component);
+      }
+      return getModelRecursive(component);
+   }
+
+   private static ZarlockModel getModelRecursive(Component component){
       Window window = SwingUtilities.getWindowAncestor(component);
+      return getModelNotRecursive(window);
+   }
+
+   private static ZarlockModel getModelNotRecursive(Window window){
       if(window==null){
          return null;
       }
@@ -18,7 +29,10 @@ public class ZarlockUtils {
          ZarlockFrame zarlockFrame = (ZarlockFrame) window;
          return zarlockFrame.getZarlockModel();
       }
-      return getZarlockModel(window);
+      ZarlockModel zarlockModel = getModelRecursive(window);
+      return zarlockModel!=null?zarlockModel:getModelNotRecursive(window.getOwner());
    }
+
+
 
 }

@@ -1,9 +1,5 @@
 package cx.ath.jbzdak.zarlok.entities;
 
-import cx.ath.jbzdak.jpaGui.Utils;
-import static cx.ath.jbzdak.jpaGui.Utils.getRelativeDate;
-import cx.ath.jbzdak.zarlok.entities.listeners.PartiaSearchCacheUpdater;
-import cx.ath.jbzdak.zarlok.entities.xml.adapters.BatchAdapter;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
@@ -13,10 +9,18 @@ import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import cx.ath.jbzdak.jpaGui.Utils;
+import cx.ath.jbzdak.zarlok.entities.listeners.PartiaSearchCacheUpdater;
+import cx.ath.jbzdak.zarlok.entities.xml.adapters.BatchAdapter;
+
+import static cx.ath.jbzdak.jpaGui.Utils.getRelativeDate;
 
 
 /**
@@ -69,149 +73,142 @@ import java.util.List;
 //                        "p.currentQty ASC"
 //        )
 //})
+@NamedQueries({
+        @NamedQuery(
+                name = "getSpecifiers",
+                query = "SELECT DISTINCT b.specifier FROM Batch b"
+        ),
+        @NamedQuery(
+                name = "getUnits",
+                query = "SELECT DISTINCT b.unit FROM Batch b"
+        )
+})
 @EntityListeners({PartiaSearchCacheUpdater.class})
 public class Batch implements IProductSearchCache {
+
+   @XmlTransient @Transient
+   private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
    @Id
    @GeneratedValue
    @Column(name = "ID")
    private Long id;
 
-	@ManyToOne(fetch= FetchType.EAGER, optional=false)
-	@JoinColumn(name = "PRODUCT_ID")
+   @ManyToOne(fetch= FetchType.EAGER, optional=false)
+   @JoinColumn(name = "PRODUCT_ID")
    private Product product;
 
-	/**
-	 * Coś co odróżnia partie produktu. Na przylkład w
-	 * szynce lukusowej luksusowa to specifier
-	 */
-	@Nonnull
-	@NotEmpty
-	@Column(name="SPECIFIER")
+   /**
+    * Coś co odróżnia partie produktu. Na przylkład w
+    * szynce lukusowej luksusowa to specifier
+    */
+   @Nonnull
+   @NotEmpty
+   @Column(name="SPECIFIER")
    private String specifier;
 
-	@Column(name="PRICE", precision=16, scale=6)
-	@Nonnull
-	@NotNull
+   @Column(name="PRICE", precision=16, scale=6)
+   @Nonnull
+   @NotNull
    private BigDecimal price;
 
-	@Column(name="START_QTY", precision=12, scale=2)
-	@Nonnull
-	@NotNull
+   @Column(name="START_QTY", precision=12, scale=2)
+   @Nonnull
+   @NotNull
    private BigDecimal startQty;
 
-	/**
-	 * Jednostka produktu.
-	 */
-	@Column(name = "UNIT")
-	@Nonnull
-	@NotNull
+   /**
+    * Jednostka produktu.
+    */
+   @Column(name = "UNIT")
+   @Nonnull
+   @NotNull
    private String unit;
 
-	@Column(name = "CURRENT_QTY", precision=12, scale=2)
-	@Nonnull
-	@NotNull
+   @Column(name = "CURRENT_QTY", precision=12, scale=2)
+   @Nonnull
+   @NotNull
    private BigDecimal currentQty;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="BOOKING_DATE")
-	@Nonnull
-	@NotNull
+   @Temporal(TemporalType.DATE)
+   @Column(name="BOOKING_DATE")
+   @Nonnull
+   @NotNull
    private Date bookingDate;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="EXPIRY_DATE")
-	@Nullable
+   @Temporal(TemporalType.DATE)
+   @Column(name="EXPIRY_DATE")
+   @Nullable
    private Date expiryDate;
 
-	/**
-	 * Moment zapisania encji w bazie danych.
-	 */
-	@Temporal(TemporalType.DATE)
-	@Column(name="CREATE_DATE")
+   /**
+    * Moment zapisania encji w bazie danych.
+    */
+   @Temporal(TemporalType.DATE)
+   @Column(name="CREATE_DATE")
    private Date createDate;
 
-	/**
-	 * Losowy ciąg znaków wprowadzany, lub nie przez użyszkodnika
-	 */
-	@Length(min=0, max=1000)
-	@Column(name="DESCRIPTION")
-	@Nullable
+   /**
+    * Losowy ciąg znaków wprowadzany, lub nie przez użyszkodnika
+    */
+   @Length(min=0, max=1000)
+   @Column(name="DESCRIPTION")
+   @Nullable
    private String description;
 
-	@Length(min=1, max=100)
-	@Column(name = "FAKTURA_NO")
-	@Nonnull
-	@NotNull
+   @Length(min=1, max=100)
+   @Column(name = "FAKTURA_NO")
+   @Nonnull
+   @NotNull
    private String fakturaNo;
 
-	@OneToMany(mappedBy="batch")
+   @OneToMany(mappedBy="batch")
    private List<Expenditure> expenditures = new ArrayList<Expenditure>();
 
-	@Column(name = "LINE_NO")
-	@Nullable private Integer lineNo;
+   @Column(name = "LINE_NO")
+   @Nullable private Integer lineNo;
 
    public Batch() {
-		super();
-	}
+      super();
+   }
 
-	public Batch(Product product, ProductSearchCache searchCache) {
-		super();
-		this.product = product;
-		setSpecifier(searchCache.specifier);
-		setUnit(searchCache.getUnit());
-		if(product.getExpiryDate() == -1){
-			setExpiryDate(null);
-		}else{
-			setExpiryDate(getRelativeDate(product.getExpiryDate()));
-		}
-	}
-
-   @PrePersist
-	public void prePersist(){
-		createDate = new Date();
-		recalculateCurrentQty();
-      price = Utils.round(price, 2);
-      startQty = Utils.round(startQty, 2);
-      currentQty = startQty;
-	}
-
-	@PreUpdate
-	public void preUpdate(){
-		//recalculateCurrentQty();
-      price = Utils.round(price, 2);
-      startQty = Utils.round(startQty, 2);
-      if(currentQty !=null){
-         currentQty = Utils.round(currentQty, 2);
+   public Batch(Product product, ProductSearchCache searchCache) {
+      super();
+      this.product = product;
+      setSpecifier(searchCache.specifier);
+      setUnit(searchCache.getUnit());
+      if(product.getExpiryDate() == -1){
+         setExpiryDate(null);
+      }else{
+         setExpiryDate(getRelativeDate(product.getExpiryDate()));
       }
-	}
+   }
 
+   public void recalculateCurrentQty(){
+      setCurrentQty(BatchUtils.getIloscTeraz(this));
+   }
 
-	public void recalculateCurrentQty(){
-	   setCurrentQty(BatchUtils.getIloscTeraz(this));
-	}
+   @Transient
+   public String getFullName(){
+      return product.getName() + " " + getSpecifier();
+   }
 
-	@Transient
-	public String getFullName(){
-		return product.getName() + " " + getSpecifier();
-	}
-
-	@Transient
-	public String getBasicData(){
-		return product.getName() + " " + getSpecifier() + " " + getCurrentQty() + " " + getUnit();
-	}
+   @Transient
+   public String getBasicData(){
+      return product.getName() + " " + getSpecifier() + " " + getCurrentQty() + " " + getUnit();
+   }
 
 
    @XmlID
    @XmlJavaTypeAdapter(BatchAdapter.class)
-	public Long getId() {
-		return id;
-	}
+   public Long getId() {
+      return id;
+   }
 
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+   public void setId(Long id) {
+      this.id = id;
+   }
 
    @XmlIDREF
    public Product getProduct() {
@@ -225,81 +222,87 @@ public class Batch implements IProductSearchCache {
    @XmlAttribute(required = true)
    @Override
    public String getSpecifier() {
-		return specifier;
-	}
+      return specifier;
+   }
 
-	public void setSpecifier(String specifier) {
-		this.specifier = specifier;
-	}
+   public void setSpecifier(String specifier) {
+      this.specifier = specifier;
+   }
 
    @XmlAttribute
-	public BigDecimal getPrice() {
-		return price;
-	}
+   public BigDecimal getPrice() {
+      return price;
+   }
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-   @XmlAttribute(required = true)
-	public BigDecimal getStartQty() {
-		return startQty;
-	}
-
-	public void setStartQty(BigDecimal startQty) {
-		this.startQty = startQty;
-	}
+   public void setPrice(BigDecimal price) {
+      BigDecimal oldPrice = this.price;
+      this.price = price;
+      support.firePropertyChange("price", oldPrice, this.price);
+   }
 
    @XmlAttribute(required = true)
-	public Date getBookingDate() {
-		return bookingDate;
-	}
+   public BigDecimal getStartQty() {
+      return startQty;
+   }
 
-	public void setBookingDate(Date bookingDate) {
-		this.bookingDate = bookingDate;
-	}
-
-   @XmlAttribute(required = true)
-	public Date getExpiryDate() {
-		return expiryDate;
-	}
-
-	public void setExpiryDate(Date expiryDate) {
-		this.expiryDate = expiryDate;
-	}
+   public void setStartQty(BigDecimal startQty) {
+      BigDecimal oldStartQty = this.startQty;
+      this.startQty = startQty;
+      support.firePropertyChange("startQty", oldStartQty, this.startQty);
+   }
 
    @XmlAttribute(required = true)
-	public Date getCreateDate() {
-		return createDate;
-	}
+   public Date getBookingDate() {
+      return bookingDate;
+   }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+   public void setBookingDate(Date bookingDate) {
+      this.bookingDate = bookingDate;
+   }
+
+   @XmlAttribute(required = true)
+   public Date getExpiryDate() {
+      return expiryDate;
+   }
+
+   public void setExpiryDate(Date expiryDate) {
+      Date oldExpiryDate = this.expiryDate;
+      this.expiryDate = expiryDate;
+      support.firePropertyChange("expiryDate", oldExpiryDate, this.expiryDate);
+   }
+
+   @XmlAttribute(required = true)
+   public Date getCreateDate() {
+      return createDate;
+   }
+
+   public void setCreateDate(Date createDate) {
+      this.createDate = createDate;
+   }
 
    @XmlElement
-	public String getDescription() {
-		return description;
-	}
+   public String getDescription() {
+      return description;
+   }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+   public void setDescription(String description) {
+      this.description = description;
+   }
 
-	@Override
+   @Override
    @XmlAttribute
    public String getUnit() {
-		return unit;
-	}
+      return unit;
+   }
 
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
+   public void setUnit(String unit) {
+      this.unit = unit;
+   }
 
    @XmlTransient
-	public BigDecimal getCurrentQty() {
-		return currentQty;
-	}
+   public BigDecimal getCurrentQty() {
+      return currentQty;
+   }
 
    @XmlAttribute
    public String getFakturaNo() {
@@ -311,35 +314,55 @@ public class Batch implements IProductSearchCache {
    }
 
    public List<Expenditure> getExpenditures() {
-		return expenditures;
-	}
+      return expenditures;
+   }
 
-	public Integer getLineNo() {
-		return lineNo;
-	}
+   public Integer getLineNo() {
+      return lineNo;
+   }
 
-	public void setExpenditures(List<Expenditure> expenditures) {
-		this.expenditures = expenditures;
-	}
+   public void setExpenditures(List<Expenditure> expenditures) {
+      this.expenditures = expenditures;
+   }
 
-	public void setLineNo(Integer lineNo) {
-		this.lineNo = lineNo;
-	}
+   public void setLineNo(Integer lineNo) {
+      this.lineNo = lineNo;
+   }
 
-	@SuppressWarnings({"WeakerAccess"})
+   @SuppressWarnings({"WeakerAccess"})
    public void setCurrentQty(BigDecimal currentQty) {
-		this.currentQty = currentQty;
-	}
+      this.currentQty = currentQty;
+   }
 
-	@Transient
-	public String getSearchFormat(){
-		return ProductSearchCacheUtils.format(this);
-	}
+   @Transient
+   public String getSearchFormat(){
+      return ProductSearchCacheUtils.format(this);
+   }
 
-    @Override
-    public String getProductName() {
-        return getProduct().getName();
-    }
+   @Override
+   public String getProductName() {
+      return getProduct().getName();
+   }
+
+   public void addPropertyChangeListener(PropertyChangeListener listener) {
+      support.addPropertyChangeListener(listener);
+   }
+
+   public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+      support.addPropertyChangeListener(propertyName, listener);
+   }
+
+   public boolean hasListeners(String propertyName) {
+      return support.hasListeners(propertyName);
+   }
+
+   public void removePropertyChangeListener(PropertyChangeListener listener) {
+      support.removePropertyChangeListener(listener);
+   }
+
+   public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+      support.removePropertyChangeListener(propertyName, listener);
+   }
 
    @Override
    public String toString() {
@@ -358,7 +381,7 @@ public class Batch implements IProductSearchCache {
       try{
          sb.append(", expenditures=").append(getExpenditures());
       }catch (RuntimeException e){
-          sb.append(", expenditures=NIE ZAŁADOWANO");
+         sb.append(", expenditures=NIE ZAŁADOWANO");
          //Hibernate exception moze polecieć -- olać!
       }
       sb.append(", description='").append(description).append('\'');

@@ -13,6 +13,7 @@ public class DBHolder {
       return LIFECYCLE_MANAGER.getDbManager();
    }
 
+
    private static LifecycleManager LIFECYCLE_MANAGER;
 
    public static LifecycleManager getLifecycleManager(){

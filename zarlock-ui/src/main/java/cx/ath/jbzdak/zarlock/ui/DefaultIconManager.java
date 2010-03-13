@@ -1,6 +1,7 @@
 package cx.ath.jbzdak.zarlock.ui;
 
 import cx.ath.jbzdak.common.iconManager.IconManager;
+import cx.ath.jbzdak.common.iconManager.NoIconAction;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -20,13 +21,14 @@ public class DefaultIconManager {
    static{
       ICON_MANAGER = new IconManager();
       ICON_MANAGER.setDefaultCollecion("silk");
+      ICON_MANAGER.setNoIconAction(NoIconAction.RETURN_NULL);
       try{
          Properties properties = new Properties();
          properties.load(DefaultIconManager.class.getResourceAsStream("/icon.properties"));
          for(Map.Entry<Object, Object> entry : properties.entrySet()){
             ICON_MANAGER.setAlias((String) entry.getKey(), (String) entry.getValue());
          }
-
+       
       }catch (Exception e){
          LOGGER.error("Exception while loading icon aliases");
       }

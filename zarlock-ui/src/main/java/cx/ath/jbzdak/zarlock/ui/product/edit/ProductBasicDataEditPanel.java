@@ -26,7 +26,7 @@ public class ProductBasicDataEditPanel extends JPanel{
       super(new MigLayout("fillx, wrap 1", "[grow, fill]"));
       FormFactory<Product> formFactory = new FormFactory<Product>();
       formFactory.setResourceBundle(ZarlockBoundle.getZarlockBundle());
-      FormPanel namePanel  = formFactory.decorateFormattedTextField(getString("product.name"), "name", new ProductNameFormatter());
+      FormPanel namePanel = formFactory.decorateFormattedTextField(getString("product.name"), "name", new ProductNameFormatter());
       FormPanel unitPanel = formFactory.decotrateComboBox(getString("product.unit"), "unit", new UnitAdaptor(), false);
       FormPanel expiryPanel = formFactory.decorateFormattedTextField(getString("product.expiryDate"), "expiryDate", new ProductExpiryFormatter());
       add(namePanel);

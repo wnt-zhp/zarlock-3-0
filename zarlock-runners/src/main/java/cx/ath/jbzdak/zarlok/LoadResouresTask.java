@@ -23,9 +23,11 @@ public class LoadResouresTask extends Task<Object>{
    @Override
    public void doTask(@Nullable Object o, @Nullable Object... varargs) throws Exception {
       Locale locale = Locale.getDefault();
-      if(ConfigHolder.getProperties().contains("overrideLocale")){
+      if(ConfigHolder.getProperties().containsKey("overrideLocale")){
          try{
-            locale = new Locale(ConfigHolder.getProperties().getProperty("overrideLocale"));
+            String localeStr = ConfigHolder.getProperties().getProperty("overrideLocale");
+            String[] splitLocale = localeStr.split("_");
+            locale = new Locale(splitLocale[0], splitLocale.length>1?splitLocale[1]:"", splitLocale.length>2?splitLocale[2]:"");
             Locale.setDefault(locale);
          }catch (Exception e){
             LOGGER.warn("Exceptin while parsing override locale. ", e);

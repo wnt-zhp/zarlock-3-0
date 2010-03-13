@@ -1,15 +1,14 @@
 package cx.ath.jbzdak.zarlock.ui;
 
-import cx.ath.jbzdak.jpaGui.ui.tabbed.JBTabbedPane;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import static cx.ath.jbzdak.zarlock.ui.DefaultIconManager.*;
+import cx.ath.jbzdak.jpaGui.ui.tabbed.JBTabbedPane;
+
 import static cx.ath.jbzdak.zarlock.ui.DefaultIconManager.ICON_MANAGER;
 import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getString;
 
@@ -81,6 +80,14 @@ public class ZarlockFrame extends JFrame{
          });
          databaseMenu.add(readFromXML);
          menuBar.add(databaseMenu);
+         JMenuItem addBatch = new JMenuItem(getString("mainFrame.menu.addExpenditure.label"));
+         addBatch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               zarlockModel.getBatchDialog().setVisible(true);
+            }
+         });
+         menuBar.add(addBatch);
       }
       setJMenuBar(menuBar);
    }

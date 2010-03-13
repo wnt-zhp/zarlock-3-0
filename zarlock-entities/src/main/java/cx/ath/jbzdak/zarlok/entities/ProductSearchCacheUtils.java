@@ -1,10 +1,11 @@
 package cx.ath.jbzdak.zarlok.entities;
 
-import cx.ath.jbzdak.jpaGui.ParsingException;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import cx.ath.jbzdak.jpaGui.ParsingException;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
@@ -15,7 +16,7 @@ public class ProductSearchCacheUtils {
    @SuppressWarnings({"WeakerAccess"})
    public static final Pattern PRODUCT_SEARCH_CACHE_PATTERN = Pattern.compile("([\\p{L}\\s]+)(?:-([\\p{L}\\s]+)?)?(?:\\[([\\p{L}\\s]+)\\]?)?");
 
-   public static final String format(IProductSearchCache bean){
+   public static String format(IProductSearchCache bean){
       StringBuilder sbr = new StringBuilder();
       sbr.append(bean.getProductName());
       if(!StringUtils.isEmpty(bean.getSpecifier())){
@@ -30,7 +31,7 @@ public class ProductSearchCacheUtils {
      return sbr.toString();
    }
 
-   public static final ProductSearchCache parse(String text) throws ParsingException {
+   public static ProductSearchCache parse(String text) throws ParsingException {
       if(StringUtils.isEmpty(text)){
 			return new ProductSearchCache("","","",null);
 		}
