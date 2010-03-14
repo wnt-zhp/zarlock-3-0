@@ -7,15 +7,19 @@ import javax.swing.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.EnumSet;
 
 import cx.ath.jbzdak.jpaGui.db.dao.DAO;
 import cx.ath.jbzdak.jpaGui.ui.autoComplete.AutocompleteComboBox;
 import cx.ath.jbzdak.jpaGui.ui.autoComplete.ComboBoxElement;
 import cx.ath.jbzdak.jpaGui.ui.form.FormPanel;
 import cx.ath.jbzdak.jpaGui.ui.form.SimpleDAOForm;
+import cx.ath.jbzdak.jpaGui.ui.form.DefaultFormElement;
+import cx.ath.jbzdak.jpaGui.ui.form.FormPanelVisibility;
 import cx.ath.jbzdak.zarlok.entities.Batch;
 import cx.ath.jbzdak.zarlok.entities.ProductSearchCache;
 import cx.ath.jbzdak.zarlok.entities.Product;
+import cx.ath.jbzdak.zarlok.ZarlockBoundle;
 import cx.ath.jbzdak.zarlock.ui.ZarlockUtils;
 
 /**
@@ -35,10 +39,11 @@ public class AddBatchPanel extends JPanel{
    public AddBatchPanel() {
       super(new MigLayout("wrap 1, fillx", "[fill]", "[|grow, fill]"));
       AutocompleteComboBox productNameComboBox = new AutocompleteComboBox(new ProductSearchCacheAdaptor(this));
-      ComboBoxElement<?, ProductSearchCache> element = new ComboBoxElement<Object, ProductSearchCache>(
+      DefaultFormElement element = new DefaultFormElement(
               productNameComboBox,
-              "",
-              ObjectProperty.<Object>create());
+              "AddBatchPanel.selectProduct",
+              ZarlockBoundle.getZarlockBundle()
+      );
       productNameComboBox.setFormatter(new ProducSearchCacheFormatter());
       productNameComboBox.setStrict(true);
       productNameComboBox.addPropertyChangeListener("selectedItem", new PropertyChangeListener() {
@@ -47,14 +52,15 @@ public class AddBatchPanel extends JPanel{
             ProductSearchCache cache = (ProductSearchCache) evt.getNewValue();
             getProductDAO().find(cache.getProductId());
             getProductDAO().beginTransaction();
+            dao.setBean(new Batch());
             dao.getBean().setProduct(productDAO.getBean());
             dao.getBean().setUnit(cache.getUnit());
-            dao.getBean().setSpecifier(cache.getUnit());
+            dao.getBean().setSpecifier(cache.getSpecifier());
             getProductDAO().commitTransaction();
             dataPanel.getForm().startEditing();
          }
       });
-      productPanel = new FormPanel(element);      
+      productPanel = new FormPanel(element, null, EnumSet.of(FormPanelVisibility.HIDE_ERROR_ICON));      
       add(productPanel);
       add(dataPanel);
    }

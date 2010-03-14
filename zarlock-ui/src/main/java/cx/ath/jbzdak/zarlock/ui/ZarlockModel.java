@@ -17,6 +17,7 @@ import cx.ath.jbzdak.jpaGui.ui.error.DisplayError;
 import cx.ath.jbzdak.jpaGui.ui.error.ErrorDetailsDialog;
 import cx.ath.jbzdak.jpaGui.ui.tabbed.JBTabbedPane;
 import cx.ath.jbzdak.zarlock.ui.batch.AddBatchDialog;
+import cx.ath.jbzdak.zarlock.ui.batch.BatchTab;
 import cx.ath.jbzdak.zarlock.ui.product.ProductList;
 import cx.ath.jbzdak.zarlock.ui.product.ProductTab;
 import cx.ath.jbzdak.zarlok.DBHolder;
@@ -43,10 +44,26 @@ public class ZarlockModel {
 
    private final ProductTab productTab = new ProductTab();
 
+   private final BatchTab batchTab = new BatchTab();
+
    private AddBatchDialog batchDialog;
 
    public ZarlockModel(ZarlockFrame zarlockFrame) {
       this.zarlockFrame = zarlockFrame;
+      mainPanel.addListener(batchTab, new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            if(JBTabbedPane.SELECTED.equals(e.getActionCommand())){
+               getDBManager().executeTransaction(new Transaction<EntityManager>() {
+                  @Override
+                  public void doTransaction(EntityManager entityManager) throws Exception {
+                     batchTab.setBathes(entityManager.createQuery("SELECT b FROM Batch b").getResultList());
+                  }
+               });
+            }
+         }
+      });
+      mainPanel.addListener(getProductList(), getProductListListener());
    }
 
    ProductList getProductList() {
@@ -118,6 +135,10 @@ public class ZarlockModel {
             }
          }
       };
+   }
+
+   public BatchTab getBatchTab() {
+      return batchTab;
    }
 
    public AddBatchDialog getBatchDialog() {

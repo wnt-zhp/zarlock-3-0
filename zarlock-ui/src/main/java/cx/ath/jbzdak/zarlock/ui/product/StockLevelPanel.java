@@ -13,6 +13,8 @@ import java.util.List;
 
 import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getString;
 
+import net.miginfocom.swing.MigLayout;
+
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: 2009-11-11
@@ -24,8 +26,8 @@ class StockLevelPanel extends JPanel{
    StockLevelPanelModel stanPanelModel = new StockLevelPanelModel();
 
    public StockLevelPanel() {
-      super(new BorderLayout());
-      add(new JScrollPane(stanTable), BorderLayout.CENTER);
+      super(new MigLayout("fillx, filly", "[]", "[fill, grow]"));
+      add(new JScrollPane(stanTable));
       initBindings();
    }
 

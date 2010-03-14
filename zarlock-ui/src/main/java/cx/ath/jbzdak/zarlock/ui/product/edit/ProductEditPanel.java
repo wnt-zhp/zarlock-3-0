@@ -33,7 +33,7 @@ public class ProductEditPanel extends JPanel{
    private DAO<Product> dao;
 
    public ProductEditPanel() {
-      super(new MigLayout("wrap 1, fillx", "[grow]"));
+      super(new MigLayout("wrap 1, fillx", "[grow, fill]"));
       editButton = createButton("product.edit");
       saveButton = createButton("product.save");
       cancelButton = createButton("product.cancel");

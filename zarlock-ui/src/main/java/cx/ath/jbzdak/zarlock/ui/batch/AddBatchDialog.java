@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import cx.ath.jbzdak.jpaGui.db.dao.DAO;
+import cx.ath.jbzdak.jpaGui.ui.error.ErrorDialog;
 import cx.ath.jbzdak.zarlock.ui.ButtonPanel;
 import cx.ath.jbzdak.zarlock.ui.ZarlockModel;
 import cx.ath.jbzdak.zarlock.ui.ZarlockUtils;
@@ -24,7 +25,7 @@ public class AddBatchDialog extends JDialog{
    public DAO<Batch> dao;
 
 
-   public AddBatchDialog(Window owner) {
+   public AddBatchDialog(final Window owner) {
       super(owner);
       setModalityType(ModalityType.DOCUMENT_MODAL);
       setLayout(new MigLayout("wrap 1, fillx, filly","[fill, grow]", "[fill][pref]"));
@@ -39,8 +40,12 @@ public class AddBatchDialog extends JDialog{
       buttonPanel.okButton.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-            setVisible(false);
-            addBatchPanel.getForm().commit();
+            try {
+               addBatchPanel.getForm().commit();
+               setVisible(false);
+            } catch (Exception e1) {
+               ErrorDialog.displayErrorDialog(addBatchPanel.getForm().checkErrors(), owner);
+            }
          }
       });
       buttonPanel.cancelButton.addActionListener(new ActionListener() {
@@ -56,6 +61,7 @@ public class AddBatchDialog extends JDialog{
    public void setVisible(boolean b) {
       pack();
       setSize(getWidth(), getHeight() + 20); //Dialog wychodził za niski. . . HACK
+      addBatchPanel.getForm().startViewing();
       super.setVisible(b);
    }
 }

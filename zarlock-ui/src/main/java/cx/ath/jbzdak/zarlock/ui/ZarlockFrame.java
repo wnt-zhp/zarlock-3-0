@@ -51,7 +51,8 @@ public class ZarlockFrame extends JFrame{
               zarlockModel.getProductTab(), getString("product.tab.tooltip"), false);
       mainPanel.addTabCloseable(getString("productList.tab.tabname"), ICON_MANAGER.getIcon("product.list"),
               zarlockModel.getProductList(), getString("productList.tab.tooltip"), false);
-      mainPanel.addListener(zarlockModel.getProductList(), zarlockModel.getProductListListener());
+      mainPanel.addTabCloseable("batchList.tab.tabname", ICON_MANAGER.getIcon("page_list"),
+              zarlockModel.getBatchTab(), getString("batchList.tab.tooltip"), false);
    }
 
    void initializeMenu(){

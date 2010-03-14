@@ -5,12 +5,14 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.EnumSet;
 
 import cx.ath.jbzdak.jpaGui.db.dao.DAO;
 import cx.ath.jbzdak.jpaGui.ui.autoComplete.AutocompleteComboBox;
 import cx.ath.jbzdak.jpaGui.ui.autoComplete.ComboBoxElement;
 import cx.ath.jbzdak.jpaGui.ui.form.*;
 import cx.ath.jbzdak.jpaGui.ui.form.validators.NonNullValidator;
+import cx.ath.jbzdak.jpaGui.ui.form.validators.NotBlankValidator;
 import cx.ath.jbzdak.jpaGui.ui.formatted.FormattedFieldElement;
 import cx.ath.jbzdak.jpaGui.ui.formatted.FormattedTextField;
 import cx.ath.jbzdak.jpaGui.ui.formatted.NotEmptyFormatter;
@@ -59,9 +61,11 @@ public class BatchBasicDataPanel extends JPanel {
       formFactory.setResourceBundle(ZarlockBoundle.getZarlockBundle());
       productName = formFactory.decotrateJTextField("batch.product", "product.name");
       productName.getFormElement().setSettingValueErrorAction(SettingValueErrorAction.LOG);
+      productName.setFormPanelVisibilities(EnumSet.of(FormPanelVisibility.HIDE_ERROR_ICON));
       specifier = formFactory.decorateComboBox("batch.specifier", "specifier", new SpecifierAdaptor(this));
+      specifier.getFormElement().addValidator(new NotBlankValidator());
       unit = formFactory.decorateComboBox("batch.unit", "unit", new UnitAdapter(this));
-
+      unit.getFormElement().addValidator(new NotBlankValidator());
       final PriceFormatter priceFormatter = new PriceFormatter();
       startQty = formFactory.decorateFormattedTextField("batch.startQty", "startQty",
               new StartQtyFormatter());

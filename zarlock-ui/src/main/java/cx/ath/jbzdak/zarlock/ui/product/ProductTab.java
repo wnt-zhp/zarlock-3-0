@@ -6,6 +6,7 @@ import cx.ath.jbzdak.jpaGui.ui.autoComplete.AutocompleteComboBox;
 import cx.ath.jbzdak.jpaGui.ui.form.DefaultFormElement;
 import cx.ath.jbzdak.jpaGui.ui.form.FormPanel;
 import cx.ath.jbzdak.jpaGui.ui.form.FormPanelVisibility;
+import cx.ath.jbzdak.jpaGui.ui.form.FormPanelConstraints;
 import cx.ath.jbzdak.zarlock.ui.product.edit.ProductEditPanel;
 import cx.ath.jbzdak.zarlok.DBHolder;
 import cx.ath.jbzdak.zarlok.ZarlockBoundle;
@@ -40,13 +41,13 @@ public class ProductTab extends JPanel{
    Product product;
 
    public ProductTab() {
-      setLayout(new MigLayout("fillx, filly", "[][grow]", "[][grow][grow]"));
+      setLayout(new MigLayout("fillx, filly", "[][grow]", "[][][grow]"));
       productEditPanel.setBorder(BorderFactory.createTitledBorder(getString("product.tab.basicData.title")));
       stockLevelPanel.setBorder(BorderFactory.createTitledBorder(getString("product.tab.stockLevel.title")));
       add(new ControlPanel(), "");
       add(kartotekaPanel, "span 1 3, wrap, growx, growy");
       add(productEditPanel, "wrap, growx");
-      add(stockLevelPanel);
+      add(stockLevelPanel, "growx, growy");
 
    }
 
@@ -70,7 +71,13 @@ public class ProductTab extends JPanel{
 
       private ControlPanel() {
          super(new MigLayout("fillx"));
-         add(new FormPanel(new DefaultFormElement(productSelection, "product.tab.selectProduct", ZarlockBoundle.getZarlockBundle()), null, EnumSet.of(FormPanelVisibility.HIDE_ERROR_ICON)));
+         add(new FormPanel(
+                 new DefaultFormElement(productSelection,
+                         "product.tab.selectProduct",
+                         ZarlockBoundle.getZarlockBundle()
+                 ),
+                 FormPanelConstraints.createLargeConstraints(),
+                 EnumSet.of(FormPanelVisibility.HIDE_ERROR_ICON)));
          add(addEditButton);
          productSelection.addPropertyChangeListener("selectedItem", new PropertyChangeListener(){
             @Override

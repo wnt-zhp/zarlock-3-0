@@ -3,6 +3,7 @@ package cx.ath.jbzdak.zarlock.ui.product;
 import cx.ath.jbzdak.jpaGui.Utils;
 import cx.ath.jbzdak.jpaGui.ui.query.FullTextPanel;
 import cx.ath.jbzdak.jpaGui.ui.query.FulltextFilter;
+import cx.ath.jbzdak.jpaGui.ui.query.FullTextQuery;
 import cx.ath.jbzdak.jpaGui.ui.table.TableButtonRendererEditor;
 import cx.ath.jbzdak.zarlock.ui.ZarlockModel;
 import cx.ath.jbzdak.zarlock.ui.ZarlockUtils;
@@ -34,11 +35,11 @@ import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getZarlockBundle;
  */
 public class ProductList extends JPanel{
 
-   FulltextFilter<TableModel, Integer> filter = new FulltextFilter<TableModel, Integer>(1,2);
+   FulltextFilter<TableModel, Integer> filter = new FulltextFilter<TableModel, Integer>(0,1);
 
    FullTextPanel fullTextPanel = new FullTextPanel(filter, getZarlockBundle());
 
-   JXTable productTable;
+   JTable productTable;
 
    List<Product> products = Collections.emptyList();
 
@@ -46,10 +47,17 @@ public class ProductList extends JPanel{
 
    public ProductList() {
       super(new MigLayout("wrap 1, fillx", "[grow, fill]", "[|grow, fill]"));
-      productTable = new JXTable();
-      TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>();
+      productTable = new JTable();
+      final TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>();
       rowSorter.setRowFilter(filter);
       productTable.setRowSorter(rowSorter);
+      filter.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {            if(FullTextQuery.QUERY_CHANGED_COMMAND.equals(e.getActionCommand())){
+               rowSorter.sort();
+            }
+         }
+      });
       add(fullTextPanel);
       add(new JScrollPane(productTable));
       JButton goToDetails = Utils.createIconButton(ICON_MANAGER.getIcon("product.go"));
@@ -62,6 +70,7 @@ public class ProductList extends JPanel{
       });
       editor.add(goToDetails, BorderLayout.CENTER);
       initBindings();
+      rowSorter.setModel(productTable.getModel());
    }
 
    public void setProducts(List<Product> products) {
