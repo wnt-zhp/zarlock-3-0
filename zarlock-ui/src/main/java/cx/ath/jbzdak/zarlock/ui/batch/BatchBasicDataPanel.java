@@ -10,11 +10,14 @@ import cx.ath.jbzdak.jpaGui.db.dao.DAO;
 import cx.ath.jbzdak.jpaGui.ui.autoComplete.AutocompleteComboBox;
 import cx.ath.jbzdak.jpaGui.ui.autoComplete.ComboBoxElement;
 import cx.ath.jbzdak.jpaGui.ui.form.*;
+import cx.ath.jbzdak.jpaGui.ui.form.validators.NonNullValidator;
 import cx.ath.jbzdak.jpaGui.ui.formatted.FormattedFieldElement;
 import cx.ath.jbzdak.jpaGui.ui.formatted.FormattedTextField;
 import cx.ath.jbzdak.jpaGui.ui.formatted.NotEmptyFormatter;
 import cx.ath.jbzdak.jpaGui.ui.formatted.formatters.BigDecimalFormatter;
 import cx.ath.jbzdak.jpaGui.ui.formatted.formatters.DateFormatter;
+import cx.ath.jbzdak.jpaGui.ui.formatted.formatters.NotEmptyNumberFormatter;
+import static cx.ath.jbzdak.jpaGui.ui.formatted.formatters.NotEmptyNumberFormatter.createNotEmptyFormatter;
 import cx.ath.jbzdak.zarlok.ZarlockBoundle;
 import cx.ath.jbzdak.zarlok.entities.Batch;
 
@@ -47,9 +50,7 @@ public class BatchBasicDataPanel extends JPanel {
 
    public BatchBasicDataPanel() {
       super(new MigLayout("wrap 2, fillx", "[grow, fill|grow,fill]"));
-
       form = createForm();
-
       initGui();
    }
 
@@ -62,12 +63,16 @@ public class BatchBasicDataPanel extends JPanel {
       unit = formFactory.decorateComboBox("batch.unit", "unit", new UnitAdapter(this));
 
       final PriceFormatter priceFormatter = new PriceFormatter();
-      startQty = formFactory.decorateFormattedTextField("batch.startQty", "startQty", new StartQtyFormatter());
-      price = formFactory.decorateFormattedTextField("batch.price", "price", new BigDecimalFormatter());
+      startQty = formFactory.decorateFormattedTextField("batch.startQty", "startQty",
+              new StartQtyFormatter());
+      startQty.getFormElement().addValidator(new NonNullValidator());
+      price = formFactory.decorateFormattedTextField("batch.price", "price",
+              new PriceFormatter());
+      price.getFormElement().addValidator(new NonNullValidator());
       startQty.addPropertyChangeListener("value", new PropertyChangeListener() {
          @Override
          public void propertyChange(PropertyChangeEvent evt) {
-            priceFormatter.setPrice(((Number)evt.getNewValue()).doubleValue());
+            priceFormatter.setStartQty(((Number)evt.getNewValue()).doubleValue());
          }
       });
       expiryDateFormatter = new ExpiryDateFormatter();
@@ -78,6 +83,7 @@ public class BatchBasicDataPanel extends JPanel {
       bookingDateFormatter.setDateFormatter(expiryDateFormatter);
       bookingDatePanel = formFactory.decorateFormattedTextField("batch.bookingDate", "bookingDate",
               bookingDateFormatter);
+      bookingDatePanel.getFormElement().addValidator(new NonNullValidator());
       bookingDatePanel.getFormElement().setReadNullValues(false);
       fakturaNo = formFactory.decorateFormattedTextField("batch.fakturaNo", "fakturaNo",
               new NotEmptyFormatter());
@@ -92,8 +98,8 @@ public class BatchBasicDataPanel extends JPanel {
       add(unit);
       add(startQty);
       add(price);
-      add(expiryDatePanel);
       add(bookingDatePanel);
+      add(expiryDatePanel);
       add(fakturaNo, "span 2");
    }
 

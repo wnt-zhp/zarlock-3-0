@@ -6,28 +6,32 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cx.ath.jbzdak.jpaGui.Formatter;
-import cx.ath.jbzdak.jpaGui.FormattingException;
-import cx.ath.jbzdak.jpaGui.ParsingException;
+import cx.ath.jbzdak.jpaGui.*;
 import cx.ath.jbzdak.jpaGui.ui.formatted.AbstractFormatter;
 import cx.ath.jbzdak.jpaGui.ui.formatted.formatters.DoubleFormatter;
+import cx.ath.jbzdak.zarlok.entities.Batch;
+import cx.ath.jbzdak.zarlok.ZarlockBoundle;
 
 import static org.apache.commons.lang.StringUtils.isEmpty;
+import org.apache.commons.math.util.MathUtils;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
  *         Date: Mar 10, 2010
  */
-public class PriceFormatter extends AbstractFormatter<BigDecimal,BigDecimal>  implements Formatter<BigDecimal,BigDecimal> {
+public class PriceFormatter
+        extends AbstractFormatter<BigDecimal,BigDecimal>  implements BeanHolderAware<Batch, BeanHolder<Batch>>{
    	private static final Pattern cenaPattern = Pattern.compile("\\s*(\\d++(?:[,.]\\d+)?)\\s*([nb])?\\s*(?:(\\+)?\\s*(\\d+)?([%p])?)\\s*");
 
 	private DoubleFormatter formatter = new DoubleFormatter();
 
 	private List<Integer> stawkiVat = Arrays.asList(0,3,7,22);
 
-   private double iloscPoczatkowa; 
+   BeanHolder<Batch> beanHolder;
 
-	public PriceFormatter() {
+   private Double startQty;
+
+   public PriceFormatter() {
 		super();
 	}
 
@@ -48,8 +52,7 @@ public class PriceFormatter extends AbstractFormatter<BigDecimal,BigDecimal>  im
 		String tax = m.group(4);
 		String percent = m.group(5);
 
-      boolean netto = findNettoBrutto(nettoBrutto.trim());
-
+      boolean netto = isNetto(nettoBrutto);
 
       if(!isEmpty(tax) && isEmpty(plusSign) && isEmpty(percent)){
 			throw new ParsingException("Niepoprawny format pola");
@@ -73,13 +76,19 @@ public class PriceFormatter extends AbstractFormatter<BigDecimal,BigDecimal>  im
 			value+=value*taxD/100;
 		}
       if(!netto){
-         value/=iloscPoczatkowa;
+         if(startQty == null || MathUtils.equals(0, startQty)){
+            throw new ParsingException(ZarlockBoundle.getString("batch.exception.bruttoPriceAndNoStartingQty"));
+         }
+         value/= startQty;
       }
 		return new BigDecimal(value);
 	}
 
-   private boolean findNettoBrutto(String nettoBrutto) throws ParsingException {
-      boolean netto;
+   private boolean isNetto(String nettoBrutto) throws ParsingException {
+      if(nettoBrutto == null){
+         return true;
+      }
+      nettoBrutto = nettoBrutto.trim();
       if("n".equals(nettoBrutto)){
          return true;
       } else if("b".equals(nettoBrutto)){
@@ -87,11 +96,22 @@ public class PriceFormatter extends AbstractFormatter<BigDecimal,BigDecimal>  im
       } else if(nettoBrutto.length()!=0){
          throw new ParsingException("Niepoprwany format pola");
       } else {
-         return false;
+         return true;
       }
    }
 
-   public void setPrice(double iloscPoczatkowa) {
-      this.iloscPoczatkowa = iloscPoczatkowa;
+   public Double getStartQty() {
+      if(startQty==null){
+         return  beanHolder.getBean().getStartQty().doubleValue();
+      }
+      return startQty;
+   }
+
+   public void setStartQty(Double iloscPoczatkowa) {
+      this.startQty = iloscPoczatkowa;
+   }
+
+   public void setBeanHolder(BeanHolder<Batch> beanHolder) {
+      this.beanHolder = beanHolder;
    }
 }

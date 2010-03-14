@@ -48,9 +48,4 @@ public class BookingDateFormatter extends DateFormatter implements BeanHolderAwa
    public void setBeanHolder(BeanHolder<Batch> beanHolder) {
       this.beanHolder = beanHolder;
    }
-//
-//   @Override
-//   public void setBeanHolder(BeanHolder<? extends Batch> beanHolder) {
-//      this.beanHolder = beanHolder;
-//   }
 }

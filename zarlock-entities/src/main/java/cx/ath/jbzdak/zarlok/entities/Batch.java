@@ -126,9 +126,7 @@ public class Batch implements IProductSearchCache {
    private String unit;
 
    @Column(name = "CURRENT_QTY", precision=12, scale=2)
-   @Nonnull
-   @NotNull
-   private BigDecimal currentQty;
+   private BigDecimal currentQty = BigDecimal.ZERO;
 
    @Temporal(TemporalType.DATE)
    @Column(name="BOOKING_DATE")
@@ -197,7 +195,6 @@ public class Batch implements IProductSearchCache {
    public String getBasicData(){
       return product.getName() + " " + getSpecifier() + " " + getCurrentQty() + " " + getUnit();
    }
-
 
    @XmlID
    @XmlJavaTypeAdapter(BatchAdapter.class)
