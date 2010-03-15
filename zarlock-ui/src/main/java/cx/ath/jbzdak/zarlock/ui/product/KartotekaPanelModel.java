@@ -32,7 +32,9 @@ class KartotekaPanelModel {
       List<Object[]> names = manager.executeTransaction(new JPAReturnableTransaction<List<Object[]>>(){
          @Override
          public List<Object[]> doTransaction(EntityManager entityManager) throws Exception {
-            return entityManager.createQuery("SELECT DISTINCT psc.specifier, psc.unit FROM ProductSearchCache psc WHERE psc.productName = :name")
+            return entityManager.createQuery(
+                    "SELECT DISTINCT b.specifier, b.unit " +
+                            "FROM Batch b WHERE b.product.name = :name")
                     .setParameter("name", product.getName()).getResultList();
          }
       });

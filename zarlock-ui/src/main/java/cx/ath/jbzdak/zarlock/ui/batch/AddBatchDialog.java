@@ -30,7 +30,7 @@ public class AddBatchDialog extends JDialog{
       setModalityType(ModalityType.DOCUMENT_MODAL);
       setLayout(new MigLayout("wrap 1, fillx, filly","[fill, grow]", "[fill][pref]"));
       addBatchPanel = new AddBatchPanel();
-      ButtonPanel buttonPanel = new ButtonPanel();
+      ButtonPanel buttonPanel = new ButtonPanel("batch.action.add");
       add(addBatchPanel);
       add(buttonPanel, "h pref");
       ZarlockModel zarlockModel = ZarlockUtils.getZarlockModel(this);

@@ -10,6 +10,10 @@ public class ConfigHolder {
 
    private static Properties PROPERTIES;
 
+   public static String getProductVersion(){
+      return PROPERTIES.getProperty("productVersion");
+   }
+
    public static String getString(String key){
       return getProperties().getProperty(key);
    }

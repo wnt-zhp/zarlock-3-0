@@ -11,6 +11,7 @@ import cx.ath.jbzdak.jpaGui.ui.tabbed.JBTabbedPane;
 
 import static cx.ath.jbzdak.zarlock.ui.DefaultIconManager.ICON_MANAGER;
 import static cx.ath.jbzdak.zarlok.ZarlockBoundle.getString;
+import cx.ath.jbzdak.zarlok.ConfigHolder;
 
 /**
  * @author Jacek Bzdak jbzdak@gmail.com
@@ -44,6 +45,7 @@ public class ZarlockFrame extends JFrame{
    }
 
    private void initialize(){
+      setTitle(getString("mainFrame.title", ConfigHolder.getProductVersion()));
       setLayout(new BorderLayout());
       add(mainPanel, BorderLayout.CENTER);
       initializeMenu();
@@ -51,7 +53,7 @@ public class ZarlockFrame extends JFrame{
               zarlockModel.getProductTab(), getString("product.tab.tooltip"), false);
       mainPanel.addTabCloseable(getString("productList.tab.tabname"), ICON_MANAGER.getIcon("product.list"),
               zarlockModel.getProductList(), getString("productList.tab.tooltip"), false);
-      mainPanel.addTabCloseable("batchList.tab.tabname", ICON_MANAGER.getIcon("page_list"),
+      mainPanel.addTabCloseable(getString("batchList.tab.tabname"), ICON_MANAGER.getIcon("batch.list"),
               zarlockModel.getBatchTab(), getString("batchList.tab.tooltip"), false);
    }
 

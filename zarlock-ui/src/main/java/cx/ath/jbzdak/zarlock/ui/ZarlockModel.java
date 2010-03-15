@@ -7,20 +7,20 @@ import javax.persistence.EntityManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
 
 import cx.ath.jbzdak.jpaGui.Utils;
-import cx.ath.jbzdak.jpaGui.db.DBManager;
-import cx.ath.jbzdak.jpaGui.db.LifecycleManager;
-import cx.ath.jbzdak.jpaGui.db.Query;
-import cx.ath.jbzdak.jpaGui.db.Transaction;
+import cx.ath.jbzdak.jpaGui.db.*;
 import cx.ath.jbzdak.jpaGui.ui.error.DisplayError;
 import cx.ath.jbzdak.jpaGui.ui.error.ErrorDetailsDialog;
 import cx.ath.jbzdak.jpaGui.ui.tabbed.JBTabbedPane;
 import cx.ath.jbzdak.zarlock.ui.batch.AddBatchDialog;
 import cx.ath.jbzdak.zarlock.ui.batch.BatchTab;
+import cx.ath.jbzdak.zarlock.ui.batch.EditBatchDialog;
 import cx.ath.jbzdak.zarlock.ui.product.ProductList;
 import cx.ath.jbzdak.zarlock.ui.product.ProductTab;
 import cx.ath.jbzdak.zarlok.DBHolder;
+import cx.ath.jbzdak.zarlok.entities.Batch;
 import cx.ath.jbzdak.zarlok.entities.Product;
 import cx.ath.jbzdak.zarlok.entities.xml.XMLLoader;
 import cx.ath.jbzdak.zarlok.entities.xml.XMLStore;
@@ -46,6 +46,8 @@ public class ZarlockModel {
 
    private final BatchTab batchTab = new BatchTab();
 
+   private EditBatchDialog editBatchDialog;
+
    private AddBatchDialog batchDialog;
 
    public ZarlockModel(ZarlockFrame zarlockFrame) {
@@ -57,13 +59,14 @@ public class ZarlockModel {
                getDBManager().executeTransaction(new Transaction<EntityManager>() {
                   @Override
                   public void doTransaction(EntityManager entityManager) throws Exception {
-                     batchTab.setBathes(entityManager.createQuery("SELECT b FROM Batch b").getResultList());
+                     batchTab.setBathes(fetchBatches());
                   }
                });
             }
          }
       });
       mainPanel.addListener(getProductList(), getProductListListener());
+
    }
 
    ProductList getProductList() {
@@ -137,6 +140,19 @@ public class ZarlockModel {
       };
    }
 
+   public List<Batch> fetchBatches(){
+      return getDBManager().executeTransaction(new ReturnableTransaction<EntityManager, List<Batch>>() {
+         @Override
+         public List<Batch> doTransaction(EntityManager entityManager) throws Exception {
+            return entityManager.createQuery("SELECT b FROM Batch b").getResultList();
+         }
+      });
+   }
+
+
+
+
+
    public BatchTab getBatchTab() {
       return batchTab;
    }
@@ -148,6 +164,15 @@ public class ZarlockModel {
          Utils.initLocation(batchDialog);
       }
       return batchDialog;
+   }
+
+   public EditBatchDialog getEditBatchDialog() {
+      if (editBatchDialog == null) {
+         editBatchDialog = new EditBatchDialog(zarlockFrame);
+         editBatchDialog.pack();
+         Utils.initLocation(editBatchDialog);
+      }
+      return editBatchDialog;
    }
 
    public void showBatchesFromProduct(Product p){

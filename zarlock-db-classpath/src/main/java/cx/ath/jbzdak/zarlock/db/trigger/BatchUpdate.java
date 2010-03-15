@@ -26,6 +26,7 @@ public class BatchUpdate extends DefaultTrigger2{
          resultSet.next();
          BigDecimal expenditured = resultSet.getBigDecimal(1);
          BigDecimal startQty = (BigDecimal) newRow[s.getOrdinalForName("START_QTY")];
+         expenditured = expenditured!=null?expenditured:BigDecimal.ZERO;
          newRow[s.getOrdinalForName("CURRENT_QTY")] = startQty.subtract(expenditured, MathContext.DECIMAL32);
       }finally {
          if(resultSet!=null){

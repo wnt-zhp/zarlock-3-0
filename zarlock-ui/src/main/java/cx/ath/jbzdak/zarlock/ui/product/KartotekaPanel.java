@@ -64,13 +64,13 @@ class KartotekaPanel extends JPanel {
       private void initBindings() {
          JTableBinding binding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ_ONCE,
                  kartotekaBeans, kartoteka);
-         binding.addColumnBinding(BeanProperty.create("date"), getString("kartoteka.dateOfChange"));
-         binding.addColumnBinding(BeanProperty.create("addedToStock"), getString("kartoteka.addedToStock"));
-         binding.addColumnBinding(BeanProperty.create("price"), getString("kartoteka.price"));
-         binding.addColumnBinding(BeanProperty.create("value"), getString("kartoteka.value"));
-         binding.addColumnBinding(BeanProperty.create("stockInWarehouse"), getString("kartoteka.stockInWarehouse"));
-         binding.addColumnBinding(BeanProperty.create("valueInWarehouse"), getString("kartoteka.valueInWarehouse"));
-         binding.addColumnBinding(BeanProperty.create("tytulem"), getString("kartoteka.tytulem"));
+         binding.addColumnBinding(BeanProperty.create("date")).setColumnName(getString("kartoteka.dateOfChange"));
+         binding.addColumnBinding(BeanProperty.create("addedToStock")).setColumnName( getString("kartoteka.addedToStock"));
+         binding.addColumnBinding(BeanProperty.create("price")).setColumnName( getString("kartoteka.price"));
+         binding.addColumnBinding(BeanProperty.create("value")).setColumnName( getString("kartoteka.value"));
+         binding.addColumnBinding(BeanProperty.create("stockInWarehouse")).setColumnName( getString("kartoteka.stockInWarehouse"));
+         binding.addColumnBinding(BeanProperty.create("valueInWarehouse")).setColumnName( getString("kartoteka.valueInWarehouse"));
+         binding.addColumnBinding(BeanProperty.create("tytulem")).setColumnName( getString("kartoteka.tytulem"));
          binding.bind();
       }
 

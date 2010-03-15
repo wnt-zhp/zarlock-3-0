@@ -26,12 +26,9 @@ public class ButtonFactory {
       }
    });
 
-   
-
    public static JButton createButton(String name){
       return buttons.get(name).make();
    }
-
 
    private static class ButtonFactoryInternal implements Factory<JButton>{
 

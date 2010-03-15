@@ -59,6 +59,8 @@ public class ProductTab extends JPanel{
    public void setProduct(Product product) {
       this.product = product;
       productEditPanel.setProduct(product);
+      stockLevelPanel.setProduct(product);
+      kartotekaPanel.setProduct(product);
    }
 
    private class ControlPanel extends JPanel{
