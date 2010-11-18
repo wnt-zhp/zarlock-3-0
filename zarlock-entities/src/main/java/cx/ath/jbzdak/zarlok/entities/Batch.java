@@ -81,7 +81,22 @@ import static cx.ath.jbzdak.jpaGui.Utils.getRelativeDate;
         @NamedQuery(
                 name = "getUnits",
                 query = "SELECT DISTINCT b.unit FROM Batch b"
+        ),
+        @NamedQuery(
+                name = "getBatchesForCourse",
+                query = "SELECT p FROM Batch p " +
+                        "WHERE " +
+                        "(:name IS NULL OR p.product.name = :name) AND " +
+                        "(:specifier IS NULL OR p.specifier = :specifier ) AND " +
+                        "(:unit IS NULL OR p.unit = :unit) AND " +
+                        "(p.expiryDate IS NULL OR p.expiryDate > :dzien) AND " +
+                        "p.bookingDate <= :dzien AND " +
+                        "p.currentQty > 0 " +
+                        "ORDER BY p.expiryDate ASC, " +
+                        "p.bookingDate DESC, " +
+                        "p.currentQty ASC"
         )
+
 })
 @EntityListeners({PartiaSearchCacheUpdater.class})
 public class Batch implements IProductSearchCache {

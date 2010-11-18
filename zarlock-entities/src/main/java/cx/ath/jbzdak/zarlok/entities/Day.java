@@ -49,7 +49,7 @@ public class Day {
    /**
     * Stawka dzienna
     */
-   private BigDecimal rate;
+   private BigDecimal rate = BigDecimal.ZERO;
 
    @PreUpdate @PrePersist
    public void recalculateDayCost(){
