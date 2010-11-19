@@ -1,1 +1,1 @@
-java -cp "zarlock.jar;lib\*" -splash:splash.bmp cx.ath.jbzdak.zarlok.main.AppLauncher
+java -cp "lib\zarlock.jar;lib\*" -splash:splash.bmp cx.ath.jbzdak.zarlok.main.AppLauncher

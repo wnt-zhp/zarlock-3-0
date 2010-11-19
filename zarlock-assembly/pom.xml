@@ -8,4 +8,28 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>zarlock-assembly</artifactId>
+
+       <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>
+                            assembly.xml
+                        </descriptor>
+                    </descriptors>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+   <dependencies>
+      <dependency>
+         <groupId>cx.ath.jbzdak.zarlock</groupId>
+         <artifactId>zarlock-runners</artifactId>
+         <version>3.1</version>
+      </dependency>
+   </dependencies>
+
+
 </project>
